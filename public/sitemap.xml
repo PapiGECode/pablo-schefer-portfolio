@@ -45,4 +45,24 @@
     <lastmod>2026-07-17</lastmod>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://pablo-schefer.vercel.app/legal/cookies</loc>
+    <lastmod>2026-07-18</lastmod>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://pablo-schefer.vercel.app/legal/privacidad</loc>
+    <lastmod>2026-07-18</lastmod>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://pablo-schefer.vercel.app/legal/aviso-legal</loc>
+    <lastmod>2026-07-18</lastmod>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://pablo-schefer.vercel.app/legal/condiciones-venta</loc>
+    <lastmod>2026-07-18</lastmod>
+    <priority>0.3</priority>
+  </url>
 </urlset>
