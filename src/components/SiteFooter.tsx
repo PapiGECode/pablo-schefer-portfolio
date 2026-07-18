@@ -11,7 +11,27 @@ export function SiteFooter({ content }: { content: SiteCopy }) {
         <span className="brand__name">Pablo Schefer</span>
       </Link>
       <p>© {new Date().getFullYear()} · {content.footer}</p>
-      <Link to="/" aria-label={content.common.backToTopLabel}>↑ Top</Link>
+      <nav className="site-footer__actions" aria-label="Enlaces secundarios">
+        <details className="site-footer__legal">
+          <summary>Legal</summary>
+          <nav aria-label="Información legal">
+            <Link to="/legal/cookies">Política de cookies</Link>
+            <Link to="/legal/privacidad">Política de privacidad</Link>
+            <Link to="/legal/aviso-legal">Aviso legal</Link>
+            <Link to="/legal/condiciones-venta">Condiciones de venta</Link>
+          </nav>
+        </details>
+        <a
+          className="site-footer__demo"
+          href="https://cima-plantilla-negocios.nadjjar.chatgpt.site"
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Abrir demostración CIMA en una pestaña nueva"
+        >
+          Demo / CIMA <span aria-hidden="true">↗</span>
+        </a>
+        <Link to="/" aria-label={content.common.backToTopLabel}>↑ Top</Link>
+      </nav>
     </footer>
   )
 }
