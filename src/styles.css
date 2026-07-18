@@ -1,14 +1,14 @@
 :root {
   font-family: 'Manrope Variable', 'Segoe UI Variable', sans-serif;
   color: #e9e6df;
-  background: #0b0c0d;
+  background: #191b1c;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   --ink: #e9e6df;
   --muted: #8f9695;
   --dim: #5f6665;
-  --surface: #0b0c0d;
-  --surface-raised: #111314;
+  --surface: #191b1c;
+  --surface-raised: #202223;
   --line: rgba(233, 230, 223, 0.13);
   --amber: #f0a24a;
   --cyan: #81d8cc;
@@ -22,7 +22,7 @@
 
 html {
   scroll-behavior: smooth;
-  scrollbar-color: #353a3a #0b0c0d;
+  scrollbar-color: #44494a #191b1c;
 }
 
 html[data-mobile-platform='ios'],
@@ -35,10 +35,7 @@ body {
   min-width: 320px;
   margin: 0;
   overflow-x: hidden;
-  background:
-    radial-gradient(circle at 12% 4%, rgba(240, 162, 74, 0.055), transparent 30rem),
-    radial-gradient(circle at 88% 18%, rgba(129, 216, 204, 0.045), transparent 28rem),
-    var(--surface);
+  background: var(--surface);
 }
 
 html[data-mobile-platform='ios'] body,
@@ -50,13 +47,7 @@ html[data-mobile-platform='mobile'] body {
 }
 
 body::before {
-  position: fixed;
-  z-index: 30;
-  inset: 0;
-  pointer-events: none;
-  content: '';
-  opacity: 0.035;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.92' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
+  display: none;
 }
 
 button,
@@ -123,15 +114,7 @@ h3 {
 }
 
 .site-shell::after {
-  position: fixed;
-  z-index: -2;
-  inset: 0;
-  content: '';
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
-  background-size: 72px 72px;
-  mask-image: linear-gradient(to bottom, black, transparent 85%);
+  display: none;
 }
 
 .ambient-field {
@@ -3752,8 +3735,6 @@ h3 {
 }
 
 @media (max-width: 820px) {
-  body::before { opacity: 0.02; }
-
   .site-header,
   .mobile-menu,
   .now-dock,
