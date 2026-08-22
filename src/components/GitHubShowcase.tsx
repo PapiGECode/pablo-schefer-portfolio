@@ -152,7 +152,9 @@ export function GitHubShowcase({ locale }: { locale: Locale }) {
           <>
             <div className="github-profile">
               <div className="github-profile__identity">
-                <span className="github-profile__mark" aria-hidden="true"><GitBranch size={30} strokeWidth={1.45} /></span>
+                <span className="github-profile__mark">
+                  <img src="/media/profile/github-papigegamer.jpg" alt="Avatar de lastPapiGEGamer" />
+                </span>
                 <div>
                   <span>{state.data.profile.name ?? state.data.profile.login}</span>
                   <strong>@{state.data.profile.login}</strong>

@@ -34,11 +34,19 @@
   width: 58px;
   height: 58px;
   flex: 0 0 auto;
-  color: #111314;
+  overflow: hidden;
   background: var(--ink);
   border-radius: 18px;
   place-items: center;
   transform: rotate(-3deg);
+}
+
+.github-profile__mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transform: rotate(3deg) scale(1.04);
 }
 
 .github-profile__identity > div {
