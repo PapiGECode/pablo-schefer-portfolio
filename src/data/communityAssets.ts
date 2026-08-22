@@ -11,6 +11,8 @@ import gw2LogoStatic from '../assets/communities/gw2.webp'
 import kernelosLogo from '../assets/projects/kernelos-logo.png'
 import nateCover from '../assets/communities/nate-cover.webp'
 import nateLogo from '../assets/communities/nate-logo.webp'
+import tiagoCover from '../assets/communities/tiago-cover.png'
+import tiagoLogo from '../assets/communities/tiago-logo.png'
 import valorantEsCover from '../assets/communities/valorant-es-cover.webp'
 import valorantEsLogo from '../assets/communities/valorant-es-logo-animated.webp'
 import valorantEsLogoStatic from '../assets/communities/valorant-es.webp'
@@ -29,6 +31,8 @@ export const communityAssets = {
   kernelosLogo,
   nateCover,
   nateLogo,
+  tiagoCover,
+  tiagoLogo,
   valorantEsCover,
   valorantEsLogo,
   valorantEsLogoStatic,

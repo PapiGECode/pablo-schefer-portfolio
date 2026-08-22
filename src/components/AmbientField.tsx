@@ -105,15 +105,25 @@ export function AmbientField() {
       if (!reduceMotion) frame = window.requestAnimationFrame(draw)
     }
 
+    const onVisibilityChange = () => {
+      window.cancelAnimationFrame(frame)
+      if (!document.hidden && !reduceMotion) {
+        lastDraw = performance.now()
+        frame = window.requestAnimationFrame(draw)
+      }
+    }
+
     resize()
     window.addEventListener('resize', resize)
     window.addEventListener('pointermove', onPointerMove, { passive: true })
+    document.addEventListener('visibilitychange', onVisibilityChange)
     draw()
 
     return () => {
       window.cancelAnimationFrame(frame)
       window.removeEventListener('resize', resize)
       window.removeEventListener('pointermove', onPointerMove)
+      document.removeEventListener('visibilitychange', onVisibilityChange)
     }
   }, [])
 

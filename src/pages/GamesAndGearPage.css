@@ -599,6 +599,36 @@
 .setup-console__meter i { display: block; height: 100%; background: var(--setup-accent); border-radius: inherit; transition: width 0.75s ease; }
 .setup-console__telemetry--offline { border-color: var(--line); }
 
+.setup-console__static-spec {
+  display: grid;
+  gap: 0.5rem;
+  max-width: 620px;
+  margin: -3.3rem 0 2.2rem;
+  padding: 1rem 1.05rem;
+  background: rgba(5, 6, 7, 0.28);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+
+.setup-console__static-spec > span {
+  color: var(--dim);
+  font: 0.5rem ui-monospace, 'Cascadia Code', monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.setup-console__static-spec > strong {
+  color: var(--setup-accent);
+  font-size: 0.85rem;
+}
+
+.setup-console__static-spec p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+
 .setup-console__icon {
   position: absolute;
   top: 24%;

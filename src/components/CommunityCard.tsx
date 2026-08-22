@@ -36,7 +36,7 @@ export function CommunityCard({ community, content, locale, index = 0, compact =
           {community.current && <span className="status-dot" aria-hidden="true" />}
           {community.current ? content.common.current : content.common.previous}
         </span>
-        {community.id === 'edgar' ? <Radio size={17} aria-hidden="true" /> : <ArrowUpRight size={17} aria-hidden="true" />}
+        {community.internal ? <Radio size={17} aria-hidden="true" /> : <ArrowUpRight size={17} aria-hidden="true" />}
       </div>
       <figure className="community-card__visual">
         <img

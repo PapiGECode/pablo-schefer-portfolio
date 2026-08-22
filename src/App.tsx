@@ -1,39 +1,51 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, useReducedMotion, useScroll, useSpring } from 'motion/react'
 import * as m from 'motion/react-m'
-import { Route, Routes, useLocation } from 'react-router-dom'
+import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import { AmbientField } from './components/AmbientField'
 import { SiteFooter } from './components/SiteFooter'
 import { SiteHeader } from './components/SiteHeader'
 import { EasterEggs } from './components/EasterEggs'
+import { VirtualCompanion } from './components/VirtualCompanion'
 import { copy, type Locale, type SiteCopy } from './content'
 import { HomePage } from './pages/HomePage'
+import { useCommunityNotifications } from './hooks/useCommunityNotifications'
 
 const ProfilePage = lazy(() => import('./pages/ProfilePage').then((module) => ({ default: module.ProfilePage })))
 const CommunitiesPage = lazy(() => import('./pages/CommunitiesPage').then((module) => ({ default: module.CommunitiesPage })))
 const EdgarPonsPage = lazy(() => import('./pages/EdgarPonsPage').then((module) => ({ default: module.EdgarPonsPage })))
+const FnlbLivePage = lazy(() => import('./pages/FnlbLivePage').then((module) => ({ default: module.FnlbLivePage })))
+const LiveCommunityPage = lazy(() => import('./pages/LiveCommunityPage').then((module) => ({ default: module.LiveCommunityPage })))
 const GamesAndGearPage = lazy(() => import('./pages/GamesAndGearPage').then((module) => ({ default: module.GamesAndGearPage })))
 const MusicPage = lazy(() => import('./pages/MusicPage').then((module) => ({ default: module.MusicPage })))
 const AnimePage = lazy(() => import('./pages/AnimePage').then((module) => ({ default: module.AnimePage })))
 const AccountPage = lazy(() => import('./pages/AccountPage').then((module) => ({ default: module.AccountPage })))
 const ProjectPage = lazy(() => import('./pages/ProjectPage').then((module) => ({ default: module.ProjectPage })))
+const LegalPage = lazy(() => import('./pages/LegalPage').then((module) => ({ default: module.LegalPage })))
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage').then((module) => ({ default: module.NotFoundPage })))
 const NowPlayingDock = lazy(() => import('./components/NowPlayingDock').then((module) => ({ default: module.NowPlayingDock })))
 const AnimeNowDock = lazy(() => import('./components/AnimeNowDock').then((module) => ({ default: module.AnimeNowDock })))
 
-const productionOrigin = 'https://pablo-schefer.vercel.app'
+const productionOrigin = 'https://pabloschefer.vercel.app'
 
 function getSeo(content: SiteCopy, pathname: string) {
   if (pathname === '/') return content.seo.home
   if (pathname === '/perfil') return content.seo.profile
   if (pathname === '/comunidades') return content.seo.communities
   if (pathname === '/comunidades/edgar-pons') return content.seo.edgar
+  if (pathname === '/comunidades/fnlb') return { title: 'FNLB Live — Estado de Discord', description: 'Panel público en tiempo real de los canales de voz de la comunidad FNLB.' }
+  if (pathname === '/comunidades/valorant') return { title: 'VALORANT ESP Live — Estado de Discord', description: 'Panel público en tiempo real de los canales de voz de la comunidad VALORANT ESP.' }
+  if (pathname === '/comunidades/nate') return { title: 'Nate Gentile Live — Estado de Discord', description: 'Panel público en tiempo real de los canales de voz de la comunidad de Nate Gentile.' }
+  if (pathname === '/comunidades/gw2') return { title: 'GW2 Live — Estado de Discord', description: 'Panel público en tiempo real de los canales de voz y la actividad visible de GW2.' }
   if (pathname === '/juegos-y-equipo') return content.seo.gamesGear
   if (pathname === '/musica') return content.seo.music
   if (pathname === '/anime') return content.seo.anime
   if (pathname === '/cuenta') return { title: 'Cuenta — Pablo Schefer', description: 'Registro, verificación por correo e inicio de sesión en el portfolio de Pablo Schefer.' }
   if (pathname === '/proyectos/fnlb') return { title: 'FNLB — Proyecto y comunidad', description: 'Colaboración de Pablo Schefer con el ecosistema FNLB.' }
   if (pathname === '/proyectos/kernelos') return { title: 'KernelOS — Proyecto y comunidad', description: 'Colaboración de Pablo Schefer con KernelOS, su CustomOS y comunidad.' }
+  if (pathname === '/legal/cookies') return { title: 'Política de cookies — Pablo Schefer', description: 'Información sobre cookies y preferencias de navegación del portafolio de Pablo Schefer.' }
+  if (pathname === '/legal/privacidad') return { title: 'Política de privacidad — Pablo Schefer', description: 'Información sobre el tratamiento de datos personales en el portafolio de Pablo Schefer.' }
+  if (pathname === '/legal/aviso-legal') return { title: 'Aviso legal — Pablo Schefer', description: 'Aviso legal y condiciones de uso del portafolio de Pablo Schefer.' }
   return content.seo.notFound
 }
 
@@ -63,10 +75,20 @@ function App() {
   const [liveUiReady, setLiveUiReady] = useState(false)
   const content = copy[locale]
   const location = useLocation()
+  const navigate = useNavigate()
+  const { notification } = useCommunityNotifications()
+  const [chatNotice, setChatNotice] = useState<typeof notification>(null)
   const reduceMotion = useReducedMotion()
   const { scrollYProgress } = useScroll()
   const scaleX = useSpring(scrollYProgress, { stiffness: 130, damping: 28, mass: 0.25 })
   const pointerFrame = useRef(0)
+
+  useEffect(() => {
+    if (!notification || location.pathname === '/') return
+    const frame = window.requestAnimationFrame(() => setChatNotice(notification))
+    const timer = window.setTimeout(() => setChatNotice(null), 7_000)
+    return () => { window.cancelAnimationFrame(frame); window.clearTimeout(timer) }
+  }, [location.pathname, notification])
 
   useEffect(() => {
     const timer = window.setTimeout(() => setLiveUiReady(true), 650)
@@ -155,6 +177,16 @@ function App() {
       <m.div className="scroll-progress" style={{ scaleX }} aria-hidden="true" />
       <SiteHeader content={content} locale={locale} onLocaleChange={setLocale} />
       <ScrollManager />
+      <VirtualCompanion locale={locale} />
+      <AnimatePresence>
+        {chatNotice && location.pathname !== '/' && (
+          <m.button className="community-chat-notice" type="button" initial={{ opacity: 0, x: 24, y: -12 }} animate={{ opacity: 1, x: 0, y: 0 }} exit={{ opacity: 0, x: 24, y: -8 }} onClick={() => { setChatNotice(null); navigate('/?chat=1') }}>
+            <span className="community-chat-notice__dot" aria-hidden="true" />
+            <span><strong>Chat de la comunidad</strong><small>{chatNotice.username}: {chatNotice.body}</small></span>
+            <span aria-hidden="true">↗</span>
+          </m.button>
+        )}
+      </AnimatePresence>
 
       <AnimatePresence mode="wait" initial={false}>
         <m.main
@@ -172,19 +204,27 @@ function App() {
               <Route path="/perfil" element={<ProfilePage content={content} locale={locale} />} />
               <Route path="/comunidades" element={<CommunitiesPage content={content} locale={locale} />} />
               <Route path="/comunidades/edgar-pons" element={<EdgarPonsPage content={content} locale={locale} />} />
+              <Route path="/comunidades/fnlb" element={<FnlbLivePage content={content} locale={locale} />} />
+              <Route path="/comunidades/valorant" element={<LiveCommunityPage content={content} locale={locale} community="valorant" />} />
+              <Route path="/comunidades/nate" element={<LiveCommunityPage content={content} locale={locale} community="nate" />} />
+              <Route path="/comunidades/gw2" element={<LiveCommunityPage content={content} locale={locale} community="gw2" />} />
               <Route path="/juegos-y-equipo" element={<GamesAndGearPage content={content} locale={locale} />} />
               <Route path="/musica" element={<MusicPage content={content} locale={locale} />} />
               <Route path="/anime" element={<AnimePage content={content} locale={locale} />} />
               <Route path="/cuenta" element={<AccountPage locale={locale} />} />
               <Route path="/proyectos/fnlb" element={<ProjectPage projectId="fnlb" locale={locale} />} />
               <Route path="/proyectos/kernelos" element={<ProjectPage projectId="kernelos" locale={locale} />} />
+              <Route path="/legal/cookies" element={<LegalPage type="cookies" />} />
+              <Route path="/legal/privacidad" element={<LegalPage type="privacidad" />} />
+              <Route path="/legal/aviso-legal" element={<LegalPage type="aviso-legal" />} />
+              <Route path="/legal/condiciones-venta" element={<Navigate to="/legal/aviso-legal" replace />} />
               <Route path="*" element={<NotFoundPage content={content} />} />
             </Routes>
           </Suspense>
         </m.main>
       </AnimatePresence>
 
-      {liveUiReady && !['/musica', '/anime'].includes(location.pathname) && (
+      {liveUiReady && !['/musica', '/anime'].includes(location.pathname) && !location.pathname.startsWith('/legal/') && (
         <Suspense fallback={null}>
           <NowPlayingDock locale={locale} placement={location.pathname === '/perfil' ? 'top-left' : 'bottom-right'} />
           <AnimeNowDock locale={locale} />

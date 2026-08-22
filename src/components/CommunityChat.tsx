@@ -1,12 +1,13 @@
 import { AnimatePresence } from 'motion/react'
 import * as m from 'motion/react-m'
-import { ArrowUpRight, LockKeyhole, MessageCircle, Send, X } from 'lucide-react'
+import { ArrowUpRight, LockKeyhole, MessageCircle, Send, Trash2, X } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent, type KeyboardEvent } from 'react'
 import { Link } from 'react-router-dom'
 import type { Locale } from '../content'
 import { useAuth } from '../contexts/AuthContext'
-import { accountName, cleanCommunityText } from '../lib/community'
+import { accountName, cleanCommunityText, normalizePublicName } from '../lib/community'
 import { getSupabase } from '../lib/supabase'
+import type { CommunityChatNotification } from '../hooks/useCommunityNotifications'
 import './CommunityChat.css'
 
 type ChatMessage = {
@@ -15,15 +16,19 @@ type ChatMessage = {
   username: string
   body: string
   created_at: string
+  avatar_url?: string | null
 }
 
 type CommunityChatProps = {
   locale: Locale
   mode?: 'widget' | 'inline'
   onOpen?: () => void
+  incomingMessage?: CommunityChatNotification | null
 }
 
-export function CommunityChat({ locale, mode = 'widget', onOpen }: CommunityChatProps) {
+const ownerEmail = 'pablopme41@gmail.com'
+
+export function CommunityChat({ locale, mode = 'widget', onOpen, incomingMessage }: CommunityChatProps) {
   const auth = useAuth()
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const [body, setBody] = useState('')
@@ -32,6 +37,7 @@ export function CommunityChat({ locale, mode = 'widget', onOpen }: CommunityChat
   const [error, setError] = useState('')
   const scrollRef = useRef<HTMLDivElement>(null)
   const username = useMemo(() => accountName(auth.user), [auth.user])
+  const isOwner = auth.user?.email?.toLowerCase() === ownerEmail
   const labels = locale === 'es' ? {
     title: 'Chat de la comunidad',
     live: 'Entre cuentas',
@@ -44,6 +50,7 @@ export function CommunityChat({ locale, mode = 'widget', onOpen }: CommunityChat
     send: 'Enviar mensaje',
     empty: 'Todavía no hay mensajes. Estrena la conversación.',
     error: 'No se ha podido conectar con el chat.',
+    remove: 'Eliminar mensaje',
   } : {
     title: 'Community chat',
     live: 'Account members',
@@ -56,6 +63,7 @@ export function CommunityChat({ locale, mode = 'widget', onOpen }: CommunityChat
     send: 'Send message',
     empty: 'No messages yet. Start the conversation.',
     error: 'The chat could not connect.',
+    remove: 'Delete message',
   }
 
   const loadMessages = useCallback(async () => {
@@ -67,15 +75,22 @@ export function CommunityChat({ locale, mode = 'widget', onOpen }: CommunityChat
       setLoading(false)
       return
     }
-    const { data, error: queryError } = await client
+    const firstQuery = await client
       .from('chat_messages')
-      .select('id,user_id,username,body,created_at')
+      .select('id,user_id,username,body,created_at,avatar_url')
       .order('created_at', { ascending: false })
       .limit(mode === 'widget' ? 28 : 100)
+    let data = firstQuery.data as ChatMessage[] | null
+    let queryError = firstQuery.error
+    if (queryError) {
+      const fallback = await client.from('chat_messages').select('id,user_id,username,body,created_at').order('created_at', { ascending: false }).limit(mode === 'widget' ? 28 : 100)
+      data = fallback.data
+      queryError = fallback.error
+    }
     if (queryError) setError(labels.error)
     else {
       setError('')
-      setMessages(((data ?? []) as ChatMessage[]).reverse())
+      setMessages(((data ?? []) as ChatMessage[]).map((message) => ({ ...message, username: normalizePublicName(message.username) })).reverse())
     }
     setLoading(false)
   }, [auth.user, labels.error, mode])
@@ -91,10 +106,15 @@ export function CommunityChat({ locale, mode = 'widget', onOpen }: CommunityChat
         .channel(`portfolio-chat-${mode}`)
         .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'chat_messages' }, (payload) => {
           const incoming = payload.new as ChatMessage
+          incoming.username = normalizePublicName(incoming.username)
           setMessages((current) => {
             if (current.some((message) => message.id === incoming.id)) return current
             return [...current, incoming].slice(mode === 'widget' ? -28 : -100)
           })
+        })
+        .on('postgres_changes', { event: 'DELETE', schema: 'public', table: 'chat_messages' }, (payload) => {
+          const removed = payload.old as Pick<ChatMessage, 'id'>
+          setMessages((current) => current.filter((message) => message.id !== removed.id))
         })
         .subscribe()
     })
@@ -117,10 +137,9 @@ export function CommunityChat({ locale, mode = 'widget', onOpen }: CommunityChat
     setError('')
     const client = await getSupabase()
     const { error: insertError } = client
-      ? await client.from('chat_messages').insert({
-        user_id: auth.user.id,
-        username,
-        body: message,
+      ? await client.rpc('send_chat_message', {
+        message_body: message,
+        display_name: username,
       })
       : { error: new Error('not_configured') }
     if (insertError) {
@@ -131,6 +150,18 @@ export function CommunityChat({ locale, mode = 'widget', onOpen }: CommunityChat
     setSending(false)
   }
 
+  const deleteMessage = async (messageId: number) => {
+    if (!isOwner) return
+    const client = await getSupabase()
+    if (!client) return
+    const { error: deleteError } = await client.from('chat_messages').delete().eq('id', messageId)
+    if (deleteError) {
+      setError(labels.error)
+      return
+    }
+    setMessages((current) => current.filter((message) => message.id !== messageId))
+  }
+
   const handleMessageKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key !== 'Enter' || event.shiftKey || event.nativeEvent.isComposing) return
     event.preventDefault()
@@ -139,9 +170,16 @@ export function CommunityChat({ locale, mode = 'widget', onOpen }: CommunityChat
 
   if (mode === 'widget') {
     return (
-      <button className="chat-launcher" type="button" onClick={onOpen} aria-label={labels.open}>
+      <button className={`chat-launcher${incomingMessage ? ' chat-launcher--incoming' : ''}`} type="button" onClick={onOpen} aria-label={labels.open}>
         <span><MessageCircle size={17} aria-hidden="true" /><i /></span>
-        <span><strong>{labels.title}</strong><small>{labels.live}</small></span>
+        <span className="chat-launcher__copy">
+          <AnimatePresence mode="wait" initial={false}>
+            <m.span key={incomingMessage?.id ?? 'default'} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.2 }}>
+              <strong>{incomingMessage ? `${incomingMessage.username}: ${incomingMessage.body}` : labels.title}</strong>
+              <small>{incomingMessage ? (locale === 'es' ? 'Nuevo mensaje · Abrir chat' : 'New message · Open chat') : labels.live}</small>
+            </m.span>
+          </AnimatePresence>
+        </span>
         <ArrowUpRight size={16} aria-hidden="true" />
       </button>
     )
@@ -177,10 +215,15 @@ export function CommunityChat({ locale, mode = 'widget', onOpen }: CommunityChat
                 const own = message.user_id === auth.user?.id
                 return (
                   <article className={own ? 'is-own' : ''} key={message.id}>
-                    <span className="community-chat__avatar">{message.username.slice(0, 1).toUpperCase()}</span>
+                    <span className="community-chat__avatar">{message.avatar_url ? <img src={message.avatar_url} alt="" /> : message.username.slice(0, 1).toUpperCase()}</span>
                     <div>
                       <header><strong>{message.username}</strong><time dateTime={message.created_at}>{new Intl.DateTimeFormat(locale, { hour: '2-digit', minute: '2-digit' }).format(new Date(message.created_at))}</time></header>
                       <p>{message.body}</p>
+                      {isOwner && (
+                        <button className="community-chat__delete" type="button" onClick={() => void deleteMessage(message.id)} aria-label={`${labels.remove}: ${message.username}`}>
+                          <Trash2 size={12} aria-hidden="true" />{labels.remove}
+                        </button>
+                      )}
                     </div>
                   </article>
                 )

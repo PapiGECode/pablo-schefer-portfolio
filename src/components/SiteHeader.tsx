@@ -111,6 +111,22 @@ export function SiteHeader({ content, locale, onLocaleChange }: SiteHeaderProps)
                     <span>{content.nav.edgarLive}</span>
                     <small className="nav-live"><Radio size={11} aria-hidden="true" /> Live</small>
                   </Link>
+                  <Link to="/comunidades/fnlb" role="menuitem" onClick={closeNavigation}>
+                    <span>{content.nav.fnlbLive}</span>
+                    <small className="nav-live"><Radio size={11} aria-hidden="true" /> Live</small>
+                  </Link>
+                  <Link to="/comunidades/valorant" role="menuitem" onClick={closeNavigation}>
+                    <span>{content.nav.valorantLive}</span>
+                    <small className="nav-live"><Radio size={11} aria-hidden="true" /> Live</small>
+                  </Link>
+                  <Link to="/comunidades/nate" role="menuitem" onClick={closeNavigation}>
+                    <span>{content.nav.nateLive}</span>
+                    <small className="nav-live"><Radio size={11} aria-hidden="true" /> Live</small>
+                  </Link>
+                  <Link to="/comunidades/gw2" role="menuitem" onClick={closeNavigation}>
+                    <span>{content.nav.gw2Live}</span>
+                    <small className="nav-live"><Radio size={11} aria-hidden="true" /> Live</small>
+                  </Link>
                 </m.div>
               )}
             </AnimatePresence>
@@ -138,6 +154,7 @@ export function SiteHeader({ content, locale, onLocaleChange }: SiteHeaderProps)
                 >
                   <Link to="/proyectos/fnlb" role="menuitem" onClick={closeNavigation}><span>{content.nav.fnlb}</span><small>{locale === 'es' ? 'Proyecto · Comunidad' : 'Project · Community'}</small></Link>
                   <Link to="/proyectos/kernelos" role="menuitem" onClick={closeNavigation}><span>{content.nav.kernelos}</span><small>{locale === 'es' ? 'Comunidad · CustomOS' : 'Community · Custom OS'}</small></Link>
+                  <Link to="/#github" role="menuitem" onClick={closeNavigation}><span>GitHub / Open Source</span><small>{locale === 'es' ? 'Repositorios · API en vivo' : 'Repositories · Live API'}</small></Link>
                 </m.div>
               )}
             </AnimatePresence>
@@ -267,6 +284,10 @@ export function SiteHeader({ content, locale, onLocaleChange }: SiteHeaderProps)
                   <m.div className="mobile-menu__submenu" initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }}>
                     <Link to="/comunidades" onClick={closeNavigation}>{content.nav.allCommunities}</Link>
                     <Link to="/comunidades/edgar-pons" onClick={closeNavigation}>{content.nav.edgarLive}</Link>
+                    <Link to="/comunidades/fnlb" onClick={closeNavigation}>{content.nav.fnlbLive}</Link>
+                    <Link to="/comunidades/valorant" onClick={closeNavigation}>{content.nav.valorantLive}</Link>
+                    <Link to="/comunidades/nate" onClick={closeNavigation}>{content.nav.nateLive}</Link>
+                    <Link to="/comunidades/gw2" onClick={closeNavigation}>{content.nav.gw2Live}</Link>
                   </m.div>
                 )}
               </AnimatePresence>
@@ -281,6 +302,7 @@ export function SiteHeader({ content, locale, onLocaleChange }: SiteHeaderProps)
                   <m.div className="mobile-menu__submenu" initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }}>
                     <Link to="/proyectos/fnlb" onClick={closeNavigation}>{content.nav.fnlb}</Link>
                     <Link to="/proyectos/kernelos" onClick={closeNavigation}>{content.nav.kernelos}</Link>
+                    <Link to="/#github" onClick={closeNavigation}>GitHub / Open Source</Link>
                   </m.div>
                 )}
               </AnimatePresence>

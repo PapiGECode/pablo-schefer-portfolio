@@ -1,0 +1,11 @@
+.git
+.git_disabled*
+.telemetry
+.vercel
+.env*
+*.log
+AUTH_SETUP.md
+GAME_ASSETS.md
+SECURITY.md
+TELEMETRY_SETUP.md
+supabase

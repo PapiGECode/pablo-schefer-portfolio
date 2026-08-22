@@ -49,19 +49,6 @@ export function EdgarPonsPage({ content, locale }: { content: SiteCopy; locale: 
         <DiscordLivePanel content={content} locale={locale} />
       </section>
 
-      <section className="edgar-integration">
-        <m.div className="edgar-integration__copy" {...reveal}>
-          <p className="eyebrow">{page.aboutEyebrow}</p>
-          <h2>{page.aboutTitle}</h2>
-          <p>{page.aboutBody}</p>
-        </m.div>
-        <div className="edgar-integration__diagram" aria-hidden="true">
-          <span>Discord public widget</span><i />
-          <span>Same-origin API</span><i />
-          <span>Portfolio UI</span>
-        </div>
-      </section>
-
       <ContactSection content={content} />
     </>
   )

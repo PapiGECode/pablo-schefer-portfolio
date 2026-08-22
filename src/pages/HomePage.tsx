@@ -1,16 +1,19 @@
 import { useReducedMotion } from 'motion/react'
 import * as m from 'motion/react-m'
 import { ArrowDown, ArrowUpRight } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import type { Locale, SiteCopy } from '../content'
 import { communities } from '../data/communities'
 import { CommunityCard } from '../components/CommunityCard'
 import { CommunityChat } from '../components/CommunityChat'
 import { ContactSection } from '../components/ContactSection'
+import { GitHubShowcase } from '../components/GitHubShowcase'
 import { MagneticLink } from '../components/MagneticLink'
 import { Monogram } from '../components/Monogram'
 import { ReviewsSection } from '../components/ReviewsSection'
+import { setDockChatOpen } from '../hooks/useDockPosition'
+import type { CommunityChatNotification } from '../hooks/useCommunityNotifications'
 
 const signalItems = [
   'DSC / 01',
@@ -18,18 +21,34 @@ const signalItems = [
   'FNLB / 03',
   'KOS / 04',
   'EDGAR / LIVE',
-  'GW2 / 100K',
+  'NATE / LIVE',
+  'TIAGO / MOD',
   'GAMES / 20',
-  'DREAM / 5090',
+  'RTX / 5080',
   'RYZEN / X3D',
   'SPOTIFY / PUBLIC',
 ]
 
 export function HomePage({ content, locale }: { content: SiteCopy; locale: Locale }) {
   const reduceMotion = useReducedMotion()
-  const [chatOpen, setChatOpen] = useState(false)
+  const [chatOpen, setChatOpen] = useState(() => new URLSearchParams(window.location.search).get('chat') === '1')
+  const [incomingMessage, setIncomingMessage] = useState<CommunityChatNotification | null>(null)
+  useEffect(() => {
+    setDockChatOpen(chatOpen)
+    return () => setDockChatOpen(false)
+  }, [chatOpen])
+  useEffect(() => {
+    const handleIncoming = (event: Event) => {
+      const message = (event as CustomEvent<CommunityChatNotification>).detail
+      setIncomingMessage(message)
+      const timer = window.setTimeout(() => setIncomingMessage(null), 8_000)
+      return () => window.clearTimeout(timer)
+    }
+    window.addEventListener('community-chat:new-message', handleIncoming)
+    return () => window.removeEventListener('community-chat:new-message', handleIncoming)
+  }, [])
   const home = content.home
-  const featuredCommunities = communities.filter((community) => ['fnlb', 'nate', 'edgar', 'gw2'].includes(community.id))
+  const featuredCommunities = communities.filter((community) => ['fnlb', 'nate', 'edgar', 'tiago'].includes(community.id))
   const reveal = {
     initial: reduceMotion ? { opacity: 1 } : { opacity: 0, y: 32 },
     whileInView: { opacity: 1, y: 0 },
@@ -39,7 +58,7 @@ export function HomePage({ content, locale }: { content: SiteCopy; locale: Local
 
   return (
     <>
-      <section className="hero" id="top">
+      <section className={`hero${chatOpen ? ' hero--chat-open' : ''}`} id="top">
         <div className="hero__status">
           <span className="status-dot" aria-hidden="true" />
           {home.availability}
@@ -78,7 +97,7 @@ export function HomePage({ content, locale }: { content: SiteCopy; locale: Local
               <div className="orbit-copy">{home.orbitLabel}</div>
               <div className="visual-coordinates">SPAIN / UTC+02</div>
             </m.div>
-            <CommunityChat locale={locale} mode="widget" onOpen={() => setChatOpen(true)} />
+            <CommunityChat locale={locale} mode="widget" incomingMessage={incomingMessage} onOpen={() => setChatOpen(true)} />
           </div>
         </div>
 
@@ -198,6 +217,8 @@ export function HomePage({ content, locale }: { content: SiteCopy; locale: Local
           })}
         </div>
       </section>
+
+      <GitHubShowcase locale={locale} />
 
       <section className="bridge-statement" aria-label={home.bridgeLead}>
         <m.p {...reveal}>

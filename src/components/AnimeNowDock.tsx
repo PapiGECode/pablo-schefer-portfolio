@@ -45,7 +45,7 @@ export function AnimeNowDock({ locale }: { locale: Locale }) {
   const [metadata, setMetadata] = useState<ResolvedAnimeMetadata | null>(null)
   const [visible, setVisible] = useState(true)
   const activity = useMemo(() => activities.find(isAnimeActivity) ?? null, [activities])
-  const { bindDock, corner, dragHandlers, isDragging, style } = useDockPosition('pablo-portfolio-anime-dock-position', 'bottom-left', 'anime', Boolean(activity))
+  const { bindDock, corner, dragHandlers, isDragging, style } = useDockPosition('pablo-portfolio-anime-dock-position', 'top-right', 'anime', Boolean(activity))
   const title = useMemo(() => activity ? cleanTitle(activity.details) || cleanTitle(activity.assets?.large_text) || cleanTitle(activity.state) || activity.name : '', [activity])
   const image = activity ? resolveImage(activity) : undefined
 

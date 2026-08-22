@@ -2,10 +2,17 @@ import { apiSecurityHeaders, enforceRateLimit, jsonResponse } from '../server/se
 
 const discordApi = 'https://discord.com/api/v10'
 const edgarGuildId = '822550944608026645'
+const fnlbGuildId = '1106879710744543303'
+const valorantGuildId = '1084367607982993428'
+const nateGuildId = '1044520223648256011'
+// Discord's public widget for Gatitos 2 / GW2 is exposed under this guild id.
+// The previously used id returns 403, while this endpoint is public and capped
+// by Discord to a manageable member/channel snapshot.
+const gw2GuildId = '1196972070253383742'
 const snapshotRefreshSeconds = 15
 const discordHeaders = {
   Accept: 'application/json',
-  'User-Agent': 'PabloScheferPortfolio/1.0 (+https://pablo-schefer.vercel.app)',
+  'User-Agent': 'PabloScheferPortfolio/1.0 (+https://pabloschefer.vercel.app)',
 }
 
 type JsonRecord = Record<string, unknown>
@@ -43,23 +50,80 @@ function errorResponse() {
   return jsonResponse({ error: 'discord_unavailable' }, 503)
 }
 
+type GuildConfig = {
+  id: string
+  name: string
+  fallback?: {
+    membersApprox: number | null
+    onlineApprox: number | null
+  }
+}
+
+function fallbackResponse(guild: GuildConfig) {
+  if (!guild.fallback) return errorResponse()
+
+  return Response.json(
+    {
+      server: {
+        id: guild.id,
+        name: guild.name,
+        membersApprox: guild.fallback.membersApprox,
+        onlineApprox: guild.fallback.onlineApprox,
+        inviteUrl: null,
+      },
+      voice: {
+        available: false,
+        visibleMemberCount: 0,
+        channels: [],
+      },
+      source: {
+        mode: 'static_fallback',
+        upstreamCacheSeconds: 300,
+        effectiveRefreshSeconds: 300,
+      },
+      updatedAt: new Date().toISOString(),
+    },
+    {
+      headers: {
+        ...apiSecurityHeaders,
+        'Cache-Control': 'public, max-age=0, s-maxage=300, stale-while-revalidate=600',
+        'Vercel-CDN-Cache-Control': 'max-age=300, stale-while-revalidate=600',
+      },
+    },
+  )
+}
+
 export async function GET(request: Request) {
   const limited = enforceRateLimit(request, { scope: 'edgar-community', limit: 60, windowMs: 60_000 })
   if (limited) return limited
+
+  const guildParam = new URL(request.url).searchParams.get('guild')
+  const guildConfig: GuildConfig = guildParam === 'fnlb'
+    ? { id: fnlbGuildId, name: 'FNLB' }
+    : guildParam === 'valorant'
+      ? { id: valorantGuildId, name: 'VALORANT ESP', fallback: { membersApprox: 98_000, onlineApprox: null } }
+      : guildParam === 'nate'
+        ? { id: nateGuildId, name: 'Nate Gentile', fallback: { membersApprox: 1_612, onlineApprox: 207 } }
+        : guildParam === 'gw2'
+          ? { id: gw2GuildId, name: 'GW2' }
+          : { id: edgarGuildId, name: 'Edgar Pons' }
+
   try {
+    const guildId = guildConfig.id
+    const defaultName = guildConfig.name
     // Discord gives the stable widget URL a five-minute CDN lifetime. A shared,
     // time-bucketed key asks for one fresh public snapshot per interval without
     // turning every visitor into a separate upstream request.
     const snapshotWindow = Math.floor(Date.now() / (snapshotRefreshSeconds * 1_000))
-    const widgetResponse = await fetch(`${discordApi}/guilds/${edgarGuildId}/widget.json?snapshot=${snapshotWindow}`, {
+    const widgetResponse = await fetch(`${discordApi}/guilds/${guildId}/widget.json?snapshot=${snapshotWindow}`, {
       headers: discordHeaders,
       cache: 'no-store',
       signal: AbortSignal.timeout(5_000),
     })
-    if (!widgetResponse.ok) return errorResponse()
+    if (!widgetResponse.ok) return fallbackResponse(guildConfig)
 
     const widget: unknown = await widgetResponse.json()
-    if (!isRecord(widget) || stringValue(widget.id) !== edgarGuildId) return errorResponse()
+    if (!isRecord(widget) || stringValue(widget.id) !== guildId) return errorResponse()
 
     const inviteUrl = typeof widget.instant_invite === 'string' ? widget.instant_invite : null
     let invite: JsonRecord | null = null
@@ -116,8 +180,8 @@ export async function GET(request: Request) {
     return Response.json(
       {
         server: {
-          id: edgarGuildId,
-          name: safeText(inviteGuild?.name ?? widget.name, 100, 'Edgar Pons'),
+          id: guildId,
+          name: safeText(inviteGuild?.name ?? widget.name, 100, defaultName),
           membersApprox,
           onlineApprox: onlineFromInvite ?? onlineFromWidget,
           inviteUrl,
@@ -143,6 +207,6 @@ export async function GET(request: Request) {
       },
     )
   } catch {
-    return errorResponse()
+    return fallbackResponse(guildConfig)
   }
 }

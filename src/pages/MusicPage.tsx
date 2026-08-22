@@ -1,6 +1,7 @@
-import { useReducedMotion } from 'motion/react'
+import { AnimatePresence, useReducedMotion } from 'motion/react'
 import * as m from 'motion/react-m'
-import { Activity, ArrowDown, ArrowUpRight, Disc3, Music2, Radio, ShieldCheck, Wifi } from 'lucide-react'
+import { Activity, ArrowDown, ArrowUpRight, Disc3, Heart, Music2, Radio, ShieldCheck, Wifi, X } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import type { Locale, SiteCopy } from '../content'
 import { ContactSection } from '../components/ContactSection'
 import { SpotifyEmbed } from '../components/SpotifyEmbed'
@@ -11,12 +12,13 @@ export function MusicPage({ content, locale }: { content: SiteCopy; locale: Loca
   const reduceMotion = useReducedMotion()
   const { phase, socketLive, track } = useLanyardPresence()
   const progress = useSpotifyProgress(track)
+  const [favoriteOpen, setFavoriteOpen] = useState(false)
 
   const labels = locale === 'es' ? {
     eyebrow: 'Spotify · Presencia · En vivo',
     eyebrowReady: 'Spotify · Presencia · Preparada',
     title: 'Lo que suena\nahora mismo.',
-    intro: 'Una página preparada para reflejar mi reproducción pública de Spotify en tiempo real a través de mi presencia de Discord.',
+    intro: 'Si estoy escuchando Spotify, aquí aparece la canción, el álbum y el progreso en directo.',
     jump: 'Abrir reproductor',
     now: 'Ahora escuchando',
     live: 'Sincronización WebSocket',
@@ -25,20 +27,20 @@ export function MusicPage({ content, locale }: { content: SiteCopy; locale: Loca
     readySignal: 'READY SIGNAL',
     connecting: 'Conectando con la presencia pública…',
     waitingTitle: 'Esperando la confirmación de Lanyard.',
-    waitingBody: 'Ya me he unido a la comunidad, pero Lanyard todavía no reconoce este ID público. La web comprueba el estado cada 15 segundos y se activará sola en cuanto la cuenta quede monitorizada.',
+    waitingBody: 'La conexión está esperando la actividad pública de mi perfil de Discord.',
     activate: 'Ver comunidad de Lanyard',
-    privacy: 'Los visitantes no tienen que registrarse. La integración solo lee mi presencia pública y nunca accede a mensajes ni credenciales.',
+    privacy: 'Solo se muestra la canción que aparece públicamente en mi perfil.',
     idleTitle: 'Nada público sonando ahora.',
     idleBody: 'La conexión está activa. Cuando Spotify aparezca en mi perfil de Discord, la canción se mostrará aquí automáticamente.',
     errorTitle: 'No se ha podido abrir la conexión.',
-    errorBody: 'La página seguirá reintentando en segundo plano. La integración no bloquea el resto del portfolio.',
+    errorBody: 'Volverá a conectarse automáticamente en unos segundos.',
     album: 'Álbum',
     openSpotify: 'Abrir en Spotify',
     playerTitle: 'Reproductor oficial de Spotify',
     playerNote: 'Pulsa play en el reproductor oficial. Spotify gestiona el audio; el volumen se ajusta desde el dispositivo o el navegador.',
-    sourceEyebrow: 'Cómo funciona',
-    sourceTitle: 'En vivo, privado por diseño.',
-    sourceBody: 'La interfaz se suscribe únicamente a mi presencia pública. No almacena historial ni controla mi cuenta; el audio se ofrece mediante el reproductor oficial de Spotify. Si la actividad deja de ser visible en Discord, la tarjeta vuelve al reposo.',
+    sourceEyebrow: 'Mi Spotify',
+    sourceTitle: 'La canción cambia conmigo.',
+    sourceBody: 'Cuando empiezo o paro una canción en Spotify, esta página refleja el cambio. El reproductor oficial permite escucharla directamente.',
     signals: ['WebSocket en vivo', 'Sin historial', 'Solo actividad pública'],
     favoriteEyebrow: 'Favorito personal',
     favoriteTitle: 'Bad Bunny',
@@ -48,29 +50,29 @@ export function MusicPage({ content, locale }: { content: SiteCopy; locale: Loca
     eyebrow: 'Spotify · Presence · Live',
     eyebrowReady: 'Spotify · Presence · Ready',
     title: 'What is playing\nright now.',
-    intro: 'A page ready to mirror my public Spotify playback in real time through my Discord presence.',
+    intro: 'If Spotify is active on my Discord profile, the track, album and progress appear here live.',
     jump: 'Open player',
     now: 'Now listening',
     live: 'WebSocket sync',
     polling: '15 s sync',
-    ready: 'Integration ready',
+    ready: 'Presence connected',
     readySignal: 'READY SIGNAL',
     connecting: 'Connecting to public presence…',
     waitingTitle: 'Waiting for Lanyard confirmation.',
-    waitingBody: 'I have joined the community, but Lanyard does not recognise this public ID yet. The site checks every 15 seconds and will activate automatically once the account is monitored.',
+    waitingBody: 'Waiting for Spotify activity to become public on my Discord profile.',
     activate: 'View the Lanyard community',
-    privacy: 'Visitors never need to register. The integration only reads my public presence and never accesses messages or credentials.',
+    privacy: 'Only the song shown publicly on my profile is displayed.',
     idleTitle: 'Nothing public is playing now.',
     idleBody: 'The connection is active. When Spotify appears on my Discord profile, the track will show here automatically.',
     errorTitle: 'The live connection could not be opened.',
-    errorBody: 'The page will keep retrying in the background. The integration never blocks the rest of the portfolio.',
+    errorBody: 'It will reconnect automatically in a few seconds.',
     album: 'Album',
     openSpotify: 'Open in Spotify',
     playerTitle: 'Official Spotify player',
     playerNote: 'Press play in the official player. Spotify manages playback; volume is adjusted through the device or browser.',
-    sourceEyebrow: 'How it works',
-    sourceTitle: 'Live, private by design.',
-    sourceBody: 'The interface subscribes only to my public presence. It stores no history and cannot control my account; audio is provided through Spotify’s official player. If activity is no longer visible on Discord, the card returns to idle.',
+    sourceEyebrow: 'My Spotify',
+    sourceTitle: 'The track changes with me.',
+    sourceBody: 'When I start or stop a track on Spotify, this page reflects it. The official player lets visitors listen directly.',
     signals: ['Live WebSocket', 'No history', 'Public activity only'],
     favoriteEyebrow: 'Personal favourite',
     favoriteTitle: 'Bad Bunny',
@@ -87,6 +89,12 @@ export function MusicPage({ content, locale }: { content: SiteCopy; locale: Loca
 
   const isLive = phase === 'ready'
   const connectionLabel = isLive ? (socketLive ? labels.live : labels.polling) : phase === 'unmonitored' ? labels.ready : labels.connecting
+
+  useEffect(() => {
+    if (!favoriteOpen) return undefined
+    const timer = window.setTimeout(() => setFavoriteOpen(false), 5_500)
+    return () => window.clearTimeout(timer)
+  }, [favoriteOpen])
 
   return (
     <div className="music-page">
@@ -105,18 +113,26 @@ export function MusicPage({ content, locale }: { content: SiteCopy; locale: Loca
         </m.div>
 
         <a className="page-hero__scroll" href="#reproductor"><ArrowDown size={15} aria-hidden="true" />{labels.jump}</a>
+        <button className="music-favorite-trigger" type="button" onClick={() => setFavoriteOpen(true)} aria-label={`${labels.favoriteEyebrow}: ${labels.favoriteTitle}`}>
+          <img src="/media/music/bad-bunny-new.jpg" alt="" width="723" height="900" />
+          <span><Heart size={13} fill="currentColor" aria-hidden="true" />{labels.favoriteTitle}</span>
+        </button>
       </section>
 
-      <m.aside className="music-favorite" {...reveal}>
-        <img src="/media/music/bad-bunny.jpg" alt="Bad Bunny" width="720" height="1088" loading="lazy" decoding="async" />
-        <div>
-          <p className="eyebrow">{labels.favoriteEyebrow}</p>
-          <h2>{labels.favoriteTitle}</h2>
-          <p>{labels.favoriteBody}</p>
-          <a href="https://open.spotify.com/artist/4q3ewBCX7sLwd24euuV69X" target="_blank" rel="noreferrer">{labels.favoriteLink}<ArrowUpRight size={16} aria-hidden="true" /></a>
-          <small>Foto: Glenn Francis · CC BY-SA 4.0</small>
-        </div>
-      </m.aside>
+      <AnimatePresence>
+        {favoriteOpen && (
+          <m.aside className="music-favorite-popover" initial={{ opacity: 0, y: -14, scale: 0.92 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -8, scale: 0.96 }} transition={{ duration: reduceMotion ? 0 : 0.28, ease: [0.16, 1, 0.3, 1] }}>
+            <img src="/media/music/bad-bunny-new.jpg" alt="Bad Bunny" width="723" height="900" />
+            <div>
+              <p className="eyebrow">{labels.favoriteEyebrow}</p>
+              <h2>{labels.favoriteTitle}</h2>
+              <p>{labels.favoriteBody}</p>
+              <a href="https://open.spotify.com/artist/4q3ewBCX7sLwd24euuV69X" target="_blank" rel="noreferrer">{labels.favoriteLink}<ArrowUpRight size={16} aria-hidden="true" /></a>
+            </div>
+            <button type="button" onClick={() => setFavoriteOpen(false)} aria-label={locale === 'es' ? 'Cerrar' : 'Close'}><X size={15} /></button>
+          </m.aside>
+        )}
+      </AnimatePresence>
 
       <section className="section music-live-section" id="reproductor">
         <m.div className="section-heading section-heading--split" {...reveal}>

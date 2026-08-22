@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; background: #0f1011; }
+a { color: #81d8cc; text-decoration: none; }
+a:hover { color: #f0a24a; }
+input, textarea, button { font-family: inherit; }
+::-webkit-scrollbar { width: 0; height: 0; }
+@keyframes psRing { 0% { transform: scale(.6); opacity: .6 } 100% { transform: scale(2.4); opacity: 0 } }
+@keyframes psMarquee { 0% { transform: translateX(0) } 100% { transform: translateX(-50%) } }
+@keyframes psSpin { to { transform: rotate(360deg) } }
+@keyframes psWave { 0%, 100% { height: 18% } 50% { height: 100% } }
+@keyframes psBreath { 0%, 100% { transform: scaleX(.88) } 50% { transform: scaleX(1) } }
+@keyframes psRise { from { opacity: 0; transform: translateY(16px) } to { opacity: 1; transform: none } }
+@keyframes psShine { 0% { transform: translateX(-140%) } 100% { transform: translateX(260%) } }
+@keyframes psType { 0%, 65%, 100% { opacity: .2; transform: translateY(0) } 32% { opacity: 1; transform: translateY(-3px) } }
+@keyframes psFloat { 0%, 100% { transform: translateY(0) } 50% { transform: translateY(-7px) } }
+@keyframes psDrift { 0%, 100% { transform: translate3d(0,0,0) } 50% { transform: translate3d(-14px,10px,0) } }
+</style>
+</helmet>
+<div style="width: 100%; height: 100%; position: relative; overflow: hidden; display: flex; flex-direction: column; background: #0f1011; color: #e9e6df; font-family: Manrope, system-ui, sans-serif; -webkit-font-smoothing: antialiased;">
+
+<div style="position: absolute; inset: 0; pointer-events: none; background: radial-gradient(120% 55% at 88% -4%, rgba(240,162,74,.15), transparent 62%), radial-gradient(95% 45% at 4% 102%, rgba(129,216,204,.10), transparent 66%); animation: psDrift 22s ease-in-out infinite;"></div>
+
+<sc-if value="{{ isIos }}" hint-placeholder-val="{{ true }}">
+<div style="position: relative; z-index: 40; flex: none; display: flex; align-items: center; justify-content: space-between; height: 62px; padding: 21px 26px 19px; background: #0f1011;">
+  <span style="font: 600 17px/22px -apple-system, system-ui, sans-serif; letter-spacing: -.2px; color: #fff;">9:41</span>
+  <span style="position: absolute; left: 50%; top: 11px; transform: translateX(-50%); width: 126px; height: 37px; border-radius: 24px; background: #000;"></span>
+  <span style="display: flex; align-items: center; gap: 7px;">
+    <svg width="19" height="12" viewBox="0 0 19 12" fill="#fff"><rect x="0" y="7.5" width="3.2" height="4.5" rx=".7"></rect><rect x="4.9" y="5.5" width="3.2" height="6.5" rx=".7"></rect><rect x="9.8" y="3" width="3.2" height="9" rx=".7"></rect><rect x="14.7" y="0" width="3.2" height="12" rx=".7"></rect></svg>
+    <svg width="17" height="12" viewBox="0 0 17 12" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round"><path d="M1.6 4.2a9.6 9.6 0 0 1 13.8 0"></path><path d="M4.4 7.1a6 6 0 0 1 8.2 0"></path><circle cx="8.5" cy="10.3" r="1.2" fill="#fff" stroke="none"></circle></svg>
+    <svg width="27" height="13" viewBox="0 0 27 13" fill="none"><rect x=".5" y=".5" width="23" height="12" rx="3.6" stroke="rgba(255,255,255,.42)"></rect><rect x="2" y="2" width="17" height="9" rx="2.4" fill="#fff"></rect><path d="M25.2 4.6v3.8a2.1 2.1 0 0 0 0-3.8z" fill="rgba(255,255,255,.42)"></path></svg>
+  </span>
+</div>
+</sc-if>
+<sc-if value="{{ isAndroid }}">
+<div style="position: relative; z-index: 40; flex: none; display: flex; align-items: center; justify-content: space-between; height: 40px; padding: 0 18px; background: #131415;">
+  <span style="font: 400 14px/20px Roboto, system-ui, sans-serif; letter-spacing: .25px; color: #e9e6df;">9:30</span>
+  <span style="position: absolute; left: 50%; top: 8px; transform: translateX(-50%); width: 24px; height: 24px; border-radius: 50%; background: #000;"></span>
+  <span style="display: flex; align-items: center; gap: 7px;">
+    <svg width="17" height="11" viewBox="0 0 17 11" fill="#e9e6df"><path d="M16 0v11h-3.4V0zM11.4 3v8H8V3zM6.8 5.6v5.4H3.4V5.6zM2.2 8v3H0V8z"></path></svg>
+    <svg width="16" height="11" viewBox="0 0 16 11" fill="none" stroke="#e9e6df" stroke-width="1.5" stroke-linecap="round"><path d="M1.4 3.6a9.2 9.2 0 0 1 13.2 0"></path><path d="M4.2 6.5a5.7 5.7 0 0 1 7.8 0"></path><circle cx="8.1" cy="9.5" r="1.1" fill="#e9e6df" stroke="none"></circle></svg>
+    <svg width="12" height="13" viewBox="0 0 12 13" fill="none"><rect x=".6" y="2" width="10.8" height="10.4" rx="2.4" fill="#e9e6df"></rect><rect x="4" y="0" width="4" height="2.4" rx="1" fill="#e9e6df"></rect></svg>
+  </span>
+</div>
+</sc-if>
+
+<sc-if value="{{ isIos }}" hint-placeholder-val="{{ true }}">
+<div style="position: relative; z-index: 30; flex: none; padding: 8px 20px 10px; background: linear-gradient(#0f1011 58%, rgba(15,16,17,.78)); backdrop-filter: blur(20px) saturate(150%); -webkit-backdrop-filter: blur(20px) saturate(150%);">
+  <sc-if value="{{ canBack }}">
+  <button type="button" onClick="{{ back }}" style="display: flex; align-items: center; gap: 2px; margin: 0 0 4px -6px; padding: 4px 6px; border: 0; background: none; color: #81d8cc; font: 500 15px/1 Manrope; cursor: pointer;">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14.5 6l-6 6 6 6"></path></svg>
+    <span>{{ t.back }}</span>
+  </button>
+  </sc-if>
+  <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 12px;">
+    <div style="display: flex; flex-direction: column; gap: 5px; min-width: 0;">
+      <span style="font: 700 9px/1 ui-monospace, Menlo, monospace; letter-spacing: .2em; text-transform: uppercase; color: #f0a24a;">{{ eyebrow }}</span>
+      <h1 style="margin: 0; font: 800 31px/1.02 Manrope; letter-spacing: -.035em; color: #e9e6df;">{{ title }}</h1>
+    </div>
+    <div style="display: flex; align-items: center; gap: 8px; flex: none; padding-bottom: 3px;">
+      <button type="button" onClick="{{ toggleLang }}" style="height: 30px; padding: 0 11px; border: .5px solid rgba(255,255,255,.16); border-radius: 100px; background: rgba(120,120,128,.26); backdrop-filter: blur(12px); color: #e9e6df; font: 700 10.5px/1 ui-monospace, Menlo, monospace; letter-spacing: .1em; cursor: pointer;">{{ langLabel }}</button>
+      <button type="button" onClick="{{ goProfile }}" style="width: 30px; height: 30px; padding: 0; border: .5px solid rgba(255,255,255,.2); border-radius: 50%; background: url(assets/avatar.webp) center/cover; cursor: pointer;"></button>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isAndroid }}">
+<div style="position: relative; z-index: 30; flex: none; padding: 4px 6px 6px; background: #131415;">
+  <div style="display: flex; align-items: center; gap: 4px; height: 56px;">
+    <sc-if value="{{ canBack }}">
+    <button type="button" onClick="{{ back }}" style="width: 44px; height: 44px; display: grid; place-items: center; border: 0; border-radius: 50%; background: none; color: #e9e6df; cursor: pointer;" style-hover="background: rgba(233,230,223,.08)">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M19 12H5"></path><path d="M11 6l-6 6 6 6"></path></svg>
+    </button>
+    </sc-if>
+    <span style="flex: 1; min-width: 0; padding-left: 8px; font: 500 21px/1.2 Roboto, Manrope, sans-serif; letter-spacing: 0; color: #e9e6df; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ title }}</span>
+    <button type="button" onClick="{{ toggleLang }}" style="height: 32px; padding: 0 12px; border: 1px solid rgba(233,230,223,.22); border-radius: 8px; background: none; color: #e9e6df; font: 700 11px/1 Roboto, monospace; letter-spacing: .08em; cursor: pointer;">{{ langLabel }}</button>
+    <button type="button" onClick="{{ goProfile }}" style="width: 40px; height: 40px; margin-left: 4px; padding: 0; border: 0; border-radius: 50%; background: url(assets/avatar.webp) center/cover; cursor: pointer;"></button>
+  </div>
+</div>
+</sc-if>
+
+<div style="position: relative; z-index: 10; flex: 1; min-height: 0; overflow-y: auto; overflow-x: hidden;">
+
+<sc-if value="{{ sHome }}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-direction: column; gap: 30px; padding: 6px 0 34px; animation: psRise .5s cubic-bezier(.16,1,.3,1) both;">
+
+  <div style="position: relative; padding: 0 20px;">
+    <div style="position: absolute; top: -46px; right: -34px; width: 238px; height: 300px; opacity: .34; background: url(assets/portrait-bw.webp) 58% 18%/cover; mask-image: radial-gradient(62% 56% at 62% 38%, #000 18%, transparent 74%); -webkit-mask-image: radial-gradient(62% 56% at 62% 38%, #000 18%, transparent 74%);"></div>
+    <div style="position: relative; display: flex; flex-direction: column; gap: 15px;">
+      <div style="display: flex; align-items: center; gap: 9px;">
+        <span style="position: relative; flex: none; width: 7px; height: 7px; border-radius: 50%; background: #81d8cc;"><span style="position: absolute; inset: -4px; border-radius: 50%; border: 1px solid #81d8cc; animation: psRing 2.6s ease-out infinite;"></span></span>
+        <span style="font: 500 11px/1.35 Manrope; color: #8f9695;">Construyendo entre comunidad, código y producto</span>
+      </div>
+      <span style="font: 700 9px/1 ui-monospace, Menlo, monospace; letter-spacing: .2em; color: #f0a24a;">DISCORD · VIBECODING · COLABORACIÓN</span>
+      <h2 style="margin: 0; font: 800 41px/.97 Manrope; letter-spacing: -.04em; color: #e9e6df;">Comunidades<br><span style="color: #5f6665;">con pulso.</span><br>Código<br><span style="color: #5f6665;">con intención.</span></h2>
+      <p style="margin: 0; max-width: 288px; font: 400 13.5px/1.6 Manrope; color: #8f9695;">Soy Pablo Schefer — PapiGEGamer en Discord. Modero comunidades tecnológicas y convierto ideas en productos digitales mediante desarrollo asistido por IA.</p>
+      <div style="display: flex; gap: 9px; padding-top: 3px;">
+        <button type="button" onClick="{{ goCommunities }}" style="height: 46px; padding: 0 19px; border: 0; border-radius: 100px; background: #f0a24a; color: #17110a; font: 700 13.5px/1 Manrope; letter-spacing: -.01em; cursor: pointer; box-shadow: 0 8px 24px rgba(240,162,74,.22);">Explorar comunidades</button>
+        <button type="button" onClick="{{ goProfile }}" style="height: 46px; padding: 0 17px; border: 1px solid rgba(233,230,223,.18); border-radius: 100px; background: rgba(233,230,223,.03); color: #e9e6df; font: 600 13.5px/1 Manrope; cursor: pointer;">Mi perfil</button>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 12px;">
+    <div style="display: flex; align-items: center; justify-content: space-between; padding: 0 20px;">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span style="width: 6px; height: 6px; border-radius: 50%; background: #f0a24a; box-shadow: 0 0 0 4px rgba(240,162,74,.14);"></span>
+        <span style="font: 700 10px/1 ui-monospace, Menlo, monospace; letter-spacing: .18em; color: #e9e6df;">AHORA MISMO</span>
+      </div>
+      <button type="button" onClick="{{ goLive }}" style="border: 0; background: none; padding: 0; color: #81d8cc; font: 600 11.5px/1 Manrope; cursor: pointer;">Ver todo</button>
+    </div>
+    <div style="display: flex; gap: 11px; overflow-x: auto; padding: 2px 20px 4px; scroll-snap-type: x mandatory;">
+      <button type="button" onClick="{{ goMusic }}" style="flex: none; width: 208px; scroll-snap-align: start; display: flex; align-items: center; gap: 11px; padding: 11px; border: 1px solid rgba(233,230,223,.10); border-radius: 18px; background: linear-gradient(140deg, rgba(129,216,204,.10), rgba(25,27,28,.9)); text-align: left; color: inherit; cursor: pointer;">
+        <span style="position: relative; flex: none; width: 46px; height: 46px; border-radius: 12px; background: url(assets/music/bad-bunny.jpg) center/cover; overflow: hidden;"><span style="position: absolute; inset: 0; background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,.28) 50%, transparent 70%); animation: psShine 3.4s linear infinite;"></span></span>
+        <span style="min-width: 0; display: flex; flex-direction: column; gap: 3px;">
+          <span style="display: flex; align-items: center; gap: 4px; font: 700 8.5px/1 ui-monospace, monospace; letter-spacing: .14em; color: #81d8cc;">SPOTIFY
+            <span style="display: inline-flex; align-items: flex-end; gap: 1.5px; height: 9px;"><i style="width: 2px; background: #81d8cc; animation: psWave .9s ease-in-out infinite;"></i><i style="width: 2px; background: #81d8cc; animation: psWave .9s ease-in-out .15s infinite;"></i><i style="width: 2px; background: #81d8cc; animation: psWave .9s ease-in-out .3s infinite;"></i></span>
+          </span>
+          <span style="font: 700 13px/1.2 Manrope; color: #e9e6df; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">NUEVAYoL</span>
+          <span style="font: 400 11px/1.2 Manrope; color: #8f9695;">Bad Bunny</span>
+        </span>
+      </button>
+      <button type="button" onClick="{{ goFnlbLive }}" style="flex: none; width: 190px; scroll-snap-align: start; display: flex; flex-direction: column; gap: 8px; padding: 12px 13px; border: 1px solid rgba(233,230,223,.10); border-radius: 18px; background: linear-gradient(140deg, rgba(58,111,216,.16), rgba(25,27,28,.9)); text-align: left; color: inherit; cursor: pointer;">
+        <span style="display: flex; align-items: center; gap: 6px; font: 700 8.5px/1 ui-monospace, monospace; letter-spacing: .14em; color: #8fb4ff;"><span style="width: 5px; height: 5px; border-radius: 50%; background: #8fb4ff;"></span>DISCORD · EN VOZ</span>
+        <span style="font: 800 26px/1 Manrope; letter-spacing: -.03em; color: #e9e6df;">{{ voiceNow }}</span>
+        <span style="font: 400 10.5px/1.3 Manrope; color: #8f9695;">personas visibles en canales públicos</span>
+      </button>
+      <button type="button" onClick="{{ goGames }}" style="flex: none; width: 190px; scroll-snap-align: start; display: flex; flex-direction: column; gap: 8px; padding: 12px 13px; border: 1px solid rgba(233,230,223,.10); border-radius: 18px; background: linear-gradient(140deg, rgba(240,162,74,.13), rgba(25,27,28,.9)); text-align: left; color: inherit; cursor: pointer;">
+        <span style="display: flex; align-items: center; gap: 6px; font: 700 8.5px/1 ui-monospace, monospace; letter-spacing: .14em; color: #f0a24a;">RTX 5080 · TELEMETRÍA</span>
+        <span style="font: 800 26px/1 Manrope; letter-spacing: -.03em; color: #e9e6df;">{{ gpuTxt }}</span>
+        <span style="display: flex; align-items: center; gap: 6px; font: 400 10.5px/1.3 Manrope; color: #8f9695;">GPU · {{ tempTxt }}
+          <span style="flex: 1; height: 3px; border-radius: 2px; background: rgba(233,230,223,.12); overflow: hidden;"><i style="display: block; width: 64%; height: 100%; background: #f0a24a; transform-origin: 0 50%; animation: psBreath 2.6s ease-in-out infinite;"></i></span>
+        </span>
+      </button>
+      <button type="button" onClick="{{ goAnime }}" style="flex: none; width: 176px; scroll-snap-align: start; display: flex; flex-direction: column; gap: 8px; padding: 12px 13px; border: 1px solid rgba(233,230,223,.10); border-radius: 18px; background: linear-gradient(140deg, rgba(155,104,255,.14), rgba(25,27,28,.9)); text-align: left; color: inherit; cursor: pointer;">
+        <span style="font: 700 8.5px/1 ui-monospace, monospace; letter-spacing: .14em; color: #b79bff;">ANIME · VIENDO</span>
+        <span style="font: 700 14px/1.25 Manrope; color: #e9e6df;">Frieren</span>
+        <span style="font: 400 10.5px/1.3 Manrope; color: #8f9695;">Ep. 7 · 12:43 / 23:40</span>
+      </button>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 13px;">
+    <div style="display: flex; align-items: flex-end; justify-content: space-between; padding: 0 20px;">
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <span style="font: 700 9px/1 ui-monospace, Menlo, monospace; letter-spacing: .2em; color: #f0a24a;">02 — COMUNIDADES</span>
+        <h3 style="margin: 0; font: 700 20px/1.15 Manrope; letter-spacing: -.025em;">Donde modero hoy</h3>
+      </div>
+      <button type="button" onClick="{{ goCommunities }}" style="border: 0; background: none; padding: 0 0 3px; color: #81d8cc; font: 600 11.5px/1 Manrope; cursor: pointer;">Las 7 ↗</button>
+    </div>
+    <div style="display: flex; gap: 12px; overflow-x: auto; padding: 2px 20px 6px; scroll-snap-type: x mandatory;">
+      <sc-for list="{{ featured }}" as="c" hint-placeholder-count="4">
+      <button type="button" onClick="{{ c.open }}" style="flex: none; width: 178px; scroll-snap-align: start; display: flex; flex-direction: column; padding: 0; border: 1px solid rgba(233,230,223,.10); border-radius: 20px; background: #191b1c; overflow: hidden; text-align: left; color: inherit; cursor: pointer;">
+        <span style="position: relative; display: block; height: 96px; background-image: {{ c.coverBg }}; background-size: cover; background-position: center;">
+          <span style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(15,16,17,.1), rgba(15,16,17,.86));"></span>
+          <span style="position: absolute; left: 11px; bottom: -18px; width: 40px; height: 40px; border-radius: 12px; border: 1px solid rgba(233,230,223,.16); background-image: {{ c.logoBg }}; background-size: cover; background-position: center; background-color: #0f1011;"></span>
+          <sc-if value="{{ c.live }}">
+          <span style="position: absolute; right: 9px; top: 9px; display: flex; align-items: center; gap: 4px; padding: 3px 7px; border-radius: 100px; background: rgba(15,16,17,.72); backdrop-filter: blur(6px); font: 700 8px/1 ui-monospace, monospace; letter-spacing: .12em; color: #81d8cc;"><span style="width: 4px; height: 4px; border-radius: 50%; background: #81d8cc;"></span>LIVE</span>
+          </sc-if>
+        </span>
+        <span style="display: flex; flex-direction: column; gap: 4px; padding: 24px 12px 13px;">
+          <span style="font: 700 14px/1.2 Manrope; letter-spacing: -.02em; color: #e9e6df;">{{ c.name }}</span>
+          <span style="font: 500 10.5px/1.3 Manrope; color: #8f9695;">{{ c.role }}</span>
+          <span style="display: flex; align-items: baseline; gap: 5px; padding-top: 4px;"><b style="font: 800 17px/1 Manrope; letter-spacing: -.03em; color: #f0a24a;">{{ c.metric }}</b><span style="font: 400 9.5px/1 Manrope; color: #5f6665;">{{ c.metricLabel }}</span></span>
+        </span>
+      </button>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 13px; padding: 0 20px;">
+    <div style="display: flex; flex-direction: column; gap: 4px;">
+      <span style="font: 700 9px/1 ui-monospace, Menlo, monospace; letter-spacing: .2em; color: #f0a24a;">01 — ÁMBITOS</span>
+      <h3 style="margin: 0; font: 700 20px/1.15 Manrope; letter-spacing: -.025em;">Discord, producto y código.</h3>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <sc-for list="{{ capabilities }}" as="k" hint-placeholder-count="3">
+      <div style="position: relative; display: flex; flex-direction: column; gap: 7px; padding: 15px 16px; border: 1px solid rgba(233,230,223,.10); border-radius: 20px; background: linear-gradient(160deg, rgba(32,34,35,.9), rgba(25,27,28,.7)); overflow: hidden;">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <span style="font: 700 9.5px/1 ui-monospace, Menlo, monospace; letter-spacing: .16em; color: #5f6665;">{{ k.index }}</span>
+          <span style="width: 5px; height: 5px; border-radius: 50%; background: #f0a24a; opacity: .75;"></span>
+        </div>
+        <span style="font: 700 15.5px/1.25 Manrope; letter-spacing: -.02em; color: #e9e6df;">{{ k.title }}</span>
+        <span style="font: 400 12.5px/1.55 Manrope; color: #8f9695;">{{ k.text }}</span>
+        <span style="display: flex; flex-wrap: wrap; gap: 6px; padding-top: 4px;">
+          <sc-for list="{{ k.tags }}" as="tag" hint-placeholder-count="3">
+          <span style="padding: 4px 9px; border: 1px solid rgba(233,230,223,.12); border-radius: 100px; font: 500 10px/1 Manrope; color: #8f9695;">{{ tag }}</span>
+          </sc-for>
+        </span>
+      </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="overflow: hidden; padding: 4px 0; border-top: 1px solid rgba(233,230,223,.09); border-bottom: 1px solid rgba(233,230,223,.09);">
+    <div style="display: flex; width: max-content; animation: psMarquee 26s linear infinite;">
+      <div style="display: flex; gap: 26px; padding-right: 26px;">
+        <span style="font: 600 9.5px/22px ui-monospace, Menlo, monospace; letter-spacing: .16em; color: #5f6665;">DSC / 01</span><span style="font: 600 9.5px/22px ui-monospace, monospace; letter-spacing: .16em; color: #5f6665;">VIBE / 02</span><span style="font: 600 9.5px/22px ui-monospace, monospace; letter-spacing: .16em; color: #f0a24a;">FNLB / 03</span><span style="font: 600 9.5px/22px ui-monospace, monospace; letter-spacing: .16em; color: #5f6665;">KOS / 04</span><span style="font: 600 9.5px/22px ui-monospace, monospace; letter-spacing: .16em; color: #5f6665;">EDGAR / LIVE</span><span style="font: 600 9.5px/22px ui-monospace, monospace; letter-spacing: .16em; color: #81d8cc;">GAMES / 20</span><span style="font: 600 9.5px/22px ui-monospace, monospace; letter-spacing: .16em; color: #5f6665;">RTX / 5080</span>
+      </div>
+      <div style="display: flex; gap: 26px; padding-right: 26px;">
+        <span style="font: 600 9.5px/22px ui-monospace, monospace; letter-spacing: .16em; color: #5f6665;">DSC / 01</span><span style="font: 600 9.5px/22px ui-monospace, monospace; letter-spacing: .16em; color: #5f6665;">VIBE / 02</span><span style="font: 600 9.5px/22px ui-monospace, monospace; letter-spacing: .16em; color: #f0a24a;">FNLB / 03</span><span style="font: 600 9.5px/22px ui-monospace, monospace; letter-spacing: .16em; color: #5f6665;">KOS / 04</span><span style="font: 600 9.5px/22px ui-monospace, monospace; letter-spacing: .16em; color: #5f6665;">EDGAR / LIVE</span><span style="font: 600 9.5px/22px ui-monospace, monospace; letter-spacing: .16em; color: #81d8cc;">GAMES / 20</span><span style="font: 600 9.5px/22px ui-monospace, monospace; letter-spacing: .16em; color: #5f6665;">RTX / 5080</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 10px; padding: 0 20px;">
+    <p style="margin: 0; font: 400 12.5px/1.6 Manrope; color: #8f9695;"><b style="color: #e9e6df; font-weight: 700;">Lo que conecta todo:</b> personas, tecnología y ganas de hacer que las cosas funcionen.</p>
+    <span style="font: 500 10px/1.4 ui-monospace, Menlo, monospace; letter-spacing: .06em; color: #5f6665;">DATOS PÚBLICOS DE DISCORD · 16.07.2026</span>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ sCommunities }}">
+<div style="display: flex; flex-direction: column; gap: 16px; padding: 4px 0 34px; animation: psRise .42s cubic-bezier(.16,1,.3,1) both;">
+  <p style="margin: 0; padding: 0 20px; font: 400 13px/1.6 Manrope; color: #8f9695;">Siete experiencias públicas destacadas. Detrás de cada cifra hay personas, contexto y confianza.</p>
+
+  <sc-if value="{{ isIos }}">
+  <div style="margin: 0 20px; padding: 2px; display: flex; gap: 2px; border-radius: 100px; background: rgba(120,120,128,.24);">
+    <button type="button" onClick="{{ setActuales }}" style="flex: 1; height: 32px; border: 0; border-radius: 100px; background: {{ segA }}; color: {{ segAc }}; font: 600 12.5px/1 Manrope; cursor: pointer; transition: background .22s ease;">Actuales</button>
+    <button type="button" onClick="{{ setAnteriores }}" style="flex: 1; height: 32px; border: 0; border-radius: 100px; background: {{ segB }}; color: {{ segBc }}; font: 600 12.5px/1 Manrope; cursor: pointer; transition: background .22s ease;">Anteriores</button>
+  </div>
+  </sc-if>
+  <sc-if value="{{ isAndroid }}">
+  <div style="margin: 0 16px; display: flex;">
+    <button type="button" onClick="{{ setActuales }}" style="flex: 1; height: 40px; border: 1px solid rgba(233,230,223,.22); border-right: 0; border-radius: 100px 0 0 100px; background: {{ segA }}; color: {{ segAc }}; font: 600 13px/1 Roboto, Manrope; cursor: pointer; transition: background .2s ease;">Actuales</button>
+    <button type="button" onClick="{{ setAnteriores }}" style="flex: 1; height: 40px; border: 1px solid rgba(233,230,223,.22); border-radius: 0 100px 100px 0; background: {{ segB }}; color: {{ segBc }}; font: 600 13px/1 Roboto, Manrope; cursor: pointer; transition: background .2s ease;">Anteriores</button>
+  </div>
+  </sc-if>
+
+  <div style="display: flex; flex-direction: column; gap: 12px; padding: 0 20px;">
+    <sc-for list="{{ shownComs }}" as="c" hint-placeholder-count="4">
+    <button type="button" onClick="{{ c.open }}" style="display: flex; flex-direction: column; padding: 0; border: 1px solid rgba(233,230,223,.10); border-radius: 22px; background: #191b1c; overflow: hidden; text-align: left; color: inherit; cursor: pointer;">
+      <span style="position: relative; display: block; height: 118px; background-image: {{ c.coverBg }}; background-size: cover; background-position: center;">
+        <span style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(15,16,17,.14) 20%, rgba(15,16,17,.92));"></span>
+        <span style="position: absolute; left: 14px; bottom: 12px; display: flex; align-items: center; gap: 11px;">
+          <span style="width: 46px; height: 46px; border-radius: 13px; border: 1px solid rgba(233,230,223,.18); background-image: {{ c.logoBg }}; background-size: cover; background-position: center; background-color: #0f1011;"></span>
+          <span style="display: flex; flex-direction: column; gap: 3px;">
+            <span style="font: 700 16px/1.15 Manrope; letter-spacing: -.025em; color: #e9e6df;">{{ c.name }}</span>
+            <span style="font: 500 10px/1 ui-monospace, monospace; letter-spacing: .1em; color: {{ c.accent }};">{{ c.roleShort }}</span>
+          </span>
+        </span>
+        <sc-if value="{{ c.live }}">
+        <span style="position: absolute; right: 11px; top: 11px; display: flex; align-items: center; gap: 5px; padding: 4px 9px; border-radius: 100px; background: rgba(15,16,17,.7); backdrop-filter: blur(8px); font: 700 8.5px/1 ui-monospace, monospace; letter-spacing: .12em; color: #81d8cc;"><span style="position: relative; width: 5px; height: 5px; border-radius: 50%; background: #81d8cc;"><span style="position: absolute; inset: -3px; border-radius: 50%; border: 1px solid #81d8cc; animation: psRing 2.2s ease-out infinite;"></span></span>EN DIRECTO</span>
+        </sc-if>
+      </span>
+      <span style="display: flex; flex-direction: column; gap: 11px; padding: 13px 15px 15px;">
+        <span style="font: 400 12.5px/1.55 Manrope; color: #8f9695;">{{ c.text }}</span>
+        <span style="display: flex; align-items: center; justify-content: space-between;">
+          <span style="display: flex; align-items: baseline; gap: 6px;"><b style="font: 800 19px/1 Manrope; letter-spacing: -.03em; color: #e9e6df;">{{ c.metric }}</b><span style="font: 400 10px/1 Manrope; color: #5f6665;">{{ c.metricLabel }}</span></span>
+          <span style="display: flex; align-items: center; gap: 5px; font: 600 11.5px/1 Manrope; color: #81d8cc;">{{ c.cta }}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M7 17 17 7"></path><path d="M9 7h8v8"></path></svg>
+          </span>
+        </span>
+      </span>
+    </button>
+    </sc-for>
+  </div>
+  <p style="margin: 0; padding: 0 20px; font: 400 10.5px/1.55 Manrope; color: #5f6665;">Selección de siete experiencias públicas; no representa todos los servidores. Las cifras son aproximadas.</p>
+</div>
+</sc-if>
+
+<sc-if value="{{ sLiveCom }}">
+<div style="display: flex; flex-direction: column; gap: 18px; padding: 0 0 34px; animation: psRise .42s cubic-bezier(.16,1,.3,1) both;">
+  <div style="position: relative; height: 152px; background-image: {{ com.coverBg }}; background-size: cover; background-position: center;">
+    <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(15,16,17,.2) 10%, #0f1011 96%);"></div>
+    <div style="position: absolute; left: 20px; right: 20px; bottom: 12px; display: flex; align-items: flex-end; gap: 12px;">
+      <div style="width: 56px; height: 56px; border-radius: 16px; border: 1px solid rgba(233,230,223,.2); background-image: {{ com.logoBg }}; background-size: cover; background-position: center; background-color: #0f1011;"></div>
+      <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px;">
+        <span style="font: 700 19px/1.1 Manrope; letter-spacing: -.03em;">{{ com.full }}</span>
+        <span style="font: 500 10.5px/1 ui-monospace, monospace; letter-spacing: .1em; color: {{ com.accent }};">{{ com.roleShort }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; padding: 0 20px;">
+    <div style="display: flex; flex-direction: column; gap: 5px; padding: 13px 12px; border: 1px solid rgba(233,230,223,.10); border-radius: 18px; background: #191b1c;">
+      <span style="font: 800 19px/1 Manrope; letter-spacing: -.03em;">{{ com.members }}</span>
+      <span style="font: 400 9.5px/1.25 Manrope; color: #5f6665;">miembros aprox.</span>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 5px; padding: 13px 12px; border: 1px solid rgba(233,230,223,.10); border-radius: 18px; background: #191b1c;">
+      <span style="font: 800 19px/1 Manrope; letter-spacing: -.03em; color: #81d8cc;">{{ com.online }}</span>
+      <span style="font: 400 9.5px/1.25 Manrope; color: #5f6665;">en línea aprox.</span>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 5px; padding: 13px 12px; border: 1px solid rgba(233,230,223,.10); border-radius: 18px; background: linear-gradient(150deg, rgba(240,162,74,.14), #191b1c);">
+      <span style="font: 800 19px/1 Manrope; letter-spacing: -.03em; color: #f0a24a;">{{ voiceNow }}</span>
+      <span style="font: 400 9.5px/1.25 Manrope; color: #5f6665;">en voz ahora</span>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 11px; padding: 0 20px;">
+    <div style="display: flex; align-items: center; justify-content: space-between;">
+      <span style="font: 700 9.5px/1 ui-monospace, Menlo, monospace; letter-spacing: .18em; color: #f0a24a;">CANALES DE VOZ VISIBLES</span>
+      <button type="button" onClick="{{ refresh }}" style="display: flex; align-items: center; gap: 6px; padding: 6px 11px 6px 9px; border: 1px solid rgba(233,230,223,.14); border-radius: 100px; background: rgba(233,230,223,.03); color: #8f9695; font: 600 10.5px/1 Manrope; cursor: pointer;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><path d="M20.5 12a8.5 8.5 0 1 1-2.6-6.1"></path><path d="M20.5 4v4.2h-4.2"></path></svg>
+        <span>hace {{ since }} s</span>
+      </button>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <sc-for list="{{ channels }}" as="ch" hint-placeholder-count="4">
+      <div style="display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 1px solid rgba(233,230,223,.09); border-radius: 18px; background: #191b1c;">
+        <span style="flex: none; display: inline-flex; align-items: flex-end; gap: 2px; width: 18px; height: 16px;">
+          <i style="flex: 1; background: #81d8cc; border-radius: 1px; animation: psWave 1.1s ease-in-out infinite;"></i>
+          <i style="flex: 1; background: #81d8cc; border-radius: 1px; animation: psWave 1.1s ease-in-out .2s infinite;"></i>
+          <i style="flex: 1; background: #81d8cc; border-radius: 1px; animation: psWave 1.1s ease-in-out .4s infinite;"></i>
+        </span>
+        <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px;">
+          <span style="font: 600 13.5px/1.2 Manrope; color: #e9e6df;">{{ ch.name }}</span>
+          <span style="font: 400 10.5px/1.2 Manrope; color: #5f6665; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ ch.users }}</span>
+        </span>
+        <span style="flex: none; padding: 4px 9px; border-radius: 100px; background: rgba(129,216,204,.12); font: 700 10px/1 ui-monospace, monospace; color: #81d8cc;">{{ ch.count }}</span>
+      </div>
+      </sc-for>
+    </div>
+    <p style="margin: 0; font: 400 10.5px/1.55 Manrope; color: #5f6665;">Discord limita el widget a canales visibles para @everyone y a 100 miembros públicos. “En voz” son personas visibles, no un censo del servidor.</p>
+  </div>
+
+  <div style="padding: 0 20px;">
+    <a href="https://discord.com" target="_blank" rel="noopener" style="display: flex; align-items: center; justify-content: center; height: 50px; border-radius: 100px; background: #f0a24a; color: #17110a; font: 700 14px/1 Manrope; box-shadow: 0 10px 28px rgba(240,162,74,.2);">Entrar al Discord</a>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ sLive }}">
+<div style="display: flex; flex-direction: column; gap: 16px; padding: 6px 20px 34px; animation: psRise .42s cubic-bezier(.16,1,.3,1) both;">
+  <p style="margin: 0; font: 400 13px/1.6 Manrope; color: #8f9695;">Presencia pública en tiempo real: Discord, Spotify y el estado del PC. Nada privado, nada inventado.</p>
+
+  <button type="button" onClick="{{ goMusic }}" style="display: flex; gap: 14px; padding: 14px; border: 1px solid rgba(129,216,204,.18); border-radius: 22px; background: linear-gradient(140deg, rgba(129,216,204,.12), #191b1c 70%); text-align: left; color: inherit; cursor: pointer;">
+    <span style="position: relative; flex: none; width: 84px; height: 84px; border-radius: 16px; background: url(assets/music/bad-bunny.jpg) center/cover; overflow: hidden; animation: psFloat 5s ease-in-out infinite;"><span style="position: absolute; inset: 0; background: linear-gradient(105deg, transparent 32%, rgba(255,255,255,.26) 50%, transparent 68%); animation: psShine 3.6s linear infinite;"></span></span>
+    <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px;">
+      <span style="display: flex; align-items: center; gap: 6px; font: 700 8.5px/1 ui-monospace, monospace; letter-spacing: .16em; color: #81d8cc;">SPOTIFY · SONANDO
+        <span style="display: inline-flex; align-items: flex-end; gap: 1.5px; height: 10px;"><i style="width: 2px; background: #81d8cc; animation: psWave .9s ease-in-out infinite;"></i><i style="width: 2px; background: #81d8cc; animation: psWave .9s ease-in-out .18s infinite;"></i><i style="width: 2px; background: #81d8cc; animation: psWave .9s ease-in-out .36s infinite;"></i><i style="width: 2px; background: #81d8cc; animation: psWave .9s ease-in-out .54s infinite;"></i></span>
+      </span>
+      <span style="font: 700 17px/1.15 Manrope; letter-spacing: -.025em;">NUEVAYoL</span>
+      <span style="font: 400 12px/1.2 Manrope; color: #8f9695;">Bad Bunny · DtMF</span>
+      <span style="display: block; height: 3px; margin-top: 4px; border-radius: 2px; background: rgba(233,230,223,.12); overflow: hidden;"><i style="display: block; height: 100%; width: {{ progPct }}; background: linear-gradient(90deg, #81d8cc, #f0a24a); transition: width 1s linear;"></i></span>
+      <span style="display: flex; justify-content: space-between; font: 500 9.5px/1 ui-monospace, monospace; color: #5f6665;"><i style="font-style: normal;">{{ elapsed }}</i><i style="font-style: normal;">3:04</i></span>
+    </span>
+  </button>
+
+  <div style="display: flex; flex-direction: column; gap: 12px; padding: 15px 16px; border: 1px solid rgba(233,230,223,.10); border-radius: 22px; background: #191b1c;">
+    <div style="display: flex; align-items: center; justify-content: space-between;">
+      <span style="font: 700 9.5px/1 ui-monospace, Menlo, monospace; letter-spacing: .18em; color: #f0a24a;">TELEMETRÍA DEL PC</span>
+      <span style="display: flex; align-items: center; gap: 5px; font: 500 10px/1 Manrope; color: #5f6665;"><span style="width: 5px; height: 5px; border-radius: 50%; background: #81d8cc;"></span>agente local</span>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 11px;">
+      <div style="display: flex; align-items: center; gap: 11px;">
+        <span style="flex: none; width: 86px; white-space: nowrap; font: 600 11px/1 Manrope; color: #8f9695;">CPU 9800X3D</span>
+        <span style="flex: 1; height: 6px; border-radius: 3px; background: rgba(233,230,223,.10); overflow: hidden;"><i style="display: block; height: 100%; width: {{ cpuPct }}; background: linear-gradient(90deg, #81d8cc, #b6f0e5); transition: width .9s cubic-bezier(.16,1,.3,1);"></i></span>
+        <span style="flex: none; width: 56px; white-space: nowrap; text-align: right; font: 700 12px/1 ui-monospace, monospace; color: #e9e6df;">{{ cpuTxt }}</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 11px;">
+        <span style="flex: none; width: 86px; white-space: nowrap; font: 600 11px/1 Manrope; color: #8f9695;">GPU RTX 5080</span>
+        <span style="flex: 1; height: 6px; border-radius: 3px; background: rgba(233,230,223,.10); overflow: hidden;"><i style="display: block; height: 100%; width: {{ gpuPct }}; background: linear-gradient(90deg, #f0a24a, #ffd9a8); transition: width .9s cubic-bezier(.16,1,.3,1);"></i></span>
+        <span style="flex: none; width: 56px; white-space: nowrap; text-align: right; font: 700 12px/1 ui-monospace, monospace; color: #e9e6df;">{{ gpuTxt }}</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 11px;">
+        <span style="flex: none; width: 86px; white-space: nowrap; font: 600 11px/1 Manrope; color: #8f9695;">RAM 32 GB</span>
+        <span style="flex: 1; height: 6px; border-radius: 3px; background: rgba(233,230,223,.10); overflow: hidden;"><i style="display: block; height: 100%; width: {{ ramPct }}; background: linear-gradient(90deg, #9b68ff, #cbb0ff); transition: width .9s cubic-bezier(.16,1,.3,1);"></i></span>
+        <span style="flex: none; width: 56px; white-space: nowrap; text-align: right; font: 700 12px/1 ui-monospace, monospace; color: #e9e6df;">{{ ramTxt }}</span>
+      </div>
+    </div>
+    <div style="display: flex; gap: 8px; padding-top: 2px;">
+      <span style="flex: 1; display: flex; flex-direction: column; gap: 3px; padding: 9px 11px; border-radius: 14px; background: rgba(233,230,223,.04);"><i style="font-style: normal; font: 700 15px/1 Manrope; color: #e9e6df;">{{ tempTxt }}</i><i style="font-style: normal; font: 400 9.5px/1 Manrope; color: #5f6665;">GPU temp</i></span>
+      <span style="flex: 1; display: flex; flex-direction: column; gap: 3px; padding: 9px 11px; border-radius: 14px; background: rgba(233,230,223,.04);"><i style="font-style: normal; font: 700 15px/1 Manrope; color: #e9e6df;">142 fps</i><i style="font-style: normal; font: 400 9.5px/1 Manrope; color: #5f6665;">ARC Raiders</i></span>
+      <span style="flex: 1; display: flex; flex-direction: column; gap: 3px; padding: 9px 11px; border-radius: 14px; background: rgba(233,230,223,.04);"><i style="font-style: normal; font: 700 15px/1 Manrope; color: #e9e6df;">2 TB</i><i style="font-style: normal; font: 400 9.5px/1 Manrope; color: #5f6665;">NVMe libre 41%</i></span>
+    </div>
+  </div>
+
+  <div style="display: flex; gap: 11px;">
+    <button type="button" onClick="{{ goAnime }}" style="flex: 1; display: flex; flex-direction: column; gap: 9px; padding: 14px; border: 1px solid rgba(155,104,255,.2); border-radius: 20px; background: linear-gradient(150deg, rgba(155,104,255,.15), #191b1c 75%); text-align: left; color: inherit; cursor: pointer;">
+      <span style="font: 700 8.5px/1 ui-monospace, monospace; letter-spacing: .16em; color: #b79bff;">ANIME · EN DIRECTO</span>
+      <span style="font: 700 15px/1.2 Manrope; letter-spacing: -.02em;">Frieren</span>
+      <span style="font: 400 11px/1.35 Manrope; color: #8f9695;">Episodio 7 · 12:43</span>
+      <span style="display: block; height: 3px; border-radius: 2px; background: rgba(233,230,223,.12); overflow: hidden;"><i style="display: block; width: 54%; height: 100%; background: #9b68ff;"></i></span>
+    </button>
+    <button type="button" onClick="{{ goGames }}" style="flex: 1; display: flex; flex-direction: column; gap: 9px; padding: 14px; border: 1px solid rgba(233,230,223,.10); border-radius: 20px; background: #191b1c; text-align: left; color: inherit; cursor: pointer; overflow: hidden;">
+      <span style="font: 700 8.5px/1 ui-monospace, monospace; letter-spacing: .16em; color: #f0a24a;">EN ROTACIÓN</span>
+      <span style="display: flex; gap: 7px;">
+        <i style="width: 38px; height: 52px; border-radius: 8px; background: url(assets/g/arc-raiders.jpg) center/cover;"></i>
+        <i style="width: 38px; height: 52px; border-radius: 8px; background: url(assets/g/gta-vi.webp) center/cover;"></i>
+      </span>
+      <span style="font: 400 11px/1.35 Manrope; color: #8f9695;">ARC Raiders · GTA VI</span>
+    </button>
+  </div>
+
+  <span style="font: 500 10px/1.5 ui-monospace, Menlo, monospace; letter-spacing: .05em; color: #5f6665;">PRESENCIA PÚBLICA VÍA LANYARD · SIN TOKENS PRIVADOS</span>
+</div>
+</sc-if>
+
+<sc-if value="{{ sChat }}">
+<div style="display: flex; flex-direction: column; min-height: 100%;">
+  <div style="flex: 1; display: flex; flex-direction: column; gap: 14px; padding: 10px 18px 14px;">
+    <div style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid rgba(233,230,223,.09); border-radius: 100px; background: rgba(25,27,28,.7); align-self: center;">
+      <span style="width: 6px; height: 6px; border-radius: 50%; background: #81d8cc;"></span>
+      <span style="font: 500 10.5px/1 Manrope; color: #8f9695;">3 personas en línea · sala pública</span>
+    </div>
+    <sc-for list="{{ msgs }}" as="msg" hint-placeholder-count="4">
+    <div style="display: flex; gap: 10px; align-items: flex-end; flex-direction: {{ msg.dir }};">
+      <span style="flex: none; width: 30px; height: 30px; border-radius: 50%; background-color: {{ msg.color }}; background-image: {{ msg.avatarBg }}; background-size: cover; background-position: center; display: grid; place-items: center; font: 700 11px/1 Manrope; color: #0f1011;">{{ msg.initial }}</span>
+      <span style="max-width: 74%; display: flex; flex-direction: column; gap: 4px;">
+        <span style="display: flex; align-items: center; gap: 7px; padding: 0 3px;">
+          <i style="font-style: normal; font: 700 11px/1 Manrope; color: #e9e6df;">{{ msg.name }}</i>
+          <i style="font-style: normal; font: 500 9px/1 ui-monospace, monospace; color: #5f6665;">{{ msg.time }}</i>
+        </span>
+        <span style="padding: 10px 13px; border: 1px solid {{ msg.border }}; border-radius: {{ msg.radius }}; background: {{ msg.bubble }}; font: 400 13px/1.5 Manrope; color: #e9e6df;">{{ msg.body }}</span>
+      </span>
+    </div>
+    </sc-for>
+    <div style="display: flex; align-items: center; gap: 8px; padding-left: 40px;">
+      <span style="display: flex; gap: 4px; padding: 9px 12px; border-radius: 14px; background: rgba(233,230,223,.05);">
+        <i style="width: 5px; height: 5px; border-radius: 50%; background: #8f9695; animation: psType 1.3s ease-in-out infinite;"></i>
+        <i style="width: 5px; height: 5px; border-radius: 50%; background: #8f9695; animation: psType 1.3s ease-in-out .2s infinite;"></i>
+        <i style="width: 5px; height: 5px; border-radius: 50%; background: #8f9695; animation: psType 1.3s ease-in-out .4s infinite;"></i>
+      </span>
+      <span style="font: 500 10px/1 Manrope; color: #5f6665;">Melitopollito está escribiendo…</span>
+    </div>
+  </div>
+
+  <sc-if value="{{ isIos }}">
+  <div style="position: sticky; bottom: 0; display: flex; align-items: center; gap: 9px; padding: 10px 16px 14px; background: rgba(15,16,17,.82); backdrop-filter: blur(18px); border-top: .5px solid rgba(233,230,223,.10);">
+    <input type="text" value="{{ chatInput }}" onChange="{{ onChatInput }}" onKeyDown="{{ onChatKey }}" placeholder="Escribe un mensaje…" style="flex: 1; min-width: 0; height: 40px; padding: 0 16px; border: .5px solid rgba(255,255,255,.14); border-radius: 100px; background: rgba(120,120,128,.22); color: #e9e6df; font: 400 13.5px/1 Manrope; outline: none;">
+    <button type="button" onClick="{{ send }}" style="flex: none; width: 40px; height: 40px; display: grid; place-items: center; border: 0; border-radius: 50%; background: #f0a24a; color: #17110a; cursor: pointer;">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"></path><path d="M5.5 11.5 12 5l6.5 6.5"></path></svg>
+    </button>
+  </div>
+  </sc-if>
+  <sc-if value="{{ isAndroid }}">
+  <div style="position: sticky; bottom: 0; display: flex; align-items: center; gap: 10px; padding: 10px 14px 14px; background: #131415;">
+    <input type="text" value="{{ chatInput }}" onChange="{{ onChatInput }}" onKeyDown="{{ onChatKey }}" placeholder="Mensaje" style="flex: 1; min-width: 0; height: 52px; padding: 0 18px; border: 1px solid rgba(233,230,223,.24); border-radius: 26px; background: #1c1e1f; color: #e9e6df; font: 400 14px/1 Roboto, Manrope; outline: none;">
+    <button type="button" onClick="{{ send }}" style="flex: none; width: 56px; height: 56px; display: grid; place-items: center; border: 0; border-radius: 18px; background: #f0a24a; color: #17110a; cursor: pointer; box-shadow: 0 6px 16px rgba(240,162,74,.28);">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l16-7-7 16-2-7z"></path></svg>
+    </button>
+  </div>
+  </sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ sProfile }}">
+<div style="display: flex; flex-direction: column; gap: 18px; padding: 4px 0 34px; animation: psRise .42s cubic-bezier(.16,1,.3,1) both;">
+  <div style="position: relative; margin: 0 20px; border: 1px solid rgba(233,230,223,.10); border-radius: 24px; overflow: hidden; background: #191b1c;">
+    <div style="position: relative; height: 236px; background: url(assets/portrait.webp) 50% 22%/cover;">
+      <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(15,16,17,0) 34%, rgba(15,16,17,.92));"></div>
+      <div style="position: absolute; left: 16px; right: 16px; bottom: 14px; display: flex; flex-direction: column; gap: 7px;">
+        <span style="display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; padding: 4px 10px; border-radius: 100px; background: rgba(15,16,17,.66); backdrop-filter: blur(8px); font: 600 9.5px/1 ui-monospace, monospace; letter-spacing: .1em; color: #81d8cc;"><span style="position: relative; width: 5px; height: 5px; border-radius: 50%; background: #81d8cc;"><span style="position: absolute; inset: -3px; border-radius: 50%; border: 1px solid #81d8cc; animation: psRing 2.4s ease-out infinite;"></span></span>EN LÍNEA</span>
+        <span style="font: 800 25px/1.02 Manrope; letter-spacing: -.035em;">Pablo Schefer<br>Orduña</span>
+        <span style="font: 500 11.5px/1 Manrope; color: #f0a24a;">PapiGEGamer 🐾 · @papigegamerantiguo</span>
+      </div>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid rgba(233,230,223,.09);">
+      <div style="display: flex; flex-direction: column; gap: 4px; padding: 13px 12px; border-right: 1px solid rgba(233,230,223,.09);"><span style="font: 800 19px/1 Manrope; letter-spacing: -.03em; color: #f0a24a;">04+</span><span style="font: 400 9.5px/1.3 Manrope; color: #5f6665;">comunidades hoy</span></div>
+      <div style="display: flex; flex-direction: column; gap: 4px; padding: 13px 12px; border-right: 1px solid rgba(233,230,223,.09);"><span style="font: 800 19px/1 Manrope; letter-spacing: -.03em;">02+</span><span style="font: 400 9.5px/1.3 Manrope; color: #5f6665;">anteriores</span></div>
+      <div style="display: flex; flex-direction: column; gap: 4px; padding: 13px 12px;"><span style="font: 800 19px/1 Manrope; letter-spacing: -.03em;">2015</span><span style="font: 400 9.5px/1.3 Manrope; color: #5f6665;">inicio en Discord</span></div>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 11px; padding: 0 20px;">
+    <span style="font: 700 9px/1 ui-monospace, Menlo, monospace; letter-spacing: .2em; color: #f0a24a;">PERFIL</span>
+    <p style="margin: 0; font: 400 13px/1.65 Manrope; color: #8f9695;">Llevo en Discord desde 2015. Ahí aprendí a coordinar personas, cuidar comunidades y convertir problemas cotidianos en soluciones.</p>
+    <p style="margin: 0; font: 400 13px/1.65 Manrope; color: #8f9695;">También programo mediante vibecoding con React y TypeScript. Es la parte técnica de un perfil que siempre empieza por entender a las personas.</p>
+    <span style="font: 500 10.5px/1.4 ui-monospace, Menlo, monospace; letter-spacing: .06em; color: #5f6665;">ESPAÑA · UTC+02 · EN DISCORD DESDE 2015</span>
+  </div>
+
+  <sc-if value="{{ isIos }}">
+  <div style="display: flex; flex-direction: column; gap: 7px; padding: 0 20px;">
+    <span style="padding-left: 4px; font: 500 11px/1 Manrope; letter-spacing: .04em; text-transform: uppercase; color: #5f6665;">Personal</span>
+    <div style="border-radius: 20px; background: #191b1c; overflow: hidden; border: .5px solid rgba(233,230,223,.09);">
+      <sc-for list="{{ profileRows }}" as="r" hint-placeholder-count="5">
+      <button type="button" onClick="{{ r.open }}" style="display: flex; align-items: center; gap: 12px; width: 100%; min-height: 52px; padding: 11px 15px; border: 0; border-top: {{ r.sep }}; background: none; text-align: left; color: inherit; cursor: pointer;">
+        <span style="flex: none; width: 30px; height: 30px; display: grid; place-items: center; border-radius: 9px; background: {{ r.tint }}; color: {{ r.color }};">{{ r.icon }}</span>
+        <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px;">
+          <i style="font-style: normal; font: 600 14.5px/1.2 Manrope; color: #e9e6df;">{{ r.title }}</i>
+          <i style="font-style: normal; font: 400 11px/1.2 Manrope; color: #5f6665;">{{ r.detail }}</i>
+        </span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(233,230,223,.3)" stroke-width="2.4" stroke-linecap="round"><path d="M9.5 6l6 6-6 6"></path></svg>
+      </button>
+      </sc-for>
+    </div>
+  </div>
+  </sc-if>
+  <sc-if value="{{ isAndroid }}">
+  <div style="display: flex; flex-direction: column; gap: 8px; padding: 0 16px;">
+    <span style="padding-left: 8px; font: 600 12px/1 Roboto, Manrope; color: #f0a24a;">Personal</span>
+    <sc-for list="{{ profileRows }}" as="r" hint-placeholder-count="5">
+    <button type="button" onClick="{{ r.open }}" style="display: flex; align-items: center; gap: 16px; width: 100%; min-height: 64px; padding: 12px 16px; border: 0; border-radius: 20px; background: #1c1e1f; text-align: left; color: inherit; cursor: pointer;" style-hover="background: #232526">
+      <span style="flex: none; width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; background: {{ r.tint }}; color: {{ r.color }};">{{ r.icon }}</span>
+      <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px;">
+        <i style="font-style: normal; font: 400 16px/1.35 Roboto, Manrope; color: #e9e6df;">{{ r.title }}</i>
+        <i style="font-style: normal; font: 400 12.5px/1.3 Roboto, Manrope; color: #8f9695;">{{ r.detail }}</i>
+      </span>
+    </button>
+    </sc-for>
+  </div>
+  </sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ sGames }}">
+<div style="display: flex; flex-direction: column; gap: 18px; padding: 6px 0 34px; animation: psRise .42s cubic-bezier(.16,1,.3,1) both;">
+  <div style="display: flex; gap: 7px; overflow-x: auto; padding: 0 20px 2px;">
+    <sc-for list="{{ gameChips }}" as="g" hint-placeholder-count="4">
+    <button type="button" onClick="{{ g.set }}" style="flex: none; height: 32px; padding: 0 13px; border: 1px solid {{ g.border }}; border-radius: 100px; background: {{ g.bg }}; color: {{ g.color }}; font: 600 11.5px/1 Manrope; cursor: pointer; transition: background .2s ease;">{{ g.label }}</button>
+    </sc-for>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 11px; padding: 0 20px;">
+    <span style="font: 700 9px/1 ui-monospace, Menlo, monospace; letter-spacing: .2em; color: #f0a24a;">EN ROTACIÓN</span>
+    <div style="display: flex; gap: 11px;">
+      <div style="position: relative; flex: 1; border-radius: 20px; overflow: hidden; border: 1px solid rgba(233,230,223,.1);">
+        <div style="height: 178px; background: url(assets/g/gta-vi.webp) center/cover;"></div>
+        <div style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 42%, rgba(15,16,17,.94));"></div>
+        <div style="position: absolute; left: 12px; right: 12px; bottom: 11px; display: flex; flex-direction: column; gap: 3px;"><span style="font: 700 13px/1.2 Manrope; letter-spacing: -.02em;">GTA VI</span><span style="font: 400 10px/1.2 Manrope; color: #8f9695;">Mundo abierto</span></div>
+      </div>
+      <div style="position: relative; flex: 1; border-radius: 20px; overflow: hidden; border: 1px solid rgba(233,230,223,.1);">
+        <div style="height: 178px; background: url(assets/g/arc-raiders.jpg) center/cover;"></div>
+        <div style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 42%, rgba(15,16,17,.94));"></div>
+        <div style="position: absolute; left: 12px; right: 12px; bottom: 11px; display: flex; flex-direction: column; gap: 3px;"><span style="font: 700 13px/1.2 Manrope; letter-spacing: -.02em;">ARC Raiders</span><span style="font: 400 10px/1.2 Manrope; color: #8f9695;">Extracción · PvPvE</span></div>
+        <span style="position: absolute; right: 9px; top: 9px; padding: 4px 8px; border-radius: 100px; background: rgba(240,162,74,.9); font: 700 8px/1 ui-monospace, monospace; letter-spacing: .1em; color: #17110a;">JUGANDO</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: flex; align-items: center; gap: 13px; margin: 0 20px; padding: 13px 14px; border: 1px solid rgba(99,215,223,.22); border-radius: 20px; background: linear-gradient(140deg, rgba(99,215,223,.13), #191b1c 72%);">
+    <span style="flex: none; width: 52px; height: 70px; border-radius: 10px; background: url(assets/g/the-cycle.jpg) center/cover;"></span>
+    <span style="flex: 1; display: flex; flex-direction: column; gap: 4px;">
+      <i style="font-style: normal; font: 700 8.5px/1 ui-monospace, monospace; letter-spacing: .16em; color: #63d7df;">JUEGO FAVORITO</i>
+      <i style="font-style: normal; font: 700 15px/1.2 Manrope; letter-spacing: -.02em;">The Cycle: Frontier</i>
+      <i style="font-style: normal; font: 400 11px/1.45 Manrope; color: #8f9695;">Extracción, riesgo y encuentros imprevisibles en Fortuna III.</i>
+    </span>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 11px; padding: 0 20px;">
+    <div style="display: flex; align-items: baseline; justify-content: space-between;">
+      <span style="font: 700 9px/1 ui-monospace, Menlo, monospace; letter-spacing: .2em; color: #f0a24a;">BIBLIOTECA</span>
+      <span style="font: 500 10px/1 ui-monospace, monospace; color: #5f6665;">20 TÍTULOS</span>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px;">
+      <sc-for list="{{ library }}" as="g" hint-placeholder-count="6">
+      <div style="position: relative; border-radius: 13px; overflow: hidden; border: 1px solid rgba(233,230,223,.09);">
+        <div style="aspect-ratio: 3 / 4; background-image: {{ g.bg }}; background-size: cover; background-position: center;"></div>
+        <div style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 52%, rgba(15,16,17,.9));"></div>
+        <span style="position: absolute; left: 8px; right: 8px; bottom: 7px; font: 600 9.5px/1.2 Manrope; color: #e9e6df;">{{ g.title }}</span>
+      </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 10px; margin: 0 20px; padding: 15px 16px; border: 1px solid rgba(233,230,223,.1); border-radius: 22px; background: #191b1c;">
+    <span style="font: 700 9px/1 ui-monospace, Menlo, monospace; letter-spacing: .2em; color: #f0a24a;">EQUIPO</span>
+    <div style="display: flex; flex-direction: column; gap: 9px;">
+      <div style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 9px; border-bottom: 1px solid rgba(233,230,223,.08);"><span style="font: 600 13px/1.2 Manrope;">NVIDIA RTX 5080</span><span style="font: 700 11px/1 ui-monospace, monospace; color: #f0a24a;">{{ gpuTxt }}</span></div>
+      <div style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 9px; border-bottom: 1px solid rgba(233,230,223,.08);"><span style="font: 600 13px/1.2 Manrope;">Ryzen 7 9800X3D</span><span style="font: 700 11px/1 ui-monospace, monospace; color: #81d8cc;">{{ cpuTxt }}</span></div>
+      <div style="display: flex; align-items: center; justify-content: space-between;"><span style="font: 600 13px/1.2 Manrope;">32 GB DDR5 6000</span><span style="font: 700 11px/1 ui-monospace, monospace; color: #b79bff;">{{ ramTxt }}</span></div>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ sMusic }}">
+<div style="display: flex; flex-direction: column; gap: 20px; padding: 10px 20px 34px; animation: psRise .42s cubic-bezier(.16,1,.3,1) both;">
+  <div style="position: relative; align-self: center; width: 250px; height: 250px; border-radius: 26px; background: url(assets/music/bad-bunny.jpg) center/cover; box-shadow: 0 26px 60px rgba(0,0,0,.55); overflow: hidden; animation: psFloat 6s ease-in-out infinite;">
+    <div style="position: absolute; inset: 0; background: linear-gradient(105deg, transparent 34%, rgba(255,255,255,.2) 50%, transparent 66%); animation: psShine 4.2s linear infinite;"></div>
+  </div>
+  <div style="display: flex; flex-direction: column; gap: 7px; align-items: center; text-align: center;">
+    <span style="display: flex; align-items: center; gap: 7px; font: 700 8.5px/1 ui-monospace, monospace; letter-spacing: .16em; color: #81d8cc;">SPOTIFY · PRESENCIA PÚBLICA
+      <span style="display: inline-flex; align-items: flex-end; gap: 2px; height: 11px;"><i style="width: 2px; background: #81d8cc; animation: psWave .85s ease-in-out infinite;"></i><i style="width: 2px; background: #81d8cc; animation: psWave .85s ease-in-out .16s infinite;"></i><i style="width: 2px; background: #81d8cc; animation: psWave .85s ease-in-out .32s infinite;"></i></span>
+    </span>
+    <span style="font: 800 26px/1.1 Manrope; letter-spacing: -.035em;">NUEVAYoL</span>
+    <span style="font: 400 13.5px/1.3 Manrope; color: #8f9695;">Bad Bunny · DeBÍ TiRAR MáS FOToS</span>
+  </div>
+  <div style="display: flex; flex-direction: column; gap: 7px;">
+    <span style="display: block; height: 4px; border-radius: 3px; background: rgba(233,230,223,.12); overflow: hidden;"><i style="display: block; height: 100%; width: {{ progPct }}; background: linear-gradient(90deg, #81d8cc, #f0a24a); transition: width 1s linear;"></i></span>
+    <span style="display: flex; justify-content: space-between; font: 500 10px/1 ui-monospace, monospace; color: #5f6665;"><i style="font-style: normal;">{{ elapsed }}</i><i style="font-style: normal;">3:04</i></span>
+  </div>
+  <div style="display: flex; align-items: center; justify-content: center; gap: 26px;">
+    <button type="button" style="width: 44px; height: 44px; display: grid; place-items: center; border: 0; border-radius: 50%; background: none; color: #8f9695; cursor: pointer;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M18 6v12l-9-6zM7 6h2v12H7z"></path></svg>
+    </button>
+    <button type="button" onClick="{{ togglePlay }}" style="width: 66px; height: 66px; display: grid; place-items: center; border: 0; border-radius: 50%; background: #f0a24a; color: #17110a; cursor: pointer; box-shadow: 0 12px 30px rgba(240,162,74,.28);">{{ playIcon }}</button>
+    <button type="button" style="width: 44px; height: 44px; display: grid; place-items: center; border: 0; border-radius: 50%; background: none; color: #8f9695; cursor: pointer;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6v12l9-6zM15 6h2v12h-2z"></path></svg>
+    </button>
+  </div>
+  <div style="display: flex; flex-direction: column; gap: 9px;">
+    <span style="font: 700 9px/1 ui-monospace, Menlo, monospace; letter-spacing: .2em; color: #f0a24a;">RECIENTES</span>
+    <sc-for list="{{ recents }}" as="r" hint-placeholder-count="3">
+    <div style="display: flex; align-items: center; gap: 12px; padding: 9px 11px; border: 1px solid rgba(233,230,223,.08); border-radius: 16px; background: #191b1c;">
+      <span style="flex: none; width: 36px; height: 36px; border-radius: 9px; background: {{ r.color }}; display: grid; place-items: center; font: 800 12px/1 Manrope; color: #0f1011;">{{ r.mark }}</span>
+      <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px;"><i style="font-style: normal; font: 600 13px/1.2 Manrope; color: #e9e6df;">{{ r.title }}</i><i style="font-style: normal; font: 400 10.5px/1.2 Manrope; color: #8f9695;">{{ r.artist }}</i></span>
+      <span style="font: 500 10px/1 ui-monospace, monospace; color: #5f6665;">{{ r.when }}</span>
+    </div>
+    </sc-for>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ sAnime }}">
+<div style="display: flex; flex-direction: column; gap: 18px; padding: 8px 20px 34px; animation: psRise .42s cubic-bezier(.16,1,.3,1) both;">
+  <div style="position: relative; border: 1px solid rgba(155,104,255,.24); border-radius: 24px; background: linear-gradient(150deg, rgba(155,104,255,.16), #191b1c 76%); overflow: hidden;">
+    <div style="height: 150px; background: url(assets/anime-loop.png) center 30%/cover; opacity: .5;"></div>
+    <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(15,16,17,.1), rgba(15,16,17,.86));"></div>
+    <div style="position: relative; display: flex; flex-direction: column; gap: 10px; padding: 0 16px 16px; margin-top: -46px;">
+      <span style="display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; padding: 4px 10px; border-radius: 100px; background: rgba(155,104,255,.22); font: 700 8.5px/1 ui-monospace, monospace; letter-spacing: .14em; color: #cbb0ff;"><span style="width: 5px; height: 5px; border-radius: 50%; background: #b79bff;"></span>DETECTADO EN DISCORD</span>
+      <span style="font: 800 24px/1.05 Manrope; letter-spacing: -.035em;">Sousou no Frieren</span>
+      <span style="font: 400 12px/1.4 Manrope; color: #8f9695;">Episodio 7 · “Como la nieve en primavera”</span>
+      <span style="display: block; height: 4px; border-radius: 3px; background: rgba(233,230,223,.12); overflow: hidden;"><i style="display: block; width: 54%; height: 100%; background: linear-gradient(90deg, #9b68ff, #cbb0ff);"></i></span>
+      <span style="display: flex; justify-content: space-between; font: 500 10px/1 ui-monospace, monospace; color: #5f6665;"><i style="font-style: normal;">12:43</i><i style="font-style: normal;">23:40</i></span>
+    </div>
+  </div>
+  <div style="display: flex; flex-direction: column; gap: 10px;">
+    <span style="font: 700 9px/1 ui-monospace, Menlo, monospace; letter-spacing: .2em; color: #f0a24a;">HISTORIAL LOCAL</span>
+    <sc-for list="{{ animeLog }}" as="a" hint-placeholder-count="4">
+    <div style="display: flex; align-items: center; gap: 12px; padding: 12px 13px; border: 1px solid rgba(233,230,223,.08); border-radius: 18px; background: #191b1c;">
+      <span style="flex: none; width: 40px; height: 40px; border-radius: 12px; background: {{ a.color }}; display: grid; place-items: center; font: 800 13px/1 Manrope; color: #0f1011;">{{ a.mark }}</span>
+      <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px;"><i style="font-style: normal; font: 600 13.5px/1.2 Manrope; color: #e9e6df;">{{ a.title }}</i><i style="font-style: normal; font: 400 10.5px/1.2 Manrope; color: #8f9695;">{{ a.detail }}</i></span>
+      <span style="font: 500 10px/1 ui-monospace, monospace; color: #5f6665;">{{ a.when }}</span>
+    </div>
+    </sc-for>
+  </div>
+  <p style="margin: 0; font: 400 10.5px/1.55 Manrope; color: #5f6665;">El historial se guarda solo en este dispositivo. La detección usa actividades públicas de Discord vía Lanyard.</p>
+</div>
+</sc-if>
+
+<sc-if value="{{ sAccount }}">
+<div style="display: flex; flex-direction: column; gap: 18px; padding: 10px 20px 34px; animation: psRise .42s cubic-bezier(.16,1,.3,1) both;">
+  <div style="display: flex; flex-direction: column; align-items: center; gap: 11px; padding: 22px 18px; border: 1px solid rgba(233,230,223,.1); border-radius: 24px; background: linear-gradient(160deg, rgba(240,162,74,.10), #191b1c 66%);">
+    <div style="position: relative; width: 84px; height: 84px; border-radius: 50%; border: 2px solid rgba(240,162,74,.55); background: url(assets/avatar.webp) center/cover;">
+      <span style="position: absolute; right: -2px; bottom: -2px; width: 20px; height: 20px; border-radius: 50%; border: 3px solid #191b1c; background: #81d8cc;"></span>
+    </div>
+    <span style="font: 700 19px/1.1 Manrope; letter-spacing: -.03em;">PapiGEGamer 🐾</span>
+    <span style="font: 400 12px/1 Manrope; color: #8f9695;">pablo@pabloschefer.dev</span>
+    <span style="display: inline-flex; align-items: center; gap: 6px; padding: 5px 11px; border-radius: 100px; background: rgba(129,216,204,.14); font: 600 10px/1 ui-monospace, monospace; letter-spacing: .1em; color: #81d8cc;">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17l9-10"></path></svg>
+      CORREO VERIFICADO
+    </span>
+  </div>
+  <div style="display: flex; flex-direction: column; gap: 8px;">
+    <sc-for list="{{ accountRows }}" as="r" hint-placeholder-count="4">
+    <div style="display: flex; align-items: center; gap: 13px; padding: 14px 15px; border: 1px solid rgba(233,230,223,.09); border-radius: 18px; background: #191b1c;">
+      <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px;"><i style="font-style: normal; font: 600 13.5px/1.2 Manrope; color: #e9e6df;">{{ r.title }}</i><i style="font-style: normal; font: 400 11px/1.35 Manrope; color: #8f9695;">{{ r.detail }}</i></span>
+      <span style="font: 600 11.5px/1 Manrope; color: #81d8cc;">{{ r.action }}</span>
+    </div>
+    </sc-for>
+  </div>
+  <button type="button" onClick="{{ signOut }}" style="height: 50px; border: 1px solid rgba(255,107,107,.3); border-radius: 100px; background: rgba(255,107,107,.08); color: #ff8f8f; font: 700 13.5px/1 Manrope; cursor: pointer;">Cerrar sesión</button>
+  <p style="margin: 0; font: 400 10.5px/1.55 Manrope; color: #5f6665;">La cuenta usa correo verificado y sesión propia. Sin datos de terceros más allá de los públicos de Discord.</p>
+</div>
+</sc-if>
+
+<sc-if value="{{ sContact }}">
+<div style="display: flex; flex-direction: column; gap: 16px; padding: 8px 20px 34px; animation: psRise .42s cubic-bezier(.16,1,.3,1) both;">
+  <p style="margin: 0; font: 400 13px/1.6 Manrope; color: #8f9695;">Deja tu correo y el mensaje. Me llega automáticamente al email y puedo responderte desde ahí.</p>
+  <sc-if value="{{ sent }}">
+  <div style="display: flex; align-items: center; gap: 12px; padding: 16px; border: 1px solid rgba(129,216,204,.3); border-radius: 20px; background: rgba(129,216,204,.1); animation: psRise .4s cubic-bezier(.16,1,.3,1) both;">
+    <span style="flex: none; width: 38px; height: 38px; display: grid; place-items: center; border-radius: 50%; background: #81d8cc; color: #0f1011;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17l9-10"></path></svg>
+    </span>
+    <span style="display: flex; flex-direction: column; gap: 3px;"><i style="font-style: normal; font: 700 13.5px/1.2 Manrope; color: #e9e6df;">Mensaje enviado</i><i style="font-style: normal; font: 400 11.5px/1.35 Manrope; color: #8f9695;">Me llegará directo al correo.</i></span>
+  </div>
+  </sc-if>
+  <div style="display: flex; flex-direction: column; gap: 13px;">
+    <label style="display: flex; flex-direction: column; gap: 7px;">
+      <span style="font: 600 10.5px/1 ui-monospace, Menlo, monospace; letter-spacing: .12em; color: #8f9695;">NOMBRE</span>
+      <input type="text" value="{{ fName }}" onChange="{{ onName }}" placeholder="Tu nombre o nick" style="height: 48px; padding: 0 15px; border: 1px solid rgba(233,230,223,.14); border-radius: 14px; background: #191b1c; color: #e9e6df; font: 400 14px/1 Manrope; outline: none;">
+    </label>
+    <label style="display: flex; flex-direction: column; gap: 7px;">
+      <span style="font: 600 10.5px/1 ui-monospace, Menlo, monospace; letter-spacing: .12em; color: #8f9695;">TU CORREO</span>
+      <input type="email" value="{{ fEmail }}" onChange="{{ onEmail }}" placeholder="tu@email.com" style="height: 48px; padding: 0 15px; border: 1px solid rgba(233,230,223,.14); border-radius: 14px; background: #191b1c; color: #e9e6df; font: 400 14px/1 Manrope; outline: none;">
+    </label>
+    <label style="display: flex; flex-direction: column; gap: 7px;">
+      <span style="font: 600 10.5px/1 ui-monospace, Menlo, monospace; letter-spacing: .12em; color: #8f9695;">MENSAJE</span>
+      <textarea rows="4" value="{{ fMsg }}" onChange="{{ onMsg }}" placeholder="Cuéntame qué quieres proponer, preguntar o construir." style="padding: 13px 15px; border: 1px solid rgba(233,230,223,.14); border-radius: 14px; background: #191b1c; color: #e9e6df; font: 400 14px/1.5 Manrope; outline: none; resize: none;"></textarea>
+    </label>
+  </div>
+  <button type="button" onClick="{{ submit }}" style="height: 52px; border: 0; border-radius: 100px; background: #f0a24a; color: #17110a; font: 700 14px/1 Manrope; cursor: pointer; box-shadow: 0 10px 28px rgba(240,162,74,.22);">{{ submitLabel }}</button>
+  <a href="https://discord.com" target="_blank" rel="noopener" style="display: flex; align-items: center; justify-content: center; height: 50px; border: 1px solid rgba(233,230,223,.16); border-radius: 100px; color: #e9e6df; font: 600 13.5px/1 Manrope;">Abrir Discord</a>
+</div>
+</sc-if>
+
+<sc-if value="{{ sSettings }}">
+<div style="display: flex; flex-direction: column; gap: 20px; padding: 10px 20px 34px; animation: psRise .42s cubic-bezier(.16,1,.3,1) both;">
+  <div style="display: flex; flex-direction: column; gap: 9px;">
+    <span style="font: 600 10.5px/1 ui-monospace, Menlo, monospace; letter-spacing: .12em; color: #8f9695;">IDIOMA</span>
+    <div style="display: flex; gap: 8px;">
+      <button type="button" onClick="{{ setEs }}" style="flex: 1; height: 46px; border: 1px solid {{ esB }}; border-radius: 14px; background: {{ esBg }}; color: {{ esC }}; font: 600 13px/1 Manrope; cursor: pointer; transition: background .2s ease;">Español</button>
+      <button type="button" onClick="{{ setEn }}" style="flex: 1; height: 46px; border: 1px solid {{ enB }}; border-radius: 14px; background: {{ enBg }}; color: {{ enC }}; font: 600 13px/1 Manrope; cursor: pointer; transition: background .2s ease;">English</button>
+    </div>
+  </div>
+  <div style="display: flex; flex-direction: column; gap: 9px;">
+    <span style="font: 600 10.5px/1 ui-monospace, Menlo, monospace; letter-spacing: .12em; color: #8f9695;">TEMA</span>
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <sc-for list="{{ themes }}" as="th" hint-placeholder-count="3">
+      <button type="button" onClick="{{ th.set }}" style="display: flex; align-items: center; gap: 13px; padding: 14px 15px; border: 1px solid {{ th.border }}; border-radius: 16px; background: {{ th.bg }}; text-align: left; color: inherit; cursor: pointer;">
+        <span style="flex: none; width: 34px; height: 34px; border-radius: 10px; background: {{ th.swatch }}; border: 1px solid rgba(233,230,223,.14);"></span>
+        <span style="flex: 1; display: flex; flex-direction: column; gap: 2px;"><i style="font-style: normal; font: 600 13.5px/1.2 Manrope; color: #e9e6df;">{{ th.label }}</i><i style="font-style: normal; font: 400 11px/1.2 Manrope; color: #5f6665;">{{ th.detail }}</i></span>
+        <span style="flex: none; width: 20px; height: 20px; border-radius: 50%; border: 2px solid {{ th.dotBorder }}; background: {{ th.dot }};"></span>
+      </button>
+      </sc-for>
+    </div>
+  </div>
+  <div style="display: flex; flex-direction: column; gap: 9px;">
+    <span style="font: 600 10.5px/1 ui-monospace, Menlo, monospace; letter-spacing: .12em; color: #8f9695;">AVISOS Y MOVIMIENTO</span>
+    <div style="display: flex; flex-direction: column; gap: 2px; border-radius: 18px; background: #191b1c; border: 1px solid rgba(233,230,223,.09); overflow: hidden;">
+      <sc-for list="{{ toggles }}" as="tg" hint-placeholder-count="4">
+      <div style="display: flex; align-items: center; gap: 12px; padding: 14px 15px; border-top: {{ tg.sep }};">
+        <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px;"><i style="font-style: normal; font: 600 13.5px/1.2 Manrope; color: #e9e6df;">{{ tg.label }}</i><i style="font-style: normal; font: 400 10.5px/1.3 Manrope; color: #5f6665;">{{ tg.detail }}</i></span>
+        <sc-if value="{{ isIos }}">
+        <button type="button" onClick="{{ tg.toggle }}" style="flex: none; width: 51px; height: 31px; padding: 2px; border: 0; border-radius: 100px; background: {{ tg.trackIos }}; cursor: pointer; transition: background .25s ease;">
+          <span style="display: block; width: 27px; height: 27px; border-radius: 50%; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,.28); transform: {{ tg.knobIos }}; transition: transform .25s cubic-bezier(.16,1,.3,1);"></span>
+        </button>
+        </sc-if>
+        <sc-if value="{{ isAndroid }}">
+        <button type="button" onClick="{{ tg.toggle }}" style="flex: none; width: 52px; height: 32px; padding: 4px; border: 2px solid {{ tg.trackBorder }}; border-radius: 100px; background: {{ tg.trackM3 }}; cursor: pointer; transition: background .25s ease, border-color .25s ease;">
+          <span style="display: block; width: 20px; height: 20px; border-radius: 50%; background: {{ tg.knobColor }}; transform: {{ tg.knobM3 }}; transition: transform .25s cubic-bezier(.2,0,0,1);"></span>
+        </button>
+        </sc-if>
+      </div>
+      </sc-for>
+    </div>
+  </div>
+  <div style="display: flex; flex-direction: column; gap: 8px;">
+    <span style="font: 600 10.5px/1 ui-monospace, Menlo, monospace; letter-spacing: .12em; color: #8f9695;">LEGAL</span>
+    <div style="display: flex; flex-direction: column; gap: 2px; border-radius: 18px; background: #191b1c; border: 1px solid rgba(233,230,223,.09); overflow: hidden;">
+      <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px 15px; font: 500 13.5px/1 Manrope; color: #e9e6df;">Política de privacidad<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(233,230,223,.3)" stroke-width="2.4" stroke-linecap="round"><path d="M9.5 6l6 6-6 6"></path></svg></div>
+      <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px 15px; border-top: 1px solid rgba(233,230,223,.07); font: 500 13.5px/1 Manrope; color: #e9e6df;">Política de cookies<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(233,230,223,.3)" stroke-width="2.4" stroke-linecap="round"><path d="M9.5 6l6 6-6 6"></path></svg></div>
+      <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px 15px; border-top: 1px solid rgba(233,230,223,.07); font: 500 13.5px/1 Manrope; color: #e9e6df;">Aviso legal<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(233,230,223,.3)" stroke-width="2.4" stroke-linecap="round"><path d="M9.5 6l6 6-6 6"></path></svg></div>
+    </div>
+    <span style="padding-top: 4px; font: 500 10px/1.5 ui-monospace, Menlo, monospace; letter-spacing: .05em; color: #5f6665;">PABLO SCHEFER · V1.0.0 (2026.07)</span>
+  </div>
+</div>
+</sc-if>
+
+</div>
+
+<sc-if value="{{ showFab }}">
+<button type="button" onClick="{{ goChat }}" style="position: absolute; right: 18px; bottom: 108px; z-index: 40; display: flex; align-items: center; gap: 10px; height: 56px; padding: 0 20px; border: 0; border-radius: 18px; background: #f0a24a; color: #17110a; font: 600 14px/1 Roboto, Manrope; cursor: pointer; box-shadow: 0 8px 24px rgba(0,0,0,.42), 0 3px 8px rgba(240,162,74,.3); animation: psRise .4s cubic-bezier(.16,1,.3,1) both;">
+  <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12.4c0 3.5-3.6 6.4-8 6.4-1 0-2-.15-2.9-.42L5 20.4l1.3-3.1A6.5 6.5 0 0 1 4 12.4C4 8.9 7.6 6 12 6s8 2.9 8 6.4Z"></path></svg>
+  <span>Chat</span>
+</button>
+</sc-if>
+
+<sc-if value="{{ toast }}">
+<div style="position: absolute; left: 16px; right: 16px; bottom: 104px; z-index: 45; display: flex; align-items: center; gap: 11px; padding: 14px 16px; border-radius: {{ toastRadius }}; background: {{ toastBg }}; border: {{ toastBorder }}; backdrop-filter: blur(16px); box-shadow: 0 12px 34px rgba(0,0,0,.42); animation: psRise .35s cubic-bezier(.16,1,.3,1) both;">
+  <span style="flex: none; width: 7px; height: 7px; border-radius: 50%; background: #81d8cc;"></span>
+  <span style="flex: 1; font: 500 12.5px/1.4 Manrope; color: #e9e6df;">{{ toast }}</span>
+</div>
+</sc-if>
+
+<sc-if value="{{ isIos }}" hint-placeholder-val="{{ true }}">
+<div style="position: relative; z-index: 30; flex: none; display: flex; align-items: flex-start; gap: 2px; padding: 7px 8px 27px; background: rgba(15,16,17,.84); backdrop-filter: blur(24px) saturate(160%); -webkit-backdrop-filter: blur(24px) saturate(160%); border-top: .5px solid rgba(233,230,223,.12);">
+  <button type="button" onClick="{{ tabHome }}" style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 4px 0; border: 0; background: none; color: {{ cHome }}; cursor: pointer; transition: color .2s ease;">
+    <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.6 12 4.2l8 6.4V20h-5.4v-6.2H9.4V20H4z"></path></svg>
+    <span style="font: 600 9.5px/1 Manrope; letter-spacing: -.01em;">{{ t.home }}</span>
+  </button>
+  <button type="button" onClick="{{ tabCommunities }}" style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 4px 0; border: 0; background: none; color: {{ cCom }}; cursor: pointer; transition: color .2s ease;">
+    <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8.2" r="3.3"></circle><path d="M3.4 19.4c0-3.1 2.5-5.1 5.6-5.1s5.6 2 5.6 5.1"></path><path d="M16.2 5.6a3.3 3.3 0 0 1 0 5.2"></path><path d="M17.6 14.8c2 .8 3 2.4 3 4.6"></path></svg>
+    <span style="font: 600 9.5px/1 Manrope; letter-spacing: -.01em;">{{ t.communities }}</span>
+  </button>
+  <button type="button" onClick="{{ tabLive }}" style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 4px 0; border: 0; background: none; color: {{ cLive }}; cursor: pointer; transition: color .2s ease;">
+    <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="2.3" fill="currentColor" stroke="none"></circle><path d="M7.2 7.2a6.8 6.8 0 0 0 0 9.6"></path><path d="M16.8 7.2a6.8 6.8 0 0 1 0 9.6"></path><path d="M4.4 4.4a10.8 10.8 0 0 0 0 15.2"></path><path d="M19.6 4.4a10.8 10.8 0 0 1 0 15.2"></path></svg>
+    <span style="font: 600 9.5px/1 Manrope; letter-spacing: -.01em;">{{ t.live }}</span>
+  </button>
+  <button type="button" onClick="{{ tabChat }}" style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 4px 0; border: 0; background: none; color: {{ cChat }}; cursor: pointer; transition: color .2s ease;">
+    <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12.4c0 3.5-3.6 6.4-8 6.4-1 0-2-.15-2.9-.42L5 20.4l1.3-3.1A6.5 6.5 0 0 1 4 12.4C4 8.9 7.6 6 12 6s8 2.9 8 6.4Z"></path></svg>
+    <span style="font: 600 9.5px/1 Manrope; letter-spacing: -.01em;">{{ t.chat }}</span>
+  </button>
+  <button type="button" onClick="{{ tabProfile }}" style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 4px 0; border: 0; background: none; color: {{ cProf }}; cursor: pointer; transition: color .2s ease;">
+    <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8.4" r="3.5"></circle><path d="M5 20c0-3.4 3.1-5.6 7-5.6s7 2.2 7 5.6"></path></svg>
+    <span style="font: 600 9.5px/1 Manrope; letter-spacing: -.01em;">{{ t.profile }}</span>
+  </button>
+</div>
+</sc-if>
+
+<sc-if value="{{ isAndroid }}">
+<div style="position: relative; z-index: 30; flex: none; display: flex; align-items: flex-start; gap: 2px; padding: 12px 4px 14px; background: #1c1e1f;">
+  <button type="button" onClick="{{ tabHome }}" style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; border: 0; background: none; color: {{ cHome }}; cursor: pointer;">
+    <span style="display: grid; place-items: center; width: 64px; height: 32px; border-radius: 100px; background: {{ pHome }}; transition: background .25s cubic-bezier(.2,0,0,1);">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.6 12 4.2l8 6.4V20h-5.4v-6.2H9.4V20H4z"></path></svg>
+    </span>
+    <span style="font: 500 11px/1 Roboto, Manrope; letter-spacing: .04em;">{{ t.home }}</span>
+  </button>
+  <button type="button" onClick="{{ tabCommunities }}" style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; border: 0; background: none; color: {{ cCom }}; cursor: pointer;">
+    <span style="display: grid; place-items: center; width: 64px; height: 32px; border-radius: 100px; background: {{ pCom }}; transition: background .25s cubic-bezier(.2,0,0,1);">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8.2" r="3.3"></circle><path d="M3.4 19.4c0-3.1 2.5-5.1 5.6-5.1s5.6 2 5.6 5.1"></path><path d="M16.2 5.6a3.3 3.3 0 0 1 0 5.2"></path><path d="M17.6 14.8c2 .8 3 2.4 3 4.6"></path></svg>
+    </span>
+    <span style="font: 500 11px/1 Roboto, Manrope; letter-spacing: .04em;">{{ t.communities }}</span>
+  </button>
+  <button type="button" onClick="{{ tabLive }}" style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; border: 0; background: none; color: {{ cLive }}; cursor: pointer;">
+    <span style="display: grid; place-items: center; width: 64px; height: 32px; border-radius: 100px; background: {{ pLive }}; transition: background .25s cubic-bezier(.2,0,0,1);">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="2.3" fill="currentColor" stroke="none"></circle><path d="M7.2 7.2a6.8 6.8 0 0 0 0 9.6"></path><path d="M16.8 7.2a6.8 6.8 0 0 1 0 9.6"></path><path d="M4.4 4.4a10.8 10.8 0 0 0 0 15.2"></path><path d="M19.6 4.4a10.8 10.8 0 0 1 0 15.2"></path></svg>
+    </span>
+    <span style="font: 500 11px/1 Roboto, Manrope; letter-spacing: .04em;">{{ t.live }}</span>
+  </button>
+  <button type="button" onClick="{{ tabChat }}" style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; border: 0; background: none; color: {{ cChat }}; cursor: pointer;">
+    <span style="display: grid; place-items: center; width: 64px; height: 32px; border-radius: 100px; background: {{ pChat }}; transition: background .25s cubic-bezier(.2,0,0,1);">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12.4c0 3.5-3.6 6.4-8 6.4-1 0-2-.15-2.9-.42L5 20.4l1.3-3.1A6.5 6.5 0 0 1 4 12.4C4 8.9 7.6 6 12 6s8 2.9 8 6.4Z"></path></svg>
+    </span>
+    <span style="font: 500 11px/1 Roboto, Manrope; letter-spacing: .04em;">{{ t.chat }}</span>
+  </button>
+  <button type="button" onClick="{{ tabProfile }}" style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; border: 0; background: none; color: {{ cProf }}; cursor: pointer;">
+    <span style="display: grid; place-items: center; width: 64px; height: 32px; border-radius: 100px; background: {{ pProf }}; transition: background .25s cubic-bezier(.2,0,0,1);">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8.4" r="3.5"></circle><path d="M5 20c0-3.4 3.1-5.6 7-5.6s7 2.2 7 5.6"></path></svg>
+    </span>
+    <span style="font: 500 11px/1 Roboto, Manrope; letter-spacing: .04em;">{{ t.profile }}</span>
+  </button>
+</div>
+<div style="position: relative; z-index: 40; flex: none; height: 24px; display: flex; align-items: center; justify-content: center; background: #1c1e1f;">
+  <span style="width: 108px; height: 4px; border-radius: 2px; background: rgba(233,230,223,.42);"></span>
+</div>
+</sc-if>
+
+<sc-if value="{{ isIos }}" hint-placeholder-val="{{ true }}">
+<div style="position: absolute; left: 0; right: 0; bottom: 0; z-index: 60; height: 34px; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 8px; pointer-events: none;">
+  <span style="width: 139px; height: 5px; border-radius: 100px; background: rgba(255,255,255,.72);"></span>
+</div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:402,&quot;height&quot;:874},&quot;platform&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;ios&quot;,&quot;android&quot;],&quot;default&quot;:&quot;ios&quot;,&quot;tsType&quot;:&quot;'ios' | 'android'&quot;,&quot;section&quot;:&quot;Plataforma&quot;},&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;es&quot;,&quot;en&quot;],&quot;default&quot;:&quot;es&quot;,&quot;tsType&quot;:&quot;'es' | 'en'&quot;,&quot;section&quot;:&quot;Plataforma&quot;},&quot;startScreen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;communities&quot;,&quot;live&quot;,&quot;chat&quot;,&quot;profile&quot;,&quot;games&quot;,&quot;music&quot;,&quot;anime&quot;,&quot;account&quot;,&quot;contact&quot;,&quot;settings&quot;],&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Pantalla inicial&quot;}}">
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    const start = props.startScreen || 'home';
+    this.state = {
+      tab: ['home', 'communities', 'live', 'chat', 'profile'].includes(start) ? start : 'home',
+      screen: start,
+      stack: [],
+      lang: props.lang === 'en' ? 'en' : 'es',
+      comId: 'fnlb',
+      filter: 'actuales',
+      gameFilter: 'todos',
+      chatInput: '',
+      msgs: [
+        { id: 1, name: 'Melitopollito', initial: 'M', color: '#f0a24a', time: '19:41', body: '¿El panel de FNLB ya muestra las calls en vivo?', mine: false },
+        { id: 2, name: 'Pablo', initial: 'P', color: '#81d8cc', time: '19:42', body: 'Sí, se refresca cada 15 s con el widget público. Sin bots ni tokens.', mine: true },
+        { id: 3, name: 'crezt3rx', initial: 'C', color: '#9b68ff', time: '19:44', body: 'Brutal. ¿Y la telemetría del PC también?', mine: false }
+      ],
+      form: { name: '', email: '', msg: '' },
+      sent: false,
+      playing: true,
+      prog: 38,
+      cpu: 34, gpu: 61, ram: 18.2, temp: 62,
+      since: 12,
+      theme: 'oscuro',
+      notif: { voz: true, chat: true, drops: false, motion: true },
+      toast: null
+    };
+  }
+
+  coms() {
+    return [
+      { id: 'fnlb', name: 'FNLB', full: 'FNLB — Fortnite Bot Lobbies', roleShort: 'MODERADOR ACTUAL', metric: '60K', metricLabel: 'miembros', logo: 'assets/c/fnlb-logo.webp', cover: 'assets/c/fnlb-cover.webp', accent: '#8fb4ff', current: true, live: true, members: '60.000', online: '8.422', voice: 61, text: 'Moderación y colaboración en un ecosistema que une lobby bots de Fortnite, soporte, producto y comunidad.' },
+      { id: 'nate', name: 'Nate Gentile', full: 'Nate Gentile', roleShort: 'MODERADOR ACTUAL', metric: '3.16M', metricLabel: 'suscriptores YT', logo: 'assets/c/nate-logo.webp', cover: 'assets/c/nate-cover.webp', accent: '#8ee6b8', current: true, live: true, members: '1.612', online: '207', voice: 18, text: 'Moderación en un espacio centrado en tecnología, hardware y divulgación.' },
+      { id: 'edgar', name: 'Edgar Pons', full: 'Edgar Pons', roleShort: 'MODERADOR ACTUAL', metric: '446K', metricLabel: 'seguidores IG', logo: 'assets/c/edgar-logo.webp', cover: 'assets/c/edgar-banner.webp', accent: '#8fb4ff', current: true, live: true, members: '793', online: '50', voice: 9, text: 'Comunidad con página propia y panel basado en el widget público de Discord.' },
+      { id: 'tiago', name: 'Thiago Community', full: 'Thiago Community', roleShort: 'MODERADOR ACTUAL', metric: '5.2M', metricLabel: 'suscriptores YT', logo: 'assets/c/tiago-logo.png', cover: 'assets/c/tiago-cover.png', accent: '#c9a6ff', current: true, live: false, members: '24.500', online: '1.940', voice: 31, text: 'Moderación en el servidor vinculado al creador ThiagoIUTU.' },
+      { id: 'kernelos', name: 'KernelOS', full: 'KernelOS', roleShort: 'COLABORADOR · COMUNIDAD', metric: '50K+', metricLabel: 'miembros', logo: 'assets/c/kernelos-logo.png', cover: 'assets/c/kernelos-cover.webp', accent: '#ff8f8f', current: true, live: false, members: '50.000', online: '3.104', voice: 22, text: 'CustomOS para gaming y baja latencia. El servidor histórico superó 1.500.000 miembros.' },
+      { id: 'gw2', name: 'GW2 · Gatitos 2', full: 'GW2 · Gatitos 2', roleShort: 'MODERADOR ANTERIOR', metric: '103K', metricLabel: 'miembros', logo: 'assets/c/gw2-logo.webp', cover: 'assets/c/gw2-cover.webp', accent: '#c9a6ff', current: false, live: true, members: '103.705', online: '20.618', voice: 96, text: 'Comunidad social y gaming que supera los 103.000 miembros.' },
+      { id: 'valorant', name: 'VALORANT ESP', full: 'VALORANT ESP', roleShort: 'MODERADOR ANTERIOR', metric: '98K+', metricLabel: 'miembros', logo: 'assets/c/valorant-logo.webp', cover: 'assets/c/valorant-cover.webp', accent: '#ff8f8f', current: false, live: false, members: '98.000', online: '6.200', voice: 44, text: 'Experiencia en una de las grandes comunidades hispanohablantes de VALORANT.' }
+    ];
+  }
+
+  componentDidMount() {
+    this.tick = window.setInterval(() => {
+      this.setState((s) => ({
+        prog: s.playing ? (s.prog + 0.55 > 100 ? 0 : s.prog + 0.55) : s.prog,
+        since: s.since > 58 ? 1 : s.since + 1
+      }));
+    }, 1000);
+    this.jit = window.setInterval(() => {
+      const j = (v, lo, hi, d) => Math.max(lo, Math.min(hi, Math.round((v + (Math.random() * 2 - 1) * d) * 10) / 10));
+      this.setState((s) => ({ cpu: j(s.cpu, 12, 88, 8), gpu: j(s.gpu, 22, 96, 9), ram: j(s.ram, 12.4, 29, 1.4), temp: j(s.temp, 48, 79, 3) }));
+    }, 2200);
+  }
+
+  componentWillUnmount() {
+    window.clearInterval(this.tick);
+    window.clearInterval(this.jit);
+    window.clearTimeout(this.toastT);
+  }
+
+  flash(msg) {
+    this.setState({ toast: msg });
+    window.clearTimeout(this.toastT);
+    this.toastT = window.setTimeout(() => this.setState({ toast: null }), 2800);
+  }
+
+  push(screen, extra) {
+    this.setState((s) => Object.assign({ screen, stack: s.stack.concat([s.screen]) }, extra || {}));
+  }
+
+  back = () => {
+    this.setState((s) => {
+      const stack = s.stack.slice();
+      const prev = stack.pop();
+      return { screen: prev || s.tab, stack };
+    });
+  };
+
+  tab = (tab) => () => this.setState({ tab, screen: tab, stack: [], sent: false });
+
+  openCom = (id) => () => this.push('liveCom', { comId: id, since: 4 });
+
+  titles() {
+    const es = {
+      home: { t: 'Inicio', e: 'Pablo Schefer · PapiGEGamer' },
+      communities: { t: 'Comunidades', e: 'Discord · 07 experiencias' },
+      live: { t: 'Ahora', e: 'Presencia en tiempo real' },
+      chat: { t: 'Chat', e: 'Comunidad · sala pública' },
+      profile: { t: 'Perfil', e: 'PapiGEGamer' },
+      liveCom: { t: 'En directo', e: 'Widget público de Discord' },
+      games: { t: 'Juegos y equipo', e: 'Rotación · biblioteca · PC' },
+      music: { t: 'Música', e: 'Spotify vía Discord' },
+      anime: { t: 'Anime', e: 'Monitor y historial' },
+      account: { t: 'Cuenta', e: 'Sesión y verificación' },
+      contact: { t: 'Contacto', e: 'Escríbeme directo' },
+      settings: { t: 'Ajustes', e: 'Idioma · tema · avisos' }
+    };
+    const en = {
+      home: { t: 'Home', e: 'Pablo Schefer · PapiGEGamer' },
+      communities: { t: 'Communities', e: 'Discord · 07 experiences' },
+      live: { t: 'Now', e: 'Real-time presence' },
+      chat: { t: 'Chat', e: 'Community · public room' },
+      profile: { t: 'Profile', e: 'PapiGEGamer' },
+      liveCom: { t: 'Live', e: 'Public Discord widget' },
+      games: { t: 'Games & gear', e: 'Rotation · library · PC' },
+      music: { t: 'Music', e: 'Spotify via Discord' },
+      anime: { t: 'Anime', e: 'Monitor and history' },
+      account: { t: 'Account', e: 'Session and verification' },
+      contact: { t: 'Contact', e: 'Write to me directly' },
+      settings: { t: 'Settings', e: 'Language · theme · alerts' }
+    };
+    return this.state.lang === 'en' ? en : es;
+  }
+
+  renderVals() {
+    const s = this.state;
+    const p = this.props.platform === 'android' ? 'android' : 'ios';
+    const ios = p === 'ios';
+    const es = s.lang === 'es';
+    const coms = this.coms();
+    const com = coms.find((c) => c.id === s.comId) || coms[0];
+    const meta = this.titles()[s.screen] || this.titles().home;
+    const on = ios ? '#f0a24a' : '#f0a24a';
+    const off = ios ? '#5f6665' : '#8f9695';
+    const url = (u) => 'url(' + u + ')';
+    const sep = (i) => (i === 0 ? '0' : '1px solid rgba(233,230,223,.07)');
+
+    const secs = Math.round((s.prog / 100) * 184);
+    const mm = Math.floor(secs / 60);
+    const ss = String(secs % 60).padStart(2, '0');
+
+    const chanSets = {
+      fnlb: [['Lobby ES · 01', 'Meefzy, nedn, llynn, +9', 12], ['Soporte bots', 'crezt3rx, haylee', 4], ['Call 07', 'Peira, WAV, Myna, +5', 8], ['Torneo 4v4', 'ALZN, cristianh, +14', 17]],
+      nate: [['Hardware talk', 'Lorde Ronins, matt', 5], ['Dudas PC', 'NotAlakShide, ALFA', 3], ['Off-topic', 'loveyzs, krispy-chan', 6]],
+      edgar: [['General voz', 'westcol, xDUXAAA-', 4], ['Directo', 'Leo, _sailuhnuwu', 3], ['Privado visible', 'Emolly', 2]],
+      tiago: [['Call 01', 'Melitopollito, Leo, +6', 9], ['Call 02', 'niclix, meat', 4], ['Eventos', 'TREPE-Guaton, +11', 13]],
+      kernelos: [['Kernel dev', 'AntiGodSyndik, RIP G4BEX', 5], ['Soporte OS', 'defackemeto', 3], ['Gaming', 'Lorde Trovador, +7', 9]],
+      gw2: [['Call 48', 'crezt3rx, ilovecinnamon…', 22], ['Llamada Activa / 10k', 'haylee, Emolly, +18', 31], ['Call 50', 'meat, 046.58, +9', 14], ['Call 51', 'niclix, ZEM, +6', 11]],
+      valorant: [['Ranked ES', 'ALZN, cristianh, +8', 11], ['Unrated', 'Myna, loveyzs', 5], ['Coaching', 'ALFA | SrSol', 3]]
+    };
+
+    return {
+      isIos: ios,
+      isAndroid: !ios,
+      title: meta.t,
+      eyebrow: meta.e,
+      canBack: s.stack.length > 0,
+      back: this.back,
+      langLabel: es ? 'ES' : 'EN',
+      toggleLang: () => this.setState((st) => ({ lang: st.lang === 'es' ? 'en' : 'es' })),
+      t: es
+        ? { home: 'Inicio', communities: 'Comunidades', live: 'Ahora', chat: 'Chat', profile: 'Perfil', back: 'Atrás' }
+        : { home: 'Home', communities: 'Communities', live: 'Now', chat: 'Chat', profile: 'Profile', back: 'Back' },
+
+      sHome: s.screen === 'home',
+      sCommunities: s.screen === 'communities',
+      sLiveCom: s.screen === 'liveCom',
+      sLive: s.screen === 'live',
+      sChat: s.screen === 'chat',
+      sProfile: s.screen === 'profile',
+      sGames: s.screen === 'games',
+      sMusic: s.screen === 'music',
+      sAnime: s.screen === 'anime',
+      sAccount: s.screen === 'account',
+      sContact: s.screen === 'contact',
+      sSettings: s.screen === 'settings',
+
+      tabHome: this.tab('home'),
+      tabCommunities: this.tab('communities'),
+      tabLive: this.tab('live'),
+      tabChat: this.tab('chat'),
+      tabProfile: this.tab('profile'),
+      cHome: s.tab === 'home' ? on : off,
+      cCom: s.tab === 'communities' ? on : off,
+      cLive: s.tab === 'live' ? on : off,
+      cChat: s.tab === 'chat' ? on : off,
+      cProf: s.tab === 'profile' ? on : off,
+      pHome: s.tab === 'home' ? 'rgba(240,162,74,.20)' : 'transparent',
+      pCom: s.tab === 'communities' ? 'rgba(240,162,74,.20)' : 'transparent',
+      pLive: s.tab === 'live' ? 'rgba(240,162,74,.20)' : 'transparent',
+      pChat: s.tab === 'chat' ? 'rgba(240,162,74,.20)' : 'transparent',
+      pProf: s.tab === 'profile' ? 'rgba(240,162,74,.20)' : 'transparent',
+      showFab: !ios && (s.screen === 'communities' || s.screen === 'liveCom'),
+
+      goCommunities: this.tab('communities'),
+      goLive: this.tab('live'),
+      goChat: this.tab('chat'),
+      goProfile: this.tab('profile'),
+      goMusic: () => this.push('music'),
+      goAnime: () => this.push('anime'),
+      goGames: () => this.push('games'),
+      goFnlbLive: () => this.push('liveCom', { comId: 'fnlb', since: 4 }),
+
+      featured: coms.filter((c) => ['fnlb', 'nate', 'edgar', 'tiago'].includes(c.id)).map((c) => ({
+        name: c.name, role: es ? 'Moderador actual' : 'Current moderator', metric: c.metric, metricLabel: c.metricLabel,
+        coverBg: url(c.cover), logoBg: url(c.logo), live: c.live, open: this.openCom(c.id)
+      })),
+      capabilities: [
+        { index: '01', title: 'Discord y moderación', text: 'Ayudo a mantener comunidades claras, seguras y activas mediante moderación, coordinación y operación diaria.', tags: ['Discord', 'Moderación', 'Operaciones'] },
+        { index: '02', title: 'Vibecoding y producto', text: 'Creo webs y herramientas con React y TypeScript, apoyándome en IA cuando aporta velocidad sin perder control.', tags: ['React', 'TypeScript', 'IA aplicada'] },
+        { index: '03', title: 'Colaboración abierta', text: 'En FNLB y KernelOS colaboro con producto, soporte y comunidad para que las ideas lleguen a usuarios reales.', tags: ['FNLB', 'KernelOS', 'Iteración'] }
+      ],
+
+      shownComs: coms.filter((c) => (s.filter === 'actuales' ? c.current : !c.current)).map((c) => ({
+        name: c.name, roleShort: c.roleShort, text: c.text, metric: c.metric, metricLabel: c.metricLabel,
+        accent: c.accent, coverBg: url(c.cover), logoBg: url(c.logo), live: c.live,
+        cta: c.live ? (es ? 'Ver en directo' : 'View live') : (es ? 'Abrir' : 'Open'),
+        open: this.openCom(c.id)
+      })),
+      setActuales: () => this.setState({ filter: 'actuales' }),
+      setAnteriores: () => this.setState({ filter: 'anteriores' }),
+      segA: s.filter === 'actuales' ? (ios ? 'rgba(240,162,74,.9)' : 'rgba(240,162,74,.22)') : 'transparent',
+      segB: s.filter !== 'actuales' ? (ios ? 'rgba(240,162,74,.9)' : 'rgba(240,162,74,.22)') : 'transparent',
+      segAc: s.filter === 'actuales' ? (ios ? '#17110a' : '#f0a24a') : '#8f9695',
+      segBc: s.filter !== 'actuales' ? (ios ? '#17110a' : '#f0a24a') : '#8f9695',
+
+      com: { full: com.full, roleShort: com.roleShort, accent: com.accent, members: com.members, online: com.online, coverBg: url(com.cover), logoBg: url(com.logo) },
+      voiceNow: com.voice + s.since % 5,
+      channels: (chanSets[com.id] || chanSets.fnlb).map((c) => ({ name: c[0], users: c[1], count: c[2] })),
+      since: s.since,
+      refresh: () => { this.setState({ since: 0 }); this.flash(es ? 'Panel actualizado con datos públicos.' : 'Panel refreshed with public data.'); },
+
+      cpuTxt: s.cpu.toFixed(0) + '%',
+      gpuTxt: s.gpu.toFixed(0) + '%',
+      ramTxt: s.ram.toFixed(1) + ' GB',
+      tempTxt: s.temp.toFixed(0) + '°C',
+      cpuPct: s.cpu.toFixed(0) + '%',
+      gpuPct: s.gpu.toFixed(0) + '%',
+      ramPct: Math.round((s.ram / 32) * 100) + '%',
+      progPct: s.prog.toFixed(1) + '%',
+      elapsed: mm + ':' + ss,
+      playing: s.playing,
+      togglePlay: () => this.setState((st) => ({ playing: !st.playing })),
+      playIcon: s.playing
+        ? React.createElement('svg', { width: 26, height: 26, viewBox: '0 0 24 24', fill: 'currentColor' }, React.createElement('path', { d: 'M7 5h4v14H7zM13 5h4v14h-4z' }))
+        : React.createElement('svg', { width: 28, height: 28, viewBox: '0 0 24 24', fill: 'currentColor' }, React.createElement('path', { d: 'M8 5.2v13.6L19 12z' })),
+
+      msgs: s.msgs.map((m) => ({
+        name: m.name, initial: m.initial, time: m.time, body: m.body, color: m.color,
+        avatarBg: m.mine ? url('assets/avatar.webp') : 'none',
+        dir: m.mine ? 'row-reverse' : 'row',
+        bubble: m.mine ? 'rgba(240,162,74,.14)' : 'rgba(233,230,223,.05)',
+        border: m.mine ? 'rgba(240,162,74,.24)' : 'rgba(233,230,223,.09)',
+        radius: m.mine ? '16px 16px 5px 16px' : '16px 16px 16px 5px'
+      })),
+      chatInput: s.chatInput,
+      onChatInput: (e) => this.setState({ chatInput: e.target.value }),
+      onChatKey: (e) => { if (e.key === 'Enter') this.sendMsg(); },
+      send: () => this.sendMsg(),
+
+      profileRows: [
+        { title: es ? 'Juegos y equipo' : 'Games & gear', detail: es ? '20 títulos · RTX 5080 en vivo' : '20 titles · live RTX 5080', tint: 'rgba(240,162,74,.14)', color: '#f0a24a', open: () => this.push('games'), sep: sep(0), icon: React.createElement('svg', { width: 17, height: 17, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.9, strokeLinecap: 'round' }, React.createElement('rect', { x: 6, y: 6, width: 12, height: 12, rx: 2.6 }), React.createElement('path', { d: 'M10 3.2v2.6M14 3.2v2.6M10 18.2v2.6M14 18.2v2.6M3.2 10h2.6M3.2 14h2.6M18.2 10h2.6M18.2 14h2.6' })) },
+        { title: es ? 'Música' : 'Music', detail: es ? 'Spotify · sonando ahora' : 'Spotify · playing now', tint: 'rgba(129,216,204,.14)', color: '#81d8cc', open: () => this.push('music'), sep: sep(1), icon: React.createElement('svg', { width: 17, height: 17, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.9, strokeLinecap: 'round' }, React.createElement('circle', { cx: 7, cy: 17, r: 2.7 }), React.createElement('circle', { cx: 17.4, cy: 15, r: 2.7 }), React.createElement('path', { d: 'M9.7 17V6.4l10.4-2v10.6' })) },
+        { title: 'Anime', detail: es ? 'Frieren · ep. 7' : 'Frieren · ep. 7', tint: 'rgba(155,104,255,.16)', color: '#b79bff', open: () => this.push('anime'), sep: sep(1), icon: React.createElement('svg', { width: 17, height: 17, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.9, strokeLinecap: 'round' }, React.createElement('rect', { x: 3.4, y: 7.4, width: 17.2, height: 12, rx: 2.6 }), React.createElement('path', { d: 'M8.6 3.6 12 7l3.4-3.4' })) },
+        { title: es ? 'Cuenta' : 'Account', detail: es ? 'Correo verificado' : 'Verified email', tint: 'rgba(233,230,223,.08)', color: '#e9e6df', open: () => this.push('account'), sep: sep(1), icon: React.createElement('svg', { width: 17, height: 17, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.9, strokeLinecap: 'round', strokeLinejoin: 'round' }, React.createElement('path', { d: 'M12 3.4 5.6 5.8v6c0 4 2.9 7 6.4 8.4 3.5-1.4 6.4-4.4 6.4-8.4v-6z' })) },
+        { title: es ? 'Contacto' : 'Contact', detail: es ? 'Formulario y Discord' : 'Form and Discord', tint: 'rgba(233,230,223,.08)', color: '#e9e6df', open: () => this.push('contact'), sep: sep(1), icon: React.createElement('svg', { width: 17, height: 17, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.9, strokeLinecap: 'round', strokeLinejoin: 'round' }, React.createElement('rect', { x: 3.4, y: 5.6, width: 17.2, height: 12.8, rx: 2.6 }), React.createElement('path', { d: 'M4.4 8.2 12 13.6l7.6-5.4' })) },
+        { title: es ? 'Ajustes' : 'Settings', detail: es ? 'Idioma, tema y avisos' : 'Language, theme, alerts', tint: 'rgba(233,230,223,.08)', color: '#e9e6df', open: () => this.push('settings'), sep: sep(1), icon: React.createElement('svg', { width: 17, height: 17, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.9, strokeLinecap: 'round' }, React.createElement('circle', { cx: 12, cy: 12, r: 3 }), React.createElement('path', { d: 'M12 3.4v2.4M12 18.2v2.4M4.6 7.7l2.1 1.2M17.3 15.1l2.1 1.2M4.6 16.3l2.1-1.2M17.3 8.9l2.1-1.2' })) }
+      ],
+
+      gameChips: [
+        { key: 'todos', label: es ? 'Todos' : 'All' },
+        { key: 'competitive', label: es ? 'Competitivo' : 'Competitive' },
+        { key: 'open-world', label: es ? 'Mundo abierto' : 'Open world' },
+        { key: 'survival', label: es ? 'Supervivencia' : 'Survival' },
+        { key: 'story', label: es ? 'Narrativa' : 'Story' }
+      ].map((g) => ({
+        label: g.label,
+        set: () => this.setState({ gameFilter: g.key }),
+        bg: s.gameFilter === g.key ? 'rgba(240,162,74,.2)' : 'transparent',
+        border: s.gameFilter === g.key ? 'rgba(240,162,74,.5)' : 'rgba(233,230,223,.14)',
+        color: s.gameFilter === g.key ? '#f0a24a' : '#8f9695'
+      })),
+      library: [
+        { title: 'Fortnite', bg: url('assets/g/fortnite.webp'), f: ['competitive'] },
+        { title: 'VALORANT', bg: url('assets/g/valorant.webp'), f: ['competitive'] },
+        { title: 'CS 2', bg: url('assets/g/cs2.jpg'), f: ['competitive'] },
+        { title: 'Minecraft', bg: url('assets/g/minecraft.webp'), f: ['survival'] },
+        { title: 'RDR 2', bg: url('assets/g/rdr2.jpg'), f: ['open-world', 'story'] },
+        { title: 'The Cycle', bg: url('assets/g/the-cycle.jpg'), f: ['survival', 'competitive'] }
+      ].filter((g) => s.gameFilter === 'todos' || g.f.indexOf(s.gameFilter) > -1),
+
+      recents: [
+        { mark: 'BB', color: '#f0a24a', title: 'DtMF', artist: 'Bad Bunny', when: 'hace 12 m' },
+        { mark: 'QV', color: '#81d8cc', title: 'Quevedo · Buenas Noches', artist: 'Quevedo', when: 'hace 1 h' },
+        { mark: 'SA', color: '#9b68ff', title: 'Saiko · Nueva Era', artist: 'Saiko', when: 'ayer' }
+      ],
+      animeLog: [
+        { mark: 'FR', color: '#b79bff', title: 'Sousou no Frieren', detail: 'Episodios 1–7', when: 'hoy' },
+        { mark: 'JJ', color: '#f0a24a', title: 'Jujutsu Kaisen', detail: 'Temporada 2 completa', when: 'jul 22' },
+        { mark: 'SP', color: '#81d8cc', title: 'Spy × Family', detail: 'Episodio 11', when: 'jul 19' },
+        { mark: 'OP', color: '#ff8f8f', title: 'One Piece', detail: 'Episodio 1102', when: 'jul 14' }
+      ],
+      accountRows: [
+        { title: es ? 'Nombre público' : 'Public name', detail: 'PapiGEGamer 🐾', action: es ? 'Editar' : 'Edit' },
+        { title: es ? 'Usuario' : 'Username', detail: '@papigegamerantiguo', action: es ? 'Cambiar' : 'Change' },
+        { title: es ? 'Sesiones activas' : 'Active sessions', detail: es ? 'Este dispositivo · España' : 'This device · Spain', action: es ? 'Ver' : 'View' },
+        { title: es ? 'Avatar' : 'Avatar', detail: es ? 'Subido el 18.07.2026' : 'Uploaded 18.07.2026', action: es ? 'Subir' : 'Upload' }
+      ],
+      signOut: () => this.flash(es ? 'Sesión cerrada en este dispositivo.' : 'Signed out on this device.'),
+
+      fName: s.form.name,
+      fEmail: s.form.email,
+      fMsg: s.form.msg,
+      onName: (e) => this.setForm('name', e.target.value),
+      onEmail: (e) => this.setForm('email', e.target.value),
+      onMsg: (e) => this.setForm('msg', e.target.value),
+      sent: s.sent,
+      submitLabel: s.sent ? (es ? 'Enviar otro mensaje' : 'Send another message') : (es ? 'Enviar mensaje' : 'Send message'),
+      submit: () => {
+        if (s.sent) { this.setState({ sent: false, form: { name: '', email: '', msg: '' } }); return; }
+        this.setState({ sent: true });
+        this.flash(es ? 'Mensaje enviado. Te responderé por correo.' : 'Message sent. I will reply by email.');
+      },
+
+      setEs: () => this.setState({ lang: 'es' }),
+      setEn: () => this.setState({ lang: 'en' }),
+      esBg: es ? 'rgba(240,162,74,.16)' : 'transparent',
+      enBg: es ? 'transparent' : 'rgba(240,162,74,.16)',
+      esB: es ? 'rgba(240,162,74,.5)' : 'rgba(233,230,223,.14)',
+      enB: es ? 'rgba(233,230,223,.14)' : 'rgba(240,162,74,.5)',
+      esC: es ? '#f0a24a' : '#8f9695',
+      enC: es ? '#8f9695' : '#f0a24a',
+      themes: [
+        { key: 'oscuro', label: es ? 'Oscuro' : 'Dark', detail: es ? 'La identidad del portfolio' : 'The portfolio identity', swatch: 'linear-gradient(135deg,#191b1c,#0f1011)' },
+        { key: 'claro', label: es ? 'Claro' : 'Light', detail: es ? 'Contraste alto para exterior' : 'High contrast outdoors', swatch: 'linear-gradient(135deg,#f4f1ea,#dcd8ce)' },
+        { key: 'sistema', label: es ? 'Del sistema' : 'System', detail: es ? 'Sigue a iOS o Android' : 'Follows iOS or Android', swatch: 'linear-gradient(135deg,#0f1011 50%,#f4f1ea 50%)' }
+      ].map((th) => ({
+        label: th.label, detail: th.detail, swatch: th.swatch,
+        set: () => this.setState({ theme: th.key }),
+        bg: s.theme === th.key ? 'rgba(240,162,74,.10)' : '#191b1c',
+        border: s.theme === th.key ? 'rgba(240,162,74,.42)' : 'rgba(233,230,223,.09)',
+        dot: s.theme === th.key ? '#f0a24a' : 'transparent',
+        dotBorder: s.theme === th.key ? '#f0a24a' : 'rgba(233,230,223,.24)'
+      })),
+      toggles: [
+        { key: 'voz', label: es ? 'Alguien entra en voz' : 'Someone joins voice', detail: es ? 'Comunidades que modero' : 'Communities I moderate' },
+        { key: 'chat', label: es ? 'Mensajes del chat' : 'Chat messages', detail: es ? 'Sala pública de la comunidad' : 'Public community room' },
+        { key: 'drops', label: es ? 'Nuevos proyectos' : 'New projects', detail: es ? 'FNLB, KernelOS y más' : 'FNLB, KernelOS and more' },
+        { key: 'motion', label: es ? 'Animaciones completas' : 'Full animations', detail: es ? 'Desactívalo para reducir movimiento' : 'Turn off to reduce motion' }
+      ].map((tg, i) => {
+        const v = s.notif[tg.key];
+        return {
+          label: tg.label, detail: tg.detail, sep: sep(i),
+          toggle: () => this.setState((st) => ({ notif: Object.assign({}, st.notif, { [tg.key]: !st.notif[tg.key] }) })),
+          trackIos: v ? '#81d8cc' : 'rgba(120,120,128,.32)',
+          knobIos: v ? 'translateX(20px)' : 'translateX(0)',
+          trackM3: v ? '#f0a24a' : 'transparent',
+          trackBorder: v ? '#f0a24a' : 'rgba(233,230,223,.34)',
+          knobColor: v ? '#17110a' : 'rgba(233,230,223,.5)',
+          knobM3: v ? 'translateX(20px) scale(1.2)' : 'translateX(0) scale(1)'
+        };
+      }),
+
+      toast: s.toast,
+      toastRadius: ios ? '18px' : '6px',
+      toastBg: ios ? 'rgba(32,34,35,.86)' : '#2b2d2e',
+      toastBorder: ios ? '.5px solid rgba(233,230,223,.14)' : '0'
+    };
+  }
+
+  setForm(k, v) {
+    this.setState((s) => ({ form: Object.assign({}, s.form, { [k]: v }) }));
+  }
+
+  sendMsg() {
+    const text = this.state.chatInput.trim();
+    if (!text) return;
+    const d = new Date();
+    const time = d.getHours() + ':' + String(d.getMinutes()).padStart(2, '0');
+    this.setState((s) => ({
+      chatInput: '',
+      msgs: s.msgs.concat([{ id: Date.now(), name: 'Pablo', initial: 'P', color: '#81d8cc', time, body: text, mine: true }])
+    }));
+  }
+}
+</script>
+</body>
+</html>

@@ -31,7 +31,7 @@ type EdgarCommunityData = {
     channels: VoiceChannel[]
   }
   source?: {
-    mode: 'discord_widget' | 'gateway'
+    mode: 'discord_widget' | 'gateway' | 'static_fallback'
     upstreamCacheSeconds: number
     effectiveRefreshSeconds?: number
   }
@@ -51,7 +51,9 @@ function createSnapshotSignature(data: EdgarCommunityData) {
   })
 }
 
-export function DiscordLivePanel({ content, locale }: { content: SiteCopy; locale: Locale }) {
+export type LiveGuildId = 'edgar' | 'fnlb' | 'valorant' | 'nate' | 'gw2'
+
+export function DiscordLivePanel({ content, locale, guildId = 'edgar', displayName }: { content: SiteCopy; locale: Locale; guildId?: LiveGuildId; displayName?: string }) {
   const [data, setData] = useState<EdgarCommunityData | null>(null)
   const [loading, setLoading] = useState(true)
   const [refreshing, setRefreshing] = useState(false)
@@ -74,8 +76,10 @@ export function DiscordLivePanel({ content, locale }: { content: SiteCopy; local
     checked: 'Comprobado',
     lastChange: 'Último cambio detectado',
     justNow: 'ahora',
-    source: 'Widget oficial · snapshots en vivo',
-    sourceDelay: 'La URL estable de Discord conserva 300 s de caché. Esta integración comparte un snapshot público versionado cada 15 s, por lo que los cambios visibles suelen aparecer en la siguiente comprobación sin usar tokens ni canales privados.',
+    source: 'Actividad pública de Discord',
+    sourceDelay: 'Miembros, canales y participantes visibles se actualizan automáticamente mientras navegas.',
+    fallbackSource: 'Resumen público de la comunidad',
+    fallbackDelay: 'Discord no publica ahora mismo los canales de voz de este servidor. El panel seguirá comprobando el widget automáticamente.',
     expand: 'Mostrar participantes',
     collapse: 'Ocultar participantes',
   } : {
@@ -87,8 +91,10 @@ export function DiscordLivePanel({ content, locale }: { content: SiteCopy; local
     checked: 'Checked',
     lastChange: 'Last change detected',
     justNow: 'now',
-    source: 'Official widget · live snapshots',
-    sourceDelay: 'Discord keeps the stable URL cached for 300 s. This integration shares a versioned public snapshot every 15 s, so visible changes normally appear on the next check without tokens or private-channel access.',
+    source: 'Public Discord activity',
+    sourceDelay: 'Visible members, channels and participants update automatically while you browse.',
+    fallbackSource: 'Public community summary',
+    fallbackDelay: 'Discord is not publishing this server’s voice channels right now. The panel will keep checking the widget automatically.',
     expand: 'Show participants',
     collapse: 'Hide participants',
   }
@@ -103,7 +109,8 @@ export function DiscordLivePanel({ content, locale }: { content: SiteCopy; local
       if (hasDataRef.current) setRefreshing(true)
 
       try {
-        const response = await fetch('/api/edgar-community', {
+        const query = guildId === 'edgar' ? '' : `?guild=${guildId}`
+        const response = await fetch(`/api/edgar-community${query}`, {
           cache: 'no-store',
           headers: { Accept: 'application/json' },
           signal: controller.signal,
@@ -119,8 +126,10 @@ export function DiscordLivePanel({ content, locale }: { content: SiteCopy; local
         }
 
         if (!expansionInitialisedRef.current) {
-          const firstActiveChannel = nextData.voice.channels.find((channel) => channel.members.length > 0)
-          if (firstActiveChannel) setExpandedChannels(new Set([firstActiveChannel.id]))
+          const activeChannels = nextData.voice.channels
+            .filter((channel) => channel.members.length > 0)
+            .map((channel) => channel.id)
+          setExpandedChannels(new Set(activeChannels))
           expansionInitialisedRef.current = true
         }
 
@@ -153,7 +162,7 @@ export function DiscordLivePanel({ content, locale }: { content: SiteCopy; local
       window.clearInterval(poll)
       document.removeEventListener('visibilitychange', onVisibilityChange)
     }
-  }, [requestVersion])
+  }, [guildId, requestVersion])
 
   const number = (value: number | null) => value === null ? '—' : new Intl.NumberFormat(locale).format(value)
   const checked = data
@@ -167,6 +176,7 @@ export function DiscordLivePanel({ content, locale }: { content: SiteCopy; local
     () => activeOnly ? data?.voice.channels.filter((channel) => channel.members.length > 0) ?? [] : data?.voice.channels ?? [],
     [activeOnly, data?.voice.channels],
   )
+  const isFallback = data?.source?.mode === 'static_fallback'
 
   const toggleChannel = (channelId: string) => {
     setExpandedChannels((current) => {
@@ -182,7 +192,7 @@ export function DiscordLivePanel({ content, locale }: { content: SiteCopy; local
       <div className="discord-live__header">
         <div>
           <span className="discord-live__signal"><span className="status-dot" aria-hidden="true" />{ui.monitor}</span>
-          <h2>{data?.server.name ?? 'Edgar Pons'}</h2>
+          <h2>{displayName ?? data?.server.name ?? ({ edgar: 'Edgar Pons', fnlb: 'FNLB', valorant: 'VALORANT ESP', nate: 'Nate Gentile', gw2: 'GW2' }[guildId])}</h2>
         </div>
         <span className="discord-live__privacy">{labels.publicData}</span>
       </div>
@@ -307,8 +317,8 @@ export function DiscordLivePanel({ content, locale }: { content: SiteCopy; local
           </div>
 
           <div className="discord-live__source">
-            <span><Radio size={15} aria-hidden="true" />{ui.source}</span>
-            <p>{ui.sourceDelay}</p>
+            <span><Radio size={15} aria-hidden="true" />{isFallback ? ui.fallbackSource : ui.source}</span>
+            <p>{isFallback ? ui.fallbackDelay : ui.sourceDelay}</p>
           </div>
 
           <div className="discord-live__footer">

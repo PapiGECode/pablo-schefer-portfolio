@@ -254,6 +254,22 @@
 }
 
 @media (max-width: 480px) {
+  .site-footer__actions {
+    gap: 0.75rem;
+  }
+
+  .site-footer__demo {
+    max-width: 4rem;
+    line-height: 1.25;
+    text-align: right;
+  }
+
+  .site-footer__legal nav {
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
   .site-header {
     width: calc(100% - 12px);
     height: 56px;
@@ -362,5 +378,135 @@
 @media (pointer: coarse) {
   .monogram__node-shift {
     transform: none;
+  }
+}
+
+/* Mobile composition: the phone layout is intentionally stacked and touch-first. */
+@media (max-width: 700px) {
+  html,
+  body,
+  #root {
+    min-width: 0;
+    overflow-x: hidden;
+  }
+
+  .site-header {
+    top: max(8px, env(safe-area-inset-top, 0px));
+    width: calc(100% - 20px);
+    height: 54px;
+    padding-inline: 0.35rem;
+    border-radius: 18px;
+  }
+
+  .site-header__nav,
+  .site-header nav {
+    display: none;
+  }
+
+  .hero {
+    width: 100%;
+    min-height: 0;
+    padding: calc(86px + env(safe-area-inset-top, 0px)) 14px 58px;
+  }
+
+  .hero__layout {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: 1.4rem;
+  }
+
+  .hero__copy {
+    width: 100%;
+    order: 1;
+  }
+
+  .hero__title {
+    max-width: 100%;
+    font-size: clamp(2.9rem, 14.5vw, 4.8rem);
+    line-height: 0.9;
+  }
+
+  .hero__intro-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .hero__actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  .hero__actions .magnetic-link {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .hero__visual-stack {
+    order: 2;
+    width: 100%;
+  }
+
+  .hero__visual {
+    width: min(70vw, 290px);
+    max-width: 290px;
+  }
+
+  .section,
+  .page-hero,
+  .site-footer {
+    width: calc(100% - 28px);
+  }
+
+  .section {
+    padding-block: 3.7rem;
+  }
+
+  .section-heading--split,
+  .page-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .page-hero {
+    min-height: 0;
+    gap: 1.5rem;
+    padding: calc(96px + env(safe-area-inset-top, 0px)) 0 3.6rem;
+  }
+
+  .page-hero__copy h1 {
+    font-size: clamp(2.8rem, 14vw, 4.6rem);
+  }
+
+  .page-hero__visual {
+    order: 2;
+    width: min(78vw, 320px);
+    margin-inline: auto;
+  }
+
+  .community-chat--inline {
+    position: fixed;
+    z-index: 60;
+    inset: auto 10px 10px;
+    width: auto;
+    max-height: min(66svh, 520px);
+    min-height: 0;
+  }
+
+  .now-dock,
+  .anime-dock {
+    max-width: calc(100vw - 16px);
+  }
+
+  .now-dock__summary,
+  .anime-dock__body {
+    min-width: 0;
+  }
+
+  .community-card-grid,
+  .projects-grid,
+  .games-grid {
+    grid-template-columns: 1fr;
   }
 }
