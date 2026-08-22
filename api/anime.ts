@@ -160,7 +160,7 @@ export async function GET(request: Request) {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        'User-Agent': 'PabloScheferPortfolio/1.0 (+https://pabloschefer.vercel.app)',
+        'User-Agent': 'PabloScheferPortfolio/1.0 (+https://www.pabloschefer.com)',
       },
       body: JSON.stringify({ query: animeQuery, variables: { search: title } }),
       cache: 'no-store',

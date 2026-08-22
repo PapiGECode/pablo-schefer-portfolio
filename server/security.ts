@@ -16,7 +16,7 @@ type RateBucket = {
 const rateBuckets = new Map<string, RateBucket>()
 const configuredOrigins = [
   'https://pablo-schefer.vercel.app',
-  'https://pabloschefer.vercel.app',
+  'https://www.pabloschefer.com',
   'https://pablo-schefer-portfolio.vercel.app',
   'https://pabloschefer.es',
   'https://www.pabloschefer.es',

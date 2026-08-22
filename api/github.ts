@@ -84,7 +84,7 @@ function normalizeRepository(payload: unknown) {
 function githubHeaders() {
   return {
     Accept: 'application/vnd.github+json',
-    'User-Agent': 'PabloScheferPortfolio/1.0 (+https://pabloschefer.vercel.app)',
+    'User-Agent': 'PabloScheferPortfolio/1.0 (+https://www.pabloschefer.com)',
     'X-GitHub-Api-Version': '2022-11-28',
   }
 }

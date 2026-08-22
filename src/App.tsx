@@ -26,7 +26,7 @@ const NotFoundPage = lazy(() => import('./pages/NotFoundPage').then((module) => 
 const NowPlayingDock = lazy(() => import('./components/NowPlayingDock').then((module) => ({ default: module.NowPlayingDock })))
 const AnimeNowDock = lazy(() => import('./components/AnimeNowDock').then((module) => ({ default: module.AnimeNowDock })))
 
-const productionOrigin = 'https://pabloschefer.vercel.app'
+const productionOrigin = 'https://www.pabloschefer.com'
 
 function getSeo(content: SiteCopy, pathname: string) {
   if (pathname === '/') return content.seo.home
@@ -53,15 +53,37 @@ function ScrollManager() {
   const location = useLocation()
 
   useEffect(() => {
+    let observer: MutationObserver | null = null
+    let timeout = 0
+
     const frame = window.requestAnimationFrame(() => {
-      if (location.hash) {
-        const id = decodeURIComponent(location.hash.slice(1))
-        document.getElementById(id)?.scrollIntoView({ block: 'start' })
-      } else {
+      if (!location.hash) {
         window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+        return
       }
+
+      const id = decodeURIComponent(location.hash.slice(1))
+      const scrollToTarget = () => {
+        const target = document.getElementById(id)
+        if (!target) return false
+        target.scrollIntoView({ block: 'start' })
+        observer?.disconnect()
+        window.clearTimeout(timeout)
+        return true
+      }
+
+      if (scrollToTarget()) return
+
+      observer = new MutationObserver(scrollToTarget)
+      observer.observe(document.getElementById('root') ?? document.body, { childList: true, subtree: true })
+      timeout = window.setTimeout(() => observer?.disconnect(), 2_000)
     })
-    return () => window.cancelAnimationFrame(frame)
+
+    return () => {
+      window.cancelAnimationFrame(frame)
+      window.clearTimeout(timeout)
+      observer?.disconnect()
+    }
   }, [location.hash, location.pathname])
 
   return null

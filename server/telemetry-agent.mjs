@@ -185,7 +185,7 @@ await sample()
 setInterval(() => { void sample() }, 5_000).unref()
 
 http.createServer(async (request, response) => {
-  response.setHeader('Access-Control-Allow-Origin', 'https://pabloschefer.vercel.app')
+  response.setHeader('Access-Control-Allow-Origin', 'https://www.pabloschefer.com')
   response.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS')
   response.setHeader('Access-Control-Allow-Headers', 'Content-Type')
   response.setHeader('Access-Control-Allow-Private-Network', 'true')

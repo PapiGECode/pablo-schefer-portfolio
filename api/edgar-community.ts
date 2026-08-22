@@ -12,7 +12,7 @@ const gw2GuildId = '1196972070253383742'
 const snapshotRefreshSeconds = 15
 const discordHeaders = {
   Accept: 'application/json',
-  'User-Agent': 'PabloScheferPortfolio/1.0 (+https://pabloschefer.vercel.app)',
+  'User-Agent': 'PabloScheferPortfolio/1.0 (+https://www.pabloschefer.com)',
 }
 
 type JsonRecord = Record<string, unknown>
