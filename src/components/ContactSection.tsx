@@ -8,7 +8,7 @@ import { MagneticLink } from './MagneticLink'
 const discordProfileUrl = 'https://discord.com/users/1179009666110476328'
 const socialLinks = [
   { label: 'Discord', href: discordProfileUrl },
-  { label: 'GitHub', href: 'https://github.com/PapiGEGamer-web' },
+  { label: 'GitHub', href: 'https://github.com/PapiGECode' },
   { label: 'X', href: 'https://x.com/PapiGEGamer' },
   { label: 'Instagram', href: 'https://www.instagram.com/papigegamer/' },
   { label: 'YouTube', href: 'https://www.youtube.com/@lastPapiGEGamer' },
