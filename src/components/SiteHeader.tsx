@@ -19,8 +19,26 @@ export function SiteHeader({ content, locale, onLocaleChange }: SiteHeaderProps)
   const [languageOpen, setLanguageOpen] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [mobileGroup, setMobileGroup] = useState<DropdownId>(null)
+  const [scrolled, setScrolled] = useState(false)
   const headerRef = useRef<HTMLElement>(null)
   const auth = useAuth()
+
+  useEffect(() => {
+    let frame = 0
+    const update = () => {
+      setScrolled(window.scrollY > 36)
+      frame = 0
+    }
+    const onScroll = () => {
+      if (!frame) frame = window.requestAnimationFrame(update)
+    }
+    update()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.cancelAnimationFrame(frame)
+    }
+  }, [])
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : ''
@@ -71,12 +89,12 @@ export function SiteHeader({ content, locale, onLocaleChange }: SiteHeaderProps)
 
   return (
     <>
-      <header className="site-header" ref={headerRef}>
+      <header className={`site-header${scrolled ? ' site-header--floating' : ' site-header--integrated'}`} ref={headerRef}>
         <Link className="brand" to="/" aria-label={content.common.homeLabel} onClick={closeNavigation}>
           <span className="brand__mark" aria-hidden="true">
             <img src="/media/profile/pablo-schefer-avatar.webp" alt="" width="64" height="64" />
           </span>
-          <span className="brand__name">Pablo Schefer</span>
+          <span className="brand__name"><strong>Pablo Schefer</strong><small>PapiGEGamer</small></span>
         </Link>
 
         <nav className="desktop-nav" aria-label={content.common.navigationLabel}>
