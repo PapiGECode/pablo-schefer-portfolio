@@ -8,7 +8,6 @@ import { AuthProvider } from './contexts/AuthContext'
 import { LanyardProvider } from './hooks/useLanyardPresence'
 import './styles.css'
 import './responsive.css'
-import './redesign.css'
 
 const loadMotionFeatures = () => import('./motionFeatures').then((module) => module.default)
 

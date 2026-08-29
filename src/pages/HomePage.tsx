@@ -1,6 +1,6 @@
 import { useReducedMotion } from 'motion/react'
 import * as m from 'motion/react-m'
-import { ArrowDown, ArrowUpRight, Braces, Radio, UsersRound } from 'lucide-react'
+import { ArrowDown, ArrowUpRight } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import type { Locale, SiteCopy } from '../content'
@@ -16,13 +16,17 @@ import { setDockChatOpen } from '../hooks/useDockPosition'
 import type { CommunityChatNotification } from '../hooks/useCommunityNotifications'
 
 const signalItems = [
-  'DISCORD / MODERATION',
-  'REACT / TYPESCRIPT',
-  'KICORD / OPEN SOURCE',
-  'FNLB / COMMUNITY',
-  'GITHUB / LIVE API',
-  'PRODUCT / ITERATION',
-  'SPAIN / UTC+02',
+  'DSC / 01',
+  'VIBE / 02',
+  'FNLB / 03',
+  'KOS / 04',
+  'EDGAR / LIVE',
+  'NATE / LIVE',
+  'TIAGO / MOD',
+  'GAMES / 20',
+  'RTX / 5080',
+  'RYZEN / X3D',
+  'SPOTIFY / PUBLIC',
 ]
 
 export function HomePage({ content, locale }: { content: SiteCopy; locale: Locale }) {
@@ -34,18 +38,14 @@ export function HomePage({ content, locale }: { content: SiteCopy; locale: Local
     return () => setDockChatOpen(false)
   }, [chatOpen])
   useEffect(() => {
-    let notificationTimer = 0
     const handleIncoming = (event: Event) => {
       const message = (event as CustomEvent<CommunityChatNotification>).detail
       setIncomingMessage(message)
-      window.clearTimeout(notificationTimer)
-      notificationTimer = window.setTimeout(() => setIncomingMessage(null), 8_000)
+      const timer = window.setTimeout(() => setIncomingMessage(null), 8_000)
+      return () => window.clearTimeout(timer)
     }
     window.addEventListener('community-chat:new-message', handleIncoming)
-    return () => {
-      window.removeEventListener('community-chat:new-message', handleIncoming)
-      window.clearTimeout(notificationTimer)
-    }
+    return () => window.removeEventListener('community-chat:new-message', handleIncoming)
   }, [])
   const home = content.home
   const featuredCommunities = communities.filter((community) => ['fnlb', 'nate', 'edgar', 'tiago'].includes(community.id))
@@ -59,16 +59,19 @@ export function HomePage({ content, locale }: { content: SiteCopy; locale: Local
   return (
     <>
       <section className={`hero${chatOpen ? ' hero--chat-open' : ''}`} id="top">
+        <div className="hero__status">
+          <span className="status-dot" aria-hidden="true" />
+          {home.availability}
+        </div>
+
         <div className="hero__layout">
           <div className="hero__copy">
-            <m.div className="hero__identity" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, duration: 0.7 }}>
-              <span className="hero__identity-avatar"><img src="/media/profile/pablo-schefer-avatar.webp" alt="" width="64" height="64" /></span>
-              <span><strong>{home.eyebrow}</strong><small>{home.availability}</small></span>
-              <i className="status-dot" aria-hidden="true" />
-            </m.div>
+            <m.p className="eyebrow hero__eyebrow" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.15, duration: 0.8 }}>
+              {home.eyebrow}
+            </m.p>
             <h1 className="hero__title" aria-label={home.heroTitle.join(' ')}>
               {home.heroTitle.map((line, index) => (
-                <span className={index === 1 ? 'accent-word' : ''} key={line}>
+                <span className={index === 1 || index === 3 ? 'accent-word' : ''} key={line}>
                   <m.span
                     initial={reduceMotion ? { opacity: 1 } : { y: '110%', rotate: 2 }}
                     animate={{ y: 0, rotate: 0 }}
@@ -86,17 +89,13 @@ export function HomePage({ content, locale }: { content: SiteCopy; locale: Local
                 <MagneticLink href="/perfil" variant="ghost">{home.secondaryCta}</MagneticLink>
               </div>
             </m.div>
-
-            <m.div className="hero__ledger" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8, duration: 0.8 }}>
-              <span><UsersRound size={15} aria-hidden="true" /><strong>04+</strong><small>{locale === 'es' ? 'comunidades actuales' : 'current communities'}</small></span>
-              <span><Braces size={15} aria-hidden="true" /><strong>React</strong><small>TypeScript · API</small></span>
-              <span><Radio size={15} aria-hidden="true" /><strong>2015</strong><small>{locale === 'es' ? 'en Discord' : 'on Discord'}</small></span>
-            </m.div>
           </div>
 
           <div className="hero__visual-stack">
             <m.div className="hero__visual" initial={{ opacity: 0, scale: 0.9, rotate: -4 }} animate={{ opacity: 1, scale: 1, rotate: 0 }} transition={{ delay: 0.25, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}>
               <Monogram />
+              <div className="orbit-copy">{home.orbitLabel}</div>
+              <div className="visual-coordinates">SPAIN / UTC+02</div>
             </m.div>
             <CommunityChat locale={locale} mode="widget" incomingMessage={incomingMessage} onOpen={() => setChatOpen(true)} />
           </div>
@@ -200,7 +199,7 @@ export function HomePage({ content, locale }: { content: SiteCopy; locale: Local
             const id = item.title === 'FNLB' ? 'fnlb' : item.title === 'KernelOS' ? 'kernelos' : undefined
             return (
               <m.article
-                className={`proof-card-shell proof-card-shell--${item.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
+                className="proof-card-shell"
                 id={id}
                 key={item.title}
                 initial={reduceMotion ? { opacity: 1 } : { opacity: 0, y: 30 }}

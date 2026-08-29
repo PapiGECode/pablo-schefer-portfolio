@@ -239,9 +239,9 @@ export const copy: Record<Locale, SiteCopy> = {
       notFound: { title: 'Página no encontrada — Pablo Schefer', description: 'La página solicitada no existe.' },
     },
     home: {
-      availability: 'Señal activa · España · UTC+02',
-      eyebrow: 'Pablo Schefer · PapiGEGamer',
-      heroTitle: ['Construyo', 'entre comunidad', 'y código.'],
+      availability: 'Construyendo entre comunidad, código y producto',
+      eyebrow: 'Discord · Vibecoding · Colaboración',
+      heroTitle: ['Comunidades', 'con pulso.', 'Código', 'con intención.'],
       heroIntro: 'Soy Pablo Schefer — PapiGEGamer en Discord. Modero comunidades tecnológicas y convierto ideas en productos digitales mediante desarrollo asistido por IA.',
       primaryCta: 'Explorar comunidades',
       secondaryCta: 'Conocer mi perfil',
@@ -278,16 +278,6 @@ export const copy: Record<Locale, SiteCopy> = {
       proofTitle: 'Donde participo. Lo que ayudo a construir.',
       proofIntro: 'Dos proyectos en los que participo y una parte de las comunidades que forman mi recorrido.',
       proof: [
-        {
-          type: 'Producto · Open source',
-          metric: 'OPEN',
-          title: 'KiCord',
-          text: 'Proyecto desarrollado en colaboración: una experiencia modular para Discord que combina producto, comunidad y una identidad visual muy cuidada.',
-          link: 'https://kicord.es/',
-          linkLabel: 'Explorar KiCord',
-          image: 'https://kicord.es/kicord-banner-sin-texto-logo.gif',
-          imageAlt: 'Identidad visual violeta de KiCord',
-        },
         {
           type: 'Producto · Comunidad',
           metric: '60K',
@@ -484,9 +474,9 @@ export const copy: Record<Locale, SiteCopy> = {
       notFound: { title: 'Page not found — Pablo Schefer', description: 'The requested page does not exist.' },
     },
     home: {
-      availability: 'Signal live · Spain · UTC+02',
-      eyebrow: 'Pablo Schefer · PapiGEGamer',
-      heroTitle: ['Building', 'between community', 'and code.'],
+      availability: 'Building across community, code and product',
+      eyebrow: 'Discord · Vibe coding · Collaboration',
+      heroTitle: ['Communities', 'with energy.', 'Code', 'with intent.'],
       heroIntro: 'I am Pablo Schefer — PapiGEGamer on Discord. I moderate tech communities and turn ideas into digital products through AI-assisted development.',
       primaryCta: 'Explore communities',
       secondaryCta: 'View my profile',
@@ -508,7 +498,6 @@ export const copy: Record<Locale, SiteCopy> = {
       proofTitle: 'Where I contribute. What I help build.',
       proofIntro: 'Two projects I contribute to and part of the community work that shaped my path.',
       proof: [
-        { type: 'Product · Open source', metric: 'OPEN', title: 'KiCord', text: 'A project built collaboratively: a modular Discord experience connecting product, community and a carefully crafted visual identity.', link: 'https://kicord.es/', linkLabel: 'Explore KiCord', image: 'https://kicord.es/kicord-banner-sin-texto-logo.gif', imageAlt: 'KiCord purple visual identity' },
         { type: 'Product · Community', metric: '60K', title: 'FNLB', text: 'I collaborate within the FNLB ecosystem, a Fortnite lobby-bot platform where product, support and community evolve together.', link: '/proyectos/fnlb', linkLabel: 'Discover FNLB', image: communityAssets.fnlbCoverStatic, imageAlt: 'Blue FNLB visual identity', internal: true },
         { type: 'Project · Community', metric: '50K+', title: 'KernelOS', text: 'I collaborate within the KernelOS ecosystem: a Custom OS for gaming, low latency and a Discord community. Its historic server passed 1,500,000 members; after it closed, the new one has more than 50,000.', link: '/proyectos/kernelos', linkLabel: 'View KernelOS', image: '/media/projects/kernelos-cover.webp', imageAlt: 'Dark KernelOS background with an oni mask', internal: true },
         { type: 'Discord · Operations', metric: '07+', title: 'Community network', text: 'Seven featured public experiences plus other current and previous roles across gaming, technology and creators.', link: '/comunidades', linkLabel: 'Explore communities', image: communityAssets.edgarPonsCover, imageAlt: 'Edgar Pons community visual identity', internal: true },
