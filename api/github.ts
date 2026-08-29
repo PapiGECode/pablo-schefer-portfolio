@@ -1,7 +1,7 @@
 import { apiSecurityHeaders, enforceRateLimit, jsonResponse } from '../server/security.js'
 
 const githubApi = 'https://api.github.com'
-const githubUser = 'PapiGEGamer-web'
+const githubUser = 'PapiGECode'
 const requestTimeoutMs = 6_000
 const maxRepositories = 6
 
