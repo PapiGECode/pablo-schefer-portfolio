@@ -41,9 +41,9 @@ pnpm build
 
 ## Integración con GitHub
 
-La portada incluye una sección `GitHub / Open Source` en `/#github`, alimentada con datos reales de la [GitHub REST API](https://docs.github.com/en/rest). La integración consulta el perfil público `PapiGEGamer-web` y sus repositorios para mostrar descripción, lenguaje principal, estrellas, forks, fecha de actualización y enlaces originales.
+La portada incluye una sección `GitHub / Open Source` en `/#github`, alimentada con datos reales de la [GitHub REST API](https://docs.github.com/en/rest). La integración consulta el perfil público `PapiGECode` y sus repositorios para mostrar descripción, lenguaje principal, estrellas, forks, fecha de actualización y enlaces originales.
 
-El navegador no consulta GitHub directamente ni recibe credenciales. La Vercel Function [`api/github.ts`](./api/github.ts) consume `GET /users/PapiGEGamer-web` y `GET /users/PapiGEGamer-web/repos`, valida y reduce la respuesta y publica únicamente los campos utilizados por la interfaz. La respuesta se conserva una hora en la CDN, admite datos obsoletos durante incidencias temporales y ofrece un fallback que mantiene operativo el resto del portfolio.
+El navegador no consulta GitHub directamente ni recibe credenciales. La Vercel Function [`api/github.ts`](./api/github.ts) consume `GET /users/PapiGECode` y `GET /users/PapiGECode/repos`, valida y reduce la respuesta y publica únicamente los campos utilizados por la interfaz. La respuesta se conserva una hora en la CDN, admite datos obsoletos durante incidencias temporales y ofrece un fallback que mantiene operativo el resto del portfolio.
 
 No se utiliza OAuth ni se declara afiliación con GitHub. La interfaz indica únicamente: `Powered by the GitHub REST API`.
 
