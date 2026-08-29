@@ -36,7 +36,7 @@ type GitHubState =
   | { status: 'ready'; data: GitHubData }
   | { status: 'unavailable'; data: null }
 
-const githubProfileUrl = 'https://github.com/PapiGEGamer-web'
+const githubProfileUrl = 'https://github.com/PapiGECode'
 
 const labels = {
   es: {
@@ -49,7 +49,7 @@ const labels = {
     updated: 'Actualizado',
     open: 'Abrir repositorio',
     profile: 'Ver perfil completo',
-    noDescription: 'Repositorio público de PapiGEGamer-web.',
+    noDescription: 'Repositorio público de PapiGECode.',
     unavailable: 'La actividad no está disponible ahora mismo. Puedes consultar el perfil directamente en GitHub.',
     powered: 'Powered by the GitHub REST API',
     loading: 'Cargando actividad pública de GitHub',
@@ -64,7 +64,7 @@ const labels = {
     updated: 'Updated',
     open: 'Open repository',
     profile: 'View full profile',
-    noDescription: 'Public repository by PapiGEGamer-web.',
+    noDescription: 'Public repository by PapiGECode.',
     unavailable: 'Activity is unavailable right now. You can still visit the profile directly on GitHub.',
     powered: 'Powered by the GitHub REST API',
     loading: 'Loading public GitHub activity',
