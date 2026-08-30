@@ -19,15 +19,13 @@ import {
   type LucideIcon,
 } from 'lucide-react'
 import type { Locale, SiteCopy } from '../content'
-import { dreamHardware, games, hardware, type Game, type HardwareItem } from '../data/gamesAndGear'
+import { games, hardware, type Game, type HardwareItem } from '../data/gamesAndGear'
 import { type LanyardActivity, useLanyardPresence } from '../hooks/useLanyardPresence'
 import { useHardwareTelemetry } from '../hooks/useHardwareTelemetry'
 import { ContactSection } from '../components/ContactSection'
 import './GamesAndGearPage.css'
 
 type GameFilter = 'all' | 'competitive' | 'coop' | 'open-world' | 'story' | 'survival' | 'creative'
-type HardwareMode = 'current' | 'dream'
-
 const hardwareIcons: Record<HardwareItem['id'], LucideIcon> = {
   cpu: Cpu,
   gpu: Monitor,
@@ -74,17 +72,6 @@ function normalizeActivityTitle(value: string) {
   return value.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim()
 }
 
-function formatBytes(value: number) {
-  if (!Number.isFinite(value) || value <= 0) return '0 B'
-  const units = ['B', 'KB', 'MB', 'GB', 'TB']
-  const exponent = Math.min(Math.floor(Math.log(value) / Math.log(1024)), units.length - 1)
-  return `${(value / 1024 ** exponent).toFixed(exponent > 1 ? 1 : 0)} ${units[exponent]}`
-}
-
-function formatRate(value: number) {
-  return `${formatBytes(value)}/s`
-}
-
 function gameFromActivity(activity: LanyardActivity): Game | null {
   if (activity.type !== 0) return null
   const normalized = normalizeActivityTitle(activityText(activity))
@@ -119,19 +106,18 @@ export function GamesAndGearPage({ content, locale }: { content: SiteCopy; local
   const telemetry = useHardwareTelemetry()
   const [filter, setFilter] = useState<GameFilter>('all')
   const [selectedGame, setSelectedGame] = useState<Game | null>(null)
-  const [hardwareMode, setHardwareMode] = useState<HardwareMode>('current')
   const [activeHardwareId, setActiveHardwareId] = useState<HardwareItem['id']>('gpu')
   const dialogRef = useRef<HTMLElement | null>(null)
   const previousFocusRef = useRef<HTMLElement | null>(null)
   const featuredGames = games.filter((game) => game.status !== 'library')
   const libraryGames = games.filter((game) => game.status === 'library' || game.id === 'arc-raiders')
-  const hardwareItems = hardwareMode === 'current' ? hardware : dreamHardware
+  const hardwareItems = hardware
   const activeHardware = hardwareItems.find((item) => item.id === activeHardwareId) ?? hardwareItems[0]
 
   const labels = locale === 'es' ? {
     eyebrow: 'Gaming · Hardware · Perfil',
     title: 'Lo que juego.\nLa máquina que lo mueve.',
-    intro: 'Una biblioteca personal inspirada en mi perfil de Discord, con los juegos que están en mi rotación, mi favorito y el hardware detectado en este equipo.',
+    intro: 'Mis juegos actuales, el que más echo de menos y la configuración completa de mi ordenador.',
     explore: 'Explorar biblioteca',
     rotation: 'En rotación',
     favorite: 'Juego favorito',
@@ -148,17 +134,10 @@ export function GamesAndGearPage({ content, locale }: { content: SiteCopy; local
     details: 'Abrir ficha',
     visit: 'Ver página oficial',
     close: 'Cerrar ficha',
-    setupEyebrow: 'Hardware · Actual + objetivo',
-    setupTitle: 'Equipo actual. Próximo nivel.',
-    setupIntro: 'Alterna entre la configuración detectada en este ordenador y un setup objetivo de gama extrema. Son dos inventarios separados y nunca se publican números de serie.',
-    currentSetup: 'Equipo actual',
-    currentHint: 'Detectado en este ordenador',
-    dreamSetup: 'Setup objetivo',
-    dreamHint: 'Aspiracional · No adquirido',
-    detected: 'Configuración verificada',
-    aspirational: 'Objetivo aspiracional · No es el equipo actual',
-    currentDisclosure: 'Hardware instalado y detectado localmente. Esta vista representa el equipo que utilizo ahora.',
-    dreamDisclosure: 'Configuración de referencia que me gustaría construir. Los componentes se basan en fichas oficiales, pero no forman parte de mi equipo actual.',
+    setupEyebrow: 'Hardware · Mi equipo',
+    setupTitle: 'Potencia, temperatura y uso en directo.',
+    setupIntro: 'Mi configuración, componente por componente, con la carga de CPU, GPU, memoria y almacenamiento actualizada cada cinco segundos.',
+    detected: 'Mi configuración',
     liveEyebrow: 'Discord · Rich Presence',
     liveTitle: 'Jugando ahora',
     liveIntro: 'La actividad pública de Discord aparece aquí en directo con su portada, estado y ficha del juego.',
@@ -166,17 +145,18 @@ export function GamesAndGearPage({ content, locale }: { content: SiteCopy; local
     idleBody: 'Cuando Discord detecte un juego abierto, esta tarjeta se actualizará automáticamente.',
     liveBadge: 'EN DIRECTO',
     connection: 'Conexión Lanyard',
-    telemetry: 'Monitor local · 5 s',
+    telemetry: 'Monitor del equipo · 5 s',
     telemetryReady: 'Lectura en directo',
-    telemetryOffline: 'Monitor local apagado',
+    telemetryOffline: 'Esperando datos del equipo',
+    staticSpec: 'Especificación del componente',
+    updated: 'Actualizado',
     utilization: 'Uso actual',
     unavailable: 'Sin lectura',
     temperature: 'Temperatura',
-    network: 'Red',
   } : {
     eyebrow: 'Gaming · Hardware · Profile',
     title: 'What I play.\nThe machine behind it.',
-    intro: 'A personal library inspired by my Discord profile, with the games in my rotation, my favourite and the hardware detected on this machine.',
+    intro: 'My current games, the one I miss most and the complete configuration of my computer.',
     explore: 'Explore library',
     rotation: 'In rotation',
     favorite: 'Favourite game',
@@ -193,17 +173,10 @@ export function GamesAndGearPage({ content, locale }: { content: SiteCopy; local
     details: 'Open details',
     visit: 'View official page',
     close: 'Close details',
-    setupEyebrow: 'Hardware · Current + target',
-    setupTitle: 'Current machine. Next level.',
-    setupIntro: 'Switch between the configuration detected on this computer and an extreme target setup. They are separate inventories and serial numbers are never published.',
-    currentSetup: 'Current machine',
-    currentHint: 'Detected on this computer',
-    dreamSetup: 'Target setup',
-    dreamHint: 'Aspirational · Not acquired',
-    detected: 'Verified configuration',
-    aspirational: 'Aspirational target · Not the current machine',
-    currentDisclosure: 'Locally installed and detected hardware. This view represents the machine I use today.',
-    dreamDisclosure: 'A reference configuration I would like to build. Components are based on official specifications, but they are not part of my current machine.',
+    setupEyebrow: 'Hardware · My build',
+    setupTitle: 'Power, temperature and live usage.',
+    setupIntro: 'My build component by component, with CPU, GPU, memory and storage load refreshed every five seconds.',
+    detected: 'My configuration',
     liveEyebrow: 'Discord · Rich Presence',
     liveTitle: 'Playing now',
     liveIntro: 'Public Discord activity appears here live with the game cover, current state and profile.',
@@ -211,28 +184,28 @@ export function GamesAndGearPage({ content, locale }: { content: SiteCopy; local
     idleBody: 'As soon as Discord detects an open game, this card updates automatically.',
     liveBadge: 'LIVE',
     connection: 'Lanyard connection',
-    telemetry: 'Local monitor · 5 s',
+    telemetry: 'PC monitor · 5 s',
     telemetryReady: 'Live reading',
-    telemetryOffline: 'Local monitor offline',
+    telemetryOffline: 'Waiting for PC data',
+    staticSpec: 'Component specification',
+    updated: 'Updated',
     utilization: 'Current use',
     unavailable: 'No reading',
     temperature: 'Temperature',
-    network: 'Network',
   }
 
   const liveUsage = useMemo(() => {
-    if (hardwareMode !== 'current' || !telemetry.metrics) return null
+    if (!telemetry.metrics) return null
     const metric = telemetry.metrics
-    const map: Record<HardwareItem['id'], { percent: number | null; detail: string | null }> = {
-      cpu: { percent: metric.cpu.percent, detail: metric.cpu.temperature == null ? null : `${Math.round(metric.cpu.temperature)} °C` },
-      gpu: { percent: metric.gpu.percent, detail: metric.gpu.temperature == null ? metric.gpu.name : `${Math.round(metric.gpu.temperature)} °C` },
-      memory: { percent: metric.memory.percent, detail: `${formatBytes(metric.memory.used)} / ${formatBytes(metric.memory.total)}` },
-      storage: { percent: metric.storage.percent, detail: `${formatBytes(metric.storage.used)} / ${formatBytes(metric.storage.total)}` },
-      board: { percent: null, detail: null },
-      power: { percent: null, detail: `${formatRate(metric.network.receivedPerSecond)} ↓ · ${formatRate(metric.network.sentPerSecond)} ↑` },
+    const percentValue = (value: number | null) => value == null ? (locale === 'es' ? 'Sin lectura' : 'No reading') : `${Math.round(value)}%`
+    const map: Partial<Record<HardwareItem['id'], { percent: number | null; value: string; detail: string | null }>> = {
+      cpu: { percent: metric.cpu.percent, value: percentValue(metric.cpu.percent), detail: metric.cpu.temperature == null ? null : `${Math.round(metric.cpu.temperature)} °C` },
+      gpu: { percent: metric.gpu.percent, value: percentValue(metric.gpu.percent), detail: metric.gpu.temperature == null ? 'Blackwell · DLSS 4' : `${Math.round(metric.gpu.temperature)} °C` },
+      memory: { percent: metric.memory.percent, value: percentValue(metric.memory.percent), detail: locale === 'es' ? 'Memoria del sistema' : 'System memory' },
+      storage: { percent: metric.storage.percent, value: percentValue(metric.storage.percent), detail: locale === 'es' ? 'Espacio ocupado' : 'Storage used' },
     }
-    return map[activeHardware.id]
-  }, [activeHardware.id, hardwareMode, telemetry.metrics])
+    return map[activeHardware.id] ?? null
+  }, [activeHardware.id, locale, telemetry.metrics])
 
   const liveActivity = useMemo(() => activities.find((activity) => gameFromActivity(activity) !== null) ?? null, [activities])
   const liveGame = useMemo(() => liveActivity ? gameFromActivity(liveActivity) : null, [liveActivity])
@@ -252,14 +225,6 @@ const connectionLabel = phase === 'ready'
 
   const closeGame = () => setSelectedGame(null)
 
-  const selectHardwareMode = (mode: HardwareMode) => {
-    const nextItems = mode === 'current' ? hardware : dreamHardware
-    setHardwareMode(mode)
-    if (!nextItems.some((item) => item.id === activeHardwareId)) {
-      setActiveHardwareId(nextItems[0].id)
-    }
-  }
-
   const handleHardwareKey = (event: ReactKeyboardEvent<HTMLButtonElement>, index: number) => {
     const keys = ['ArrowRight', 'ArrowDown', 'ArrowLeft', 'ArrowUp', 'Home', 'End']
     if (!keys.includes(event.key)) return
@@ -272,7 +237,7 @@ const connectionLabel = phase === 'ready'
         : (index + offset + hardwareItems.length) % hardwareItems.length
     const nextItem = hardwareItems[nextIndex]
     setActiveHardwareId(nextItem.id)
-    window.requestAnimationFrame(() => document.getElementById(`hardware-tab-${hardwareMode}-${nextItem.id}`)?.focus())
+    window.requestAnimationFrame(() => document.getElementById(`hardware-tab-${nextItem.id}`)?.focus())
   }
 
   useEffect(() => {
@@ -499,32 +464,19 @@ const connectionLabel = phase === 'ready'
           <p className="section-heading__intro">{labels.setupIntro}</p>
         </m.div>
 
-        <div className={`setup-mode-switch setup-mode-switch--${hardwareMode}`} role="group" aria-label={locale === 'es' ? 'Seleccionar configuración' : 'Select setup'}>
-          <button type="button" aria-pressed={hardwareMode === 'current'} onClick={() => selectHardwareMode('current')}>
-            <span aria-hidden="true">01</span>
-            <strong>{labels.currentSetup}</strong>
-            <small>{labels.currentHint}</small>
-          </button>
-          <button type="button" aria-pressed={hardwareMode === 'dream'} onClick={() => selectHardwareMode('dream')}>
-            <span aria-hidden="true">02</span>
-            <strong>{labels.dreamSetup}</strong>
-            <small>{labels.dreamHint}</small>
-          </button>
-        </div>
-
-        <p className={`setup-disclosure setup-disclosure--${hardwareMode}`}>
+        <p className="setup-disclosure setup-disclosure--current">
           <span className="status-dot" aria-hidden="true" />
-          {hardwareMode === 'current' ? labels.currentDisclosure : labels.dreamDisclosure}
+          {labels.detected}
         </p>
 
-        <div className={`setup-console setup-console--${hardwareMode}`}>
+        <div className="setup-console setup-console--current">
           <div className="setup-console__rail" role="tablist" aria-label={locale === 'es' ? 'Componentes del ordenador' : 'Computer components'}>
             {hardwareItems.map((item, index) => {
               const Icon = hardwareIcons[item.id]
               const selected = item.id === activeHardware.id
               return (
                 <button
-                  id={`hardware-tab-${hardwareMode}-${item.id}`}
+                  id={`hardware-tab-${item.id}`}
                   type="button"
                   role="tab"
                   aria-selected={selected}
@@ -548,30 +500,37 @@ const connectionLabel = phase === 'ready'
               className="setup-console__detail"
               id="hardware-panel"
               role="tabpanel"
-              aria-labelledby={`hardware-tab-${hardwareMode}-${activeHardware.id}`}
+              aria-labelledby={`hardware-tab-${activeHardware.id}`}
               aria-live="polite"
-              key={`${hardwareMode}-${activeHardware.id}`}
+              key={activeHardware.id}
               initial={reduceMotion ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={reduceMotion ? { opacity: 1, x: 0 } : { opacity: 0, x: -14 }}
               transition={{ duration: reduceMotion ? 0 : 0.32 }}
             >
               <header>
-                <span><span className="status-dot" aria-hidden="true" />{hardwareMode === 'current' ? labels.detected : labels.aspirational}</span>
+                <span><span className="status-dot" aria-hidden="true" />{labels.detected}</span>
                 <strong>{activeHardware.metric}</strong>
               </header>
-              {hardwareMode === 'current' && (
+              {liveUsage ? (
                 <div className={`setup-console__telemetry setup-console__telemetry--${telemetry.status}`}>
                   <div>
                     <span>{labels.telemetry}</span>
                     <strong>{telemetry.status === 'ready' ? labels.telemetryReady : labels.telemetryOffline}</strong>
+                    {telemetry.capturedAt && <small>{labels.updated} · {new Intl.DateTimeFormat(locale, { hour: '2-digit', minute: '2-digit', second: '2-digit' }).format(new Date(telemetry.capturedAt))}</small>}
                   </div>
                   <div className="setup-console__telemetry-value">
                     <span>{labels.utilization}</span>
-                    <strong>{liveUsage?.percent == null ? labels.unavailable : `${Math.round(liveUsage.percent)}%`}</strong>
-                    {liveUsage?.detail && <small>{activeHardware.id === 'power' ? labels.network : labels.temperature} · {liveUsage.detail}</small>}
+                    <strong>{liveUsage.value}</strong>
+                    {liveUsage.detail && <small>{activeHardware.id === 'storage' ? labels.utilization : labels.temperature} · {liveUsage.detail}</small>}
                   </div>
-                  <span className="setup-console__meter" aria-hidden="true"><i style={{ width: `${Math.max(0, Math.min(100, liveUsage?.percent ?? 0))}%` }} /></span>
+                  <span className="setup-console__meter" aria-hidden="true"><i style={{ width: `${Math.max(0, Math.min(100, liveUsage.percent ?? 0))}%` }} /></span>
+                </div>
+              ) : (
+                <div className="setup-console__static-spec">
+                  <span>{labels.staticSpec}</span>
+                  <strong>{activeHardware.metric}</strong>
+                  <p>{activeHardware.summary[locale]}</p>
                 </div>
               )}
               <div className="setup-console__icon">

@@ -7,7 +7,7 @@ Only the current production deployment and the latest commit on `main` receive s
 ## Reporting a vulnerability
 
 Please report suspected vulnerabilities privately through the contact form at
-<https://pablo-schefer.vercel.app/#contacto>. Do not include passwords, session
+<https://pabloschefer.vercel.app/#contacto>. Do not include passwords, session
 tokens, API keys, private Discord content, or personal data in the first report.
 
 Include the affected URL, reproduction steps, expected impact, and a safe proof

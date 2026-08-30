@@ -8,6 +8,24 @@ type DockId = 'spotify' | 'anime'
 const dockRegistry = new Map<DockId, DockCorner>()
 const dockSubscribers = new Set<() => void>()
 const dockCorners: DockCorner[] = ['top-left', 'top-right', 'bottom-left', 'bottom-right']
+let communityChatOpen = false
+const dockChatEvent = 'portfolio:dock-chat-open'
+
+/** Reserve the left rail for the community chat while it is expanded. */
+export function setDockChatOpen(open: boolean) {
+  if (communityChatOpen === open) return
+  communityChatOpen = open
+  if (typeof window !== 'undefined') window.dispatchEvent(new Event(dockChatEvent))
+  notifyDockChange()
+}
+
+export function isDockChatOpen() {
+  return communityChatOpen
+}
+
+function allowedCorners() {
+  return communityChatOpen ? (['top-right', 'bottom-right'] as DockCorner[]) : dockCorners
+}
 
 function isDockCorner(value: string | null): value is DockCorner {
   return value !== null && dockCorners.includes(value as DockCorner)
@@ -79,12 +97,13 @@ export function useDockPosition(storageKey: string, defaultCorner: DockCorner, i
 
   useEffect(() => {
     if (active) {
+      const allowed = allowedCorners()
       const occupied = new Set<DockCorner>()
       dockRegistry.forEach((registeredCorner, registeredId) => {
         if (registeredId !== id) occupied.add(registeredCorner)
       })
-      if (occupied.has(corner)) {
-        const openCorner = dockCorners.find((candidate) => !occupied.has(candidate))
+      if (!allowed.includes(corner) || occupied.has(corner)) {
+        const openCorner = allowed.find((candidate) => !occupied.has(candidate)) ?? allowed[0]
         if (openCorner) {
           storeCorner(storageKey, openCorner)
           window.queueMicrotask(() => setCorner(openCorner))
@@ -107,11 +126,7 @@ export function useDockPosition(storageKey: string, defaultCorner: DockCorner, i
     const mobile = viewport.width <= 700
     const edge = mobile ? 8 : 20
     const topOffset = mobile ? 76 : 118
-    const left = mobile
-      ? edge
-      : nextCorner.endsWith('left')
-        ? edge
-        : viewport.width - size.width - edge
+    const left = nextCorner.endsWith('left') ? edge : viewport.width - size.width - edge
     const top = nextCorner.startsWith('top')
       ? topOffset
       : viewport.height - size.height - edge
@@ -160,6 +175,25 @@ export function useDockPosition(storageKey: string, defaultCorner: DockCorner, i
     return occupied
   }, [id])
 
+  // When the chat opens, move any dock that was parked on the left immediately.
+  // The registry is updated synchronously so two visible docks never select the
+  // same right-hand corner during the same event.
+  useEffect(() => {
+    const relocateIfNeeded = () => {
+      if (!active || !communityChatOpen || allowedCorners().includes(corner)) return
+      const occupied = occupiedCorners()
+      const nextCorner = allowedCorners().find((candidate) => !occupied.has(candidate)) ?? allowedCorners()[0]
+      if (!nextCorner) return
+      dockRegistry.set(id, nextCorner)
+      storeCorner(storageKey, nextCorner)
+      setCorner(nextCorner)
+      moveToCorner(nextCorner)
+    }
+    window.addEventListener(dockChatEvent, relocateIfNeeded)
+    relocateIfNeeded()
+    return () => window.removeEventListener(dockChatEvent, relocateIfNeeded)
+  }, [active, corner, id, moveToCorner, occupiedCorners, storageKey])
+
   useEffect(() => {
     if (!manualRef.current) setCorner(defaultCorner)
   }, [defaultCorner])
@@ -206,14 +240,14 @@ export function useDockPosition(storageKey: string, defaultCorner: DockCorner, i
     const centerX = releaseX - pointerOffset.current.x + (bounds.width / 2)
     const centerY = releaseY - pointerOffset.current.y + (bounds.height / 2)
     const occupied = occupiedCorners()
-    const candidates = dockCorners.filter((candidate) => !occupied.has(candidate) || candidate === corner)
+    const candidates = allowedCorners().filter((candidate) => !occupied.has(candidate) || candidate === corner)
     const nextCorner = candidates.reduce((closest, candidate) => {
       const target = fixedPosition(candidate, bounds)
       const targetCenterX = target.left + (bounds.width / 2)
       const targetCenterY = target.top + (bounds.height / 2)
       const distance = ((targetCenterX - centerX) ** 2) + ((targetCenterY - centerY) ** 2)
       return distance < closest.distance ? { corner: candidate, distance } : closest
-    }, { corner: dockCorners[0], distance: Number.POSITIVE_INFINITY }).corner
+    }, { corner: candidates[0] ?? 'top-right', distance: Number.POSITIVE_INFINITY }).corner
     const target = fixedPosition(nextCorner, bounds)
     manualRef.current = true
     targetX.set(target.left)
@@ -246,7 +280,9 @@ export function useDockPosition(storageKey: string, defaultCorner: DockCorner, i
     const width = Math.min(cardSize.current.width || 390, viewport.width - 16)
     const height = Math.min(cardSize.current.height || 120, viewport.height - 16)
     pointerPosition.current = { x: event.clientX, y: event.clientY }
-    targetX.set(Math.max(8, Math.min(viewport.width - width - 8, event.clientX - pointerOffset.current.x)))
+    const rightLimit = Math.max(8, viewport.width - width - 8)
+    const minX = communityChatOpen ? Math.min(viewport.width / 2, rightLimit) : 8
+    targetX.set(Math.max(minX, Math.min(rightLimit, event.clientX - pointerOffset.current.x)))
     targetY.set(Math.max(8, Math.min(viewport.height - height - 8, event.clientY - pointerOffset.current.y)))
   }, [isDragging, targetX, targetY])
 

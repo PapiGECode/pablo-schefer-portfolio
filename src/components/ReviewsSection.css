@@ -4,12 +4,22 @@
 .reviews-grid > article { min-height: 180px; padding: 1.25rem; background: linear-gradient(145deg, rgba(20, 22, 23, 0.88), rgba(11, 12, 13, 0.68)); border: 1px solid var(--line); border-radius: 22px; }
 .reviews-grid header { display: grid; grid-template-columns: 34px 1fr auto; align-items: center; gap: 0.65rem; margin-bottom: 1.2rem; }
 .reviews-grid header > span:first-child { display: grid; width: 34px; aspect-ratio: 1; place-items: center; color: #111; font-size: 0.66rem; font-weight: 800; background: var(--cyan); border-radius: 50%; }
+.reviews-avatar { overflow: hidden; }
+.reviews-avatar img { width: 100%; height: 100%; object-fit: cover; }
 .reviews-grid header strong { overflow: hidden; font-size: 0.7rem; text-overflow: ellipsis; white-space: nowrap; }
 .reviews-stars { display: flex; color: var(--amber); }
 .reviews-grid article > p { margin: 0; color: var(--muted); font-size: 0.76rem; line-height: 1.68; }
+.review-delete { display: inline-flex; align-items: center; gap: 0.35rem; margin-top: 1rem; padding: 0; color: #ef8f8a; font: inherit; font-size: 0.56rem; background: transparent; border: 0; cursor: pointer; opacity: 0.7; }
+.review-delete:hover { opacity: 1; }
 .reviews-empty { grid-column: 1 / -1; padding: 2rem; color: var(--dim); text-align: center; border: 1px dashed var(--line); border-radius: 22px; }
 .review-form { display: grid; gap: 0.7rem; padding: 1rem; background: rgba(17, 19, 20, 0.76); border: 1px solid var(--line); border-radius: 24px; }
 .review-form__label { color: var(--muted); font-size: 0.66rem; }
+.review-login-banner { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 0.65rem; padding: 0.8rem; background: linear-gradient(135deg, rgba(240, 162, 74, 0.16), rgba(129, 216, 204, 0.08)); border: 1px solid rgba(240, 162, 74, 0.42); border-radius: 17px; box-shadow: 0 10px 28px rgba(0, 0, 0, 0.16); }
+.review-login-banner__icon { display: grid; width: 32px; aspect-ratio: 1; place-items: center; color: #111; background: var(--amber); border-radius: 50%; }
+.review-login-banner div { display: grid; gap: 0.18rem; min-width: 0; }
+.review-login-banner strong { color: var(--ink); font-size: 0.7rem; }
+.review-login-banner small { color: var(--muted); font-size: 0.58rem; line-height: 1.35; }
+.review-login-banner a, .review-login-toast a { display: inline-flex; align-items: center; gap: 0.3rem; width: max-content; color: var(--amber); font-size: 0.58rem; font-weight: 750; white-space: nowrap; }
 .review-form__rating { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.45rem; }
 .review-form__rating button { display: grid; gap: 0.3rem; padding: 0.7rem; color: var(--muted); text-align: left; background: transparent; border: 1px solid var(--line); border-radius: 14px; cursor: pointer; }
 .review-form__rating button span { color: var(--amber); font-size: 0.55rem; letter-spacing: 0.08em; }
@@ -19,5 +29,8 @@
 .review-form__submit { min-height: 44px; color: #111; font-size: 0.66rem; font-weight: 750; background: var(--amber); border: 0; border-radius: 999px; cursor: pointer; }
 .review-form__submit:disabled { cursor: not-allowed; opacity: 0.4; }
 .review-form > p { margin: 0; color: var(--cyan); font-size: 0.6rem; text-align: center; }
+.review-login-toast { position: fixed; z-index: 110; right: 24px; bottom: 24px; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 0.65rem; width: min(390px, calc(100vw - 32px)); padding: 0.85rem 1rem; color: var(--ink); background: rgba(17, 19, 20, 0.94); border: 1px solid rgba(240, 162, 74, 0.52); border-radius: 18px; box-shadow: 0 22px 70px rgba(0, 0, 0, 0.46); backdrop-filter: blur(18px); }
+.review-login-toast > svg { color: var(--amber); }
+.review-login-toast span { font-size: 0.65rem; line-height: 1.3; }
 @media (max-width: 900px) { .reviews-layout { grid-template-columns: 1fr; } }
-@media (max-width: 600px) { .reviews-grid { grid-template-columns: 1fr; } .reviews-grid > article { min-height: 150px; } }
+@media (max-width: 600px) { .reviews-grid { grid-template-columns: 1fr; } .reviews-grid > article { min-height: 150px; } .review-login-banner { grid-template-columns: auto minmax(0, 1fr); } .review-login-banner a { grid-column: 2; } .review-login-toast { right: 16px; bottom: 16px; } }

@@ -18,6 +18,7 @@ import {
   Play,
   Radio,
   Sparkles,
+  Trash2,
   Tv,
   X,
 } from 'lucide-react'
@@ -60,6 +61,7 @@ type AnimeMetadata = {
 }
 
 const historyKey = 'pablo-portfolio-anime-history-v1'
+const hiddenHistoryKey = 'pablo-portfolio-anime-hidden-v1'
 const metadataKey = 'pablo-portfolio-anime-metadata-v1'
 const ownerEmail = 'pablopme41@gmail.com'
 const crunchyrollIcon = 'https://s4.anilist.co/file/anilistcdn/link/icon/5-AWN2pVlluCOO.png'
@@ -168,7 +170,9 @@ function readHistory() {
   try {
     const value = window.localStorage.getItem(historyKey)
     const parsed = value ? JSON.parse(value) as AnimeEntry[] : []
-    return mergeHistory([...seededHistory, ...(Array.isArray(parsed) ? parsed : [])])
+    const hiddenValue = window.localStorage.getItem(hiddenHistoryKey)
+    const hiddenIds = new Set(hiddenValue ? JSON.parse(hiddenValue) as string[] : [])
+    return mergeHistory([...seededHistory, ...(Array.isArray(parsed) ? parsed : [])]).filter((entry) => !hiddenIds.has(entry.id))
   } catch {
     return seededHistory
   }
@@ -258,6 +262,7 @@ export function AnimePage({ content, locale }: { content: SiteCopy; locale: Loca
     firstSeen: 'Primera vez',
     liveBadge: 'EN DIRECTO',
     clear: 'Limpiar historial',
+    remove: 'Quitar del historial',
     detected: 'Biblioteca personal',
     details: 'Abrir ficha',
     close: 'Cerrar ficha',
@@ -291,6 +296,7 @@ export function AnimePage({ content, locale }: { content: SiteCopy; locale: Loca
     firstSeen: 'First seen',
     liveBadge: 'LIVE',
     clear: 'Clear history',
+    remove: 'Remove from history',
     detected: 'Personal library',
     details: 'Open profile',
     close: 'Close profile',
@@ -330,12 +336,31 @@ export function AnimePage({ content, locale }: { content: SiteCopy; locale: Loca
   const clearHistory = () => {
     if (!isOwner) return
     window.localStorage.removeItem(historyKey)
-    setHistory(seededHistory)
+    const hiddenIds = Array.from(new Set([...seededHistory, ...history].map((entry) => entry.id)))
+    window.localStorage.setItem(hiddenHistoryKey, JSON.stringify(hiddenIds))
+    setHistory([])
+  }
+
+  const removeHistoryEntry = (entryId: string) => {
+    if (!isOwner) return
+    const next = history.filter((entry) => entry.id !== entryId)
+    const hiddenValue = window.localStorage.getItem(hiddenHistoryKey)
+    const hiddenIds = new Set(hiddenValue ? JSON.parse(hiddenValue) as string[] : [])
+    hiddenIds.add(entryId)
+    window.localStorage.setItem(hiddenHistoryKey, JSON.stringify(Array.from(hiddenIds)))
+    window.localStorage.setItem(historyKey, JSON.stringify(next))
+    setHistory(next)
+    if (selectedEntry?.id === entryId) setSelectedEntry(null)
   }
 
   useEffect(() => {
     if (!liveEntry) return
     const updateTimer = window.setTimeout(() => {
+      const hiddenValue = window.localStorage.getItem(hiddenHistoryKey)
+      const hiddenIds = new Set(hiddenValue ? JSON.parse(hiddenValue) as string[] : [])
+      if (hiddenIds.delete(liveEntry.id)) {
+        window.localStorage.setItem(hiddenHistoryKey, JSON.stringify(Array.from(hiddenIds)))
+      }
       setHistory((current) => {
         const existing = current.find((entry) => entry.id === liveEntry.id)
         const next = mergeHistory([{
@@ -526,7 +551,7 @@ export function AnimePage({ content, locale }: { content: SiteCopy; locale: Loca
             <h2>{labels.historyTitle}</h2>
           </div>
           <p>{labels.historyIntro}</p>
-          {isOwner && history.length > seededHistory.length && (
+          {isOwner && history.length > 0 && (
             <button type="button" onClick={clearHistory}>
               {labels.clear}
             </button>
@@ -542,28 +567,28 @@ export function AnimePage({ content, locale }: { content: SiteCopy; locale: Loca
           ) : history.map((entry, index) => {
             const entryMetadata = metadataFor(entry)
             return (
-              <m.button
-                className="anime-card"
-                type="button"
+              <m.article
+                className="anime-card-shell"
                 key={entry.id}
-                onClick={() => openEntry(entry)}
-                aria-label={`${labels.details}: ${entryMetadata?.title ?? entry.title}`}
                 initial={reduceMotion ? { opacity: 1 } : { opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: reduceMotion ? 0 : index * 0.055, duration: reduceMotion ? 0 : 0.55 }}
                 style={{ '--anime-accent': entryMetadata?.accent || '#f47521' } as CSSProperties}
               >
-                <AnimePoster src={entryMetadata?.coverImage ?? entry.image} title={entryMetadata?.title ?? entry.title} />
-                <span className="anime-card__copy">
-                  <span className="anime-card__topline"><span>{String(index + 1).padStart(2, '0')}</span><AnimeRating score={entryMetadata?.score} locale={locale} compact /></span>
-                  <strong>{entryMetadata?.title ?? entry.title}</strong>
-                  <small>{entry.subtitle}</small>
-                  <span className="anime-card__synopsis">{entryMetadata?.synopsis ?? labels.metadataLoading}</span>
-                  <span className="anime-tags">{entryMetadata?.genres.slice(0, 3).map((genre) => <i key={genre}>{genre}</i>)}</span>
-                  <span className="anime-card__footer"><span><CalendarDays size={14} aria-hidden="true" />{formatDate(entry.lastSeen, locale)}</span><span>{labels.details}<ArrowUpRight size={14} aria-hidden="true" /></span></span>
-                </span>
-              </m.button>
+                <button className="anime-card" type="button" onClick={() => openEntry(entry)} aria-label={`${labels.details}: ${entryMetadata?.title ?? entry.title}`}>
+                  <AnimePoster src={entryMetadata?.coverImage ?? entry.image} title={entryMetadata?.title ?? entry.title} />
+                  <span className="anime-card__copy">
+                    <span className="anime-card__topline"><span>{String(index + 1).padStart(2, '0')}</span><AnimeRating score={entryMetadata?.score} locale={locale} compact /></span>
+                    <strong>{entryMetadata?.title ?? entry.title}</strong>
+                    <small>{entry.subtitle}</small>
+                    <span className="anime-card__synopsis">{entryMetadata?.synopsis ?? labels.metadataLoading}</span>
+                    <span className="anime-tags">{entryMetadata?.genres.slice(0, 3).map((genre) => <i key={genre}>{genre}</i>)}</span>
+                    <span className="anime-card__footer"><span><CalendarDays size={14} aria-hidden="true" />{formatDate(entry.lastSeen, locale)}</span><span>{labels.details}<ArrowUpRight size={14} aria-hidden="true" /></span></span>
+                  </span>
+                </button>
+                {isOwner && <button className="anime-card__remove" type="button" onClick={() => removeHistoryEntry(entry.id)} aria-label={`${labels.remove}: ${entryMetadata?.title ?? entry.title}`}><Trash2 size={14} aria-hidden="true" /></button>}
+              </m.article>
             )
           })}
         </div>

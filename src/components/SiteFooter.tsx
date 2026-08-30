@@ -18,7 +18,6 @@ export function SiteFooter({ content }: { content: SiteCopy }) {
             <Link to="/legal/cookies">Política de cookies</Link>
             <Link to="/legal/privacidad">Política de privacidad</Link>
             <Link to="/legal/aviso-legal">Aviso legal</Link>
-            <Link to="/legal/condiciones-venta">Condiciones de venta</Link>
           </nav>
         </details>
         <a

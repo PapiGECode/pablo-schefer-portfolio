@@ -8,7 +8,7 @@ La interfaz usa Supabase Auth con OTP por correo. Para activarla en producción:
 
 ```html
 <h2>Tu código de acceso</h2>
-<p>Introduce este código en pablo-schefer.vercel.app:</p>
+<p>Introduce este código en pabloschefer.vercel.app:</p>
 <p style="font-size:32px;font-weight:700;letter-spacing:8px">{{ .Token }}</p>
 <p>El código caduca en unos minutos.</p>
 ```

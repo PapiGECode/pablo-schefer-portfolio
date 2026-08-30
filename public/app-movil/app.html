@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; }
+html { background: #0b0c0c; }
+body { margin: 0; background: #0b0c0c; font-family: Manrope, system-ui, sans-serif; }
+.dv-turn { background: #0b0c0c; }
+a { color: #81d8cc; text-decoration: none; }
+a:hover { color: #f0a24a; }
+.dv-turn { padding: 44px 48px 40px; border-bottom: 1px solid rgba(233,230,223,.09); scroll-margin-top: 16px; }
+.dv-thd { display: flex; align-items: baseline; gap: 11px; margin: 0 0 8px; }
+.dv-tid { font: 700 10px ui-monospace, Menlo, monospace; padding: 4px 8px; background: #f0a24a; color: #17110a; border-radius: 5px; text-decoration: none; }
+.dv-tname { font: 700 14px/1.2 Manrope, sans-serif; color: #e9e6df; letter-spacing: -.02em; }
+.dv-note { max-width: 760px; margin: 0 0 26px; font: 400 12.5px/1.65 Manrope, sans-serif; color: #8f9695; }
+.dv-note b { color: #e9e6df; font-weight: 700; }
+.dv-opts { display: flex; flex-wrap: nowrap; width: max-content; gap: 34px; align-items: flex-start; }
+.dv-opt { flex: none; display: flex; flex-direction: column; gap: 10px; scroll-margin-top: 16px; }
+.dv-oid { font: 700 10.5px ui-monospace, Menlo, monospace; padding: 3px 7px; background: rgba(233,230,223,.1); color: #e9e6df; border-radius: 5px; text-decoration: none; }
+.dv-olabel { display: flex; align-items: baseline; gap: 9px; font: 400 11.5px/1.4 Manrope, sans-serif; color: #8f9695; max-width: 420px; }
+.dv-card { max-width: 100%; border-radius: 10px; overflow: hidden; }
+.dv-opt:target .dv-oid { background: #f0a24a; color: #17110a; }
+.dv-next { margin: 30px 0 0; font: 400 12px/1.6 Manrope, sans-serif; color: #5f6665; }
+.dv-next b { color: #e9e6df; font-weight: 700; }
+@keyframes dvIn { from { opacity: 0; transform: translateY(14px) } to { opacity: 1; transform: none } }
+</style>
+</helmet>
+
+<section class="dv-turn" id="t2">
+  <div class="dv-thd"><a class="dv-tid" href="#t2">2</a><span class="dv-tname">Sección "Descargar app" para la web — dos caminos reales</span></div>
+  <p class="dv-note">Un botón de descarga necesita destino. <b><a href="#2a">2a</a> · PWA (funciona hoy):</b> tu web se instala en la pantalla de inicio sin tienda, sin cuota y sin revisión. El botón detecta el móvil y hace lo correcto — en Android dispara el instalador nativo del navegador, en iOS abre las instrucciones de Compartir → Añadir a pantalla de inicio. Es lo que recomiendo: tu app ya es esta web. <b><a href="#2b">2b</a> · Insignias de tienda:</b> solo cuando publiques de verdad (Apple 99 $/año + revisión, Google 25 $ único). Las insignias oficiales hay que descargarlas de Apple y Google — dejo los huecos con la proporción correcta en vez de dibujarlas. Pruébalo: pulsa <b>Instalar app</b> en 2a.</p>
+  <div class="dv-opts">
+
+    <div class="dv-opt" id="2a">
+      <div class="dv-olabel"><a class="dv-oid" href="#2a">2a</a>Banda PWA. Botón vivo con hoja de instrucciones por plataforma.</div>
+      <div class="dv-card" style="position: relative; width: 1120px; padding: 62px 64px; background: #0f1011; border: 1px solid rgba(233,230,223,.13); border-radius: 4px; overflow: hidden;">
+        <div style="position: absolute; top: -120px; right: -60px; width: 620px; height: 620px; pointer-events: none; background: radial-gradient(circle, rgba(240,162,74,.11), transparent 62%);"></div>
+        <div style="position: relative; display: grid; grid-template-columns: minmax(0, 1.15fr) 400px; gap: 56px; align-items: center;">
+          <div style="display: flex; flex-direction: column; gap: 26px; min-width: 0;">
+            <span style="font: 660 10.5px/1 ui-monospace, 'Cascadia Code', monospace; letter-spacing: .16em; text-transform: uppercase; color: #f0a24a;">05 — App móvil</span>
+            <h2 style="margin: 0; font: 520 62px/.98 Manrope; letter-spacing: -.055em; color: #e9e6df;">Llévate esto<br><span style="color: #5f6665;">en el bolsillo.</span></h2>
+            <p style="margin: 0; max-width: 460px; font: 400 15px/1.72 Manrope; color: #8f9695;">La misma web, instalada como app: se abre a pantalla completa, sin barra del navegador, con su icono en tu pantalla de inicio. No hay tienda de por medio ni nada que descargar.</p>
+            <div style="display: flex; gap: 12px; padding-top: 2px;">
+              <button type="button" onClick="{{ openSheet }}" style="display: inline-flex; align-items: center; gap: 10px; height: 54px; padding: 0 26px; border: 0; border-radius: 999px; background: #f0a24a; color: #111; font: 750 13.5px/1 Manrope; cursor: pointer;" style-hover="background: #f5b164">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.6v11.2"></path><path d="M7.6 10.6 12 15l4.4-4.4"></path><path d="M4.8 18.6h14.4"></path></svg>
+                Instalar app
+              </button>
+              <a href="#2a" style="display: inline-flex; align-items: center; height: 54px; padding: 0 24px; border: 1px solid rgba(233,230,223,.13); border-radius: 999px; color: #e9e6df; font: 700 13.5px/1 Manrope;" style-hover="border-color: #81d8cc">Ver cómo funciona</a>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; margin-top: 12px; background: rgba(233,230,223,.13); border-top: 1px solid rgba(233,230,223,.13); border-bottom: 1px solid rgba(233,230,223,.13);">
+              <div style="display: flex; flex-direction: column; gap: 7px; padding: 18px 16px 18px 0; background: #0f1011;"><span style="font: 520 25px/1 Manrope; letter-spacing: -.03em; color: #f0a24a;">0 €</span><span style="font: 400 11.5px/1.4 Manrope; color: #8f9695;">Sin tienda ni cuotas</span></div>
+              <div style="display: flex; flex-direction: column; gap: 7px; padding: 18px 16px; background: #0f1011;"><span style="font: 520 25px/1 Manrope; letter-spacing: -.03em; color: #e9e6df;">~5 s</span><span style="font: 400 11.5px/1.4 Manrope; color: #8f9695;">Lo que tarda en instalarse</span></div>
+              <div style="display: flex; flex-direction: column; gap: 7px; padding: 18px 16px; background: #0f1011;"><span style="font: 520 25px/1 Manrope; letter-spacing: -.03em; color: #81d8cc;">iOS + Android</span><span style="font: 400 11.5px/1.4 Manrope; color: #8f9695;">Un solo código, tu web</span></div>
+            </div>
+          </div>
+          <div style="position: relative; justify-self: center; width: 248px; height: 538px;">
+            <div style="position: absolute; top: 0; left: 0; width: 402px; height: 874px; transform: scale(.615); transform-origin: top left; border-radius: 48px; overflow: hidden; background: #0f1011; box-shadow: 0 40px 80px rgba(0,0,0,.55), 0 0 0 1px rgba(233,230,223,.16);">
+              <dc-import name="PSPhone" platform="ios" lang="es" start-screen="home" hint-size="402px,874px" style="display: block; width: 100%; height: 100%;"></dc-import>
+            </div>
+          </div>
+        </div>
+
+        <sc-if value="{{ sheet }}">
+        <div style="position: absolute; inset: 0; z-index: 20; display: grid; place-items: center; padding: 40px; background: rgba(11,12,13,.72); backdrop-filter: blur(10px); animation: dvIn .3s cubic-bezier(.16,1,.3,1) both;">
+          <div style="width: 470px; padding: 26px; background: rgba(17,19,20,.98); border: 1px solid rgba(233,230,223,.13); border-radius: 24px; box-shadow: 0 30px 90px rgba(0,0,0,.5);">
+            <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 18px;">
+              <div style="display: flex; flex-direction: column; gap: 6px;">
+                <span style="font: 660 10px/1 ui-monospace, monospace; letter-spacing: .16em; color: #f0a24a;">INSTALAR EN TU MÓVIL</span>
+                <span style="font: 560 21px/1.2 Manrope; letter-spacing: -.03em; color: #e9e6df;">{{ sheetTitle }}</span>
+              </div>
+              <button type="button" onClick="{{ closeSheet }}" style="flex: none; width: 32px; height: 32px; display: grid; place-items: center; border: 1px solid rgba(233,230,223,.13); border-radius: 50%; background: none; color: #8f9695; cursor: pointer;" style-hover="color: #e9e6df">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+              </button>
+            </div>
+            <div style="display: flex; gap: 8px; margin-bottom: 20px;">
+              <button type="button" onClick="{{ pickIos }}" style="flex: 1; height: 40px; border: 1px solid {{ iosB }}; border-radius: 999px; background: {{ iosBg }}; color: {{ iosC }}; font: 700 12.5px/1 Manrope; cursor: pointer;">iPhone · Safari</button>
+              <button type="button" onClick="{{ pickAndroid }}" style="flex: 1; height: 40px; border: 1px solid {{ andB }}; border-radius: 999px; background: {{ andBg }}; color: {{ andC }}; font: 700 12.5px/1 Manrope; cursor: pointer;">Android · Chrome</button>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <sc-for list="{{ steps }}" as="st" hint-placeholder-count="3">
+              <div style="display: flex; align-items: center; gap: 14px; padding: 14px 15px; background: rgba(255,255,255,.035); border: 1px solid rgba(255,255,255,.05); border-radius: 16px;">
+                <span style="flex: none; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: rgba(240,162,74,.12); font: 800 12px/1 Manrope; color: #f0a24a;">{{ st.n }}</span>
+                <span style="flex: 1; font: 400 13px/1.5 Manrope; color: #e9e6df;">{{ st.text }}</span>
+                <span style="flex: none; color: #81d8cc;">{{ st.icon }}</span>
+              </div>
+              </sc-for>
+            </div>
+            <p style="margin: 18px 0 0; font: 400 11px/1.6 ui-monospace, 'Cascadia Code', monospace; letter-spacing: .04em; color: #5f6665;">{{ sheetNote }}</p>
+          </div>
+        </div>
+        </sc-if>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="2b">
+      <div class="dv-olabel"><a class="dv-oid" href="#2b">2b</a>Insignias de tienda, para cuando publiques. Huecos con proporción oficial.</div>
+      <div class="dv-card" style="width: 560px; padding: 40px; background: #0f1011; border: 1px solid rgba(233,230,223,.13); border-radius: 4px;">
+        <div style="display: flex; flex-direction: column; gap: 22px;">
+          <span style="font: 660 10.5px/1 ui-monospace, 'Cascadia Code', monospace; letter-spacing: .16em; text-transform: uppercase; color: #f0a24a;">05 — Descarga</span>
+          <h2 style="margin: 0; font: 520 40px/1 Manrope; letter-spacing: -.05em; color: #e9e6df;">Disponible en<br>tu tienda.</h2>
+          <p style="margin: 0; font: 400 14px/1.7 Manrope; color: #8f9695;">Mismo bloque cuando tengas la app publicada. Sustituye cada hueco por la insignia oficial descargada de Apple Marketing Resources y de Google Play Brand Guidelines — ambas exigen su propio artwork.</p>
+          <div style="display: flex; gap: 12px;">
+            <div style="flex: 1; display: flex; flex-direction: column; gap: 7px; height: 56px; padding: 0 18px; justify-content: center; border: 1px dashed rgba(233,230,223,.24); border-radius: 10px;">
+              <span style="font: 700 9px/1 ui-monospace, monospace; letter-spacing: .12em; color: #5f6665;">HUECO 120 × 40</span>
+              <span style="font: 500 11.5px/1 Manrope; color: #8f9695;">Insignia App Store</span>
+            </div>
+            <div style="flex: 1; display: flex; flex-direction: column; gap: 7px; height: 56px; padding: 0 18px; justify-content: center; border: 1px dashed rgba(233,230,223,.24); border-radius: 10px;">
+              <span style="font: 700 9px/1 ui-monospace, monospace; letter-spacing: .12em; color: #5f6665;">HUECO 135 × 40</span>
+              <span style="font: 500 11.5px/1 Manrope; color: #8f9695;">Insignia Google Play</span>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 16px; padding: 16px; background: linear-gradient(135deg, rgba(240,162,74,.16), rgba(17,19,20,.6)); border: 1px solid rgba(240,162,74,.22); border-radius: 18px;">
+            <span style="flex: none; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: #f0a24a; color: #111;">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 8.4v4.8"></path><circle cx="12" cy="16.6" r=".2"></circle><path d="M12 3.8 3 19.4h18z" stroke-linejoin="round"></path></svg>
+            </span>
+            <span style="display: flex; flex-direction: column; gap: 3px;">
+              <span style="font: 750 12.5px/1.2 Manrope; color: #e9e6df;">Esto exige una app nativa publicada</span>
+              <span style="font: 400 11.5px/1.45 Manrope; color: #8f9695;">Apple: 99 $/año y revisión. Google: 25 $ único. Empezaría por 2a.</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <p class="dv-next">Si te vale la vía PWA: dime y te dejo el <b>manifest.json</b>, el icono y el service worker listos para pegar en tu repo, además de esta sección en HTML/CSS del sitio.</p>
+</section>
+
+<section class="dv-turn" id="t1">
+  <div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">Pablo Schefer · app móvil — dos plataformas, un lenguaje de marca</span></div>
+  <p class="dv-note"><b>Supuestos:</b> misma identidad que la web (fondo #191b1c, ámbar #f0a24a, cian #81d8cc, Manrope) pero reorganizada para el pulgar. <b>Decisiones:</b> 5 pestañas — Inicio, Comunidades, <i>Ahora</i>, Chat, Perfil — donde <i>Ahora</i> agrupa lo que en la web son docks flotantes (Spotify, anime, telemetría del PC) y la home lleva una tira compacta “Ahora mismo”. Juegos, Música, Anime, Cuenta, Contacto y Ajustes se abren en pila desde Perfil. <b>Diferencias reales de plataforma:</b> <a href="#1a">1a</a> usa títulos grandes, píldoras de cristal, controles segmentados, listas agrupadas y switches iOS; <a href="#1b">1b</a> usa top app bar M3, barra de navegación con indicador de píldora, FAB, botones segmentados y switches Material. Todo es navegable: pulsa pestañas, tarjetas, refresca el panel de voz, escribe en el chat, envía el formulario y cambia idioma o tema.</p>
+  <div class="dv-opts">
+
+    <div class="dv-opt" id="1a">
+      <div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a>iOS · Cupertino. Título grande + eyebrow monospace, tab bar de cristal, listas agrupadas.</div>
+      <div class="dv-card">
+        <div style="position: relative; width: 402px; height: 874px; border-radius: 48px; overflow: hidden; background: #0f1011; box-shadow: 0 40px 80px rgba(0,0,0,.55), 0 0 0 1px rgba(233,230,223,.16);">
+          <dc-import name="PSPhone" platform="ios" lang="es" start-screen="home" hint-size="402px,874px" style="display: block; width: 100%; height: 100%;"></dc-import>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="1b">
+      <div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a>Android · Material 3. App bar de 56dp, indicador de píldora, FAB en Comunidades.</div>
+      <div class="dv-card">
+        <div style="position: relative; width: 412px; height: 892px; border-radius: 34px; overflow: hidden; background: #131415; box-shadow: 0 40px 80px rgba(0,0,0,.55), 0 0 0 1px rgba(233,230,223,.16);">
+          <dc-import name="PSPhone" platform="android" lang="es" start-screen="communities" hint-size="412px,892px" style="display: block; width: 100%; height: 100%;"></dc-import>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="1c">
+      <div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a>Home alternativa: retrato protagonista. La foto manda y el titular se apoya en ella.</div>
+      <div class="dv-card" style="width: 320px; height: 620px; position: relative; background: #0f1011; border: 1px solid rgba(233,230,223,.1); border-radius: 26px; overflow: hidden;">
+        <div style="position: absolute; inset: 0; background: url(assets/portrait.webp) 50% 16%/cover;"></div>
+        <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(15,16,17,.5) 0%, rgba(15,16,17,.1) 26%, rgba(15,16,17,.94) 68%, #0f1011 100%);"></div>
+        <div style="position: relative; display: flex; flex-direction: column; height: 100%; padding: 22px 20px 18px;">
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <span style="display: flex; align-items: center; gap: 7px; font: 600 10px/1 ui-monospace, Menlo, monospace; letter-spacing: .14em; color: #e9e6df;"><span style="width: 6px; height: 6px; border-radius: 50%; background: #81d8cc;"></span>EN LÍNEA</span>
+            <span style="padding: 5px 10px; border: 1px solid rgba(233,230,223,.28); border-radius: 100px; font: 700 9.5px/1 ui-monospace, monospace; letter-spacing: .1em; color: #e9e6df;">ES</span>
+          </div>
+          <div style="flex: 1;"></div>
+          <div style="display: flex; flex-direction: column; gap: 13px;">
+            <span style="font: 700 9px/1 ui-monospace, Menlo, monospace; letter-spacing: .2em; color: #f0a24a;">PAPIGEGAMER · ESPAÑA</span>
+            <span style="font: 800 44px/.92 Manrope; letter-spacing: -.045em; color: #e9e6df;">Pablo<br>Schefer</span>
+            <span style="font: 400 12.5px/1.55 Manrope; color: #b9b6ae; max-width: 250px;">Modero comunidades tecnológicas y construyo producto con código asistido por IA.</span>
+            <div style="display: flex; gap: 8px; padding-top: 4px;">
+              <span style="padding: 6px 11px; border-radius: 100px; background: rgba(233,230,223,.1); backdrop-filter: blur(8px); font: 600 10.5px/1 Manrope; color: #e9e6df;">04+ comunidades</span>
+              <span style="padding: 6px 11px; border-radius: 100px; background: rgba(233,230,223,.1); backdrop-filter: blur(8px); font: 600 10.5px/1 Manrope; color: #e9e6df;">Desde 2015</span>
+            </div>
+            <div style="display: flex; gap: 9px; padding-top: 6px;">
+              <span style="flex: 1; display: grid; place-items: center; height: 46px; border-radius: 100px; background: #f0a24a; font: 700 13px/1 Manrope; color: #17110a;">Comunidades</span>
+              <span style="display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; border: 1px solid rgba(233,230,223,.24); color: #e9e6df; font: 400 18px/1 Manrope;">↗</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="1d">
+      <div class="dv-olabel"><a class="dv-oid" href="#1d">1d</a>Home alternativa: actividad primero. Abre con lo que está pasando ahora, no con quién eres.</div>
+      <div class="dv-card" style="width: 320px; height: 620px; background: #0f1011; border: 1px solid rgba(233,230,223,.1); border-radius: 26px; overflow: hidden; display: flex; flex-direction: column; gap: 12px; padding: 20px 16px;">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <span style="display: flex; align-items: center; gap: 8px;"><span style="width: 26px; height: 26px; border-radius: 50%; background: url(assets/avatar.webp) center/cover;"></span><span style="font: 700 12px/1 Manrope; color: #e9e6df;">Pablo</span></span>
+          <span style="display: flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 100px; background: rgba(129,216,204,.12); font: 700 9px/1 ui-monospace, monospace; letter-spacing: .12em; color: #81d8cc;"><span style="width: 5px; height: 5px; border-radius: 50%; background: #81d8cc;"></span>4 SEÑALES</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 3px; padding: 2px 2px 4px;">
+          <span style="font: 800 26px/1.05 Manrope; letter-spacing: -.04em; color: #e9e6df;">Ahora mismo</span>
+          <span style="font: 400 11.5px/1.4 Manrope; color: #8f9695;">Discord, Spotify y el PC, en directo.</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 11px; padding: 12px; border: 1px solid rgba(129,216,204,.2); border-radius: 18px; background: linear-gradient(140deg, rgba(129,216,204,.12), #191b1c 74%);">
+          <span style="width: 44px; height: 44px; border-radius: 12px; background: url(assets/music/bad-bunny.jpg) center/cover;"></span>
+          <span style="flex: 1; display: flex; flex-direction: column; gap: 3px;"><i style="font-style: normal; font: 700 8.5px/1 ui-monospace, monospace; letter-spacing: .14em; color: #81d8cc;">SPOTIFY</i><i style="font-style: normal; font: 700 13px/1.2 Manrope; color: #e9e6df;">NUEVAYoL</i><i style="font-style: normal; font: 400 10.5px/1 Manrope; color: #8f9695;">Bad Bunny</i></span>
+          <span style="display: inline-flex; align-items: flex-end; gap: 2px; height: 16px;"><i style="width: 2.5px; height: 40%; background: #81d8cc;"></i><i style="width: 2.5px; height: 100%; background: #81d8cc;"></i><i style="width: 2.5px; height: 62%; background: #81d8cc;"></i></span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 11px; padding: 12px; border: 1px solid rgba(143,180,255,.2); border-radius: 18px; background: linear-gradient(140deg, rgba(58,111,216,.16), #191b1c 74%);">
+          <span style="width: 44px; height: 44px; border-radius: 12px; background: url(assets/c/fnlb-logo.webp) center/cover;"></span>
+          <span style="flex: 1; display: flex; flex-direction: column; gap: 3px;"><i style="font-style: normal; font: 700 8.5px/1 ui-monospace, monospace; letter-spacing: .14em; color: #8fb4ff;">FNLB · EN VOZ</i><i style="font-style: normal; font: 700 13px/1.2 Manrope; color: #e9e6df;">61 personas visibles</i><i style="font-style: normal; font: 400 10.5px/1 Manrope; color: #8f9695;">4 canales públicos</i></span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 9px; padding: 13px; border: 1px solid rgba(233,230,223,.1); border-radius: 18px; background: #191b1c;">
+          <span style="font: 700 8.5px/1 ui-monospace, monospace; letter-spacing: .14em; color: #f0a24a;">TELEMETRÍA · RTX 5080</span>
+          <span style="display: flex; align-items: center; gap: 9px;"><i style="font-style: normal; flex: none; width: 30px; font: 600 10px/1 Manrope; color: #8f9695;">GPU</i><i style="flex: 1; height: 5px; border-radius: 3px; background: rgba(233,230,223,.1); overflow: hidden;"><b style="display: block; width: 61%; height: 100%; background: #f0a24a;"></b></i><i style="font-style: normal; font: 700 11px/1 ui-monospace, monospace; color: #e9e6df;">61%</i></span>
+          <span style="display: flex; align-items: center; gap: 9px;"><i style="font-style: normal; flex: none; width: 30px; font: 600 10px/1 Manrope; color: #8f9695;">CPU</i><i style="flex: 1; height: 5px; border-radius: 3px; background: rgba(233,230,223,.1); overflow: hidden;"><b style="display: block; width: 34%; height: 100%; background: #81d8cc;"></b></i><i style="font-style: normal; font: 700 11px/1 ui-monospace, monospace; color: #e9e6df;">34%</i></span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 11px; padding: 12px; border: 1px solid rgba(155,104,255,.2); border-radius: 18px; background: linear-gradient(140deg, rgba(155,104,255,.14), #191b1c 74%);">
+          <span style="width: 44px; height: 44px; border-radius: 12px; background: rgba(155,104,255,.2); display: grid; place-items: center; font: 800 13px/1 Manrope; color: #cbb0ff;">FR</span>
+          <span style="flex: 1; display: flex; flex-direction: column; gap: 3px;"><i style="font-style: normal; font: 700 8.5px/1 ui-monospace, monospace; letter-spacing: .14em; color: #b79bff;">ANIME</i><i style="font-style: normal; font: 700 13px/1.2 Manrope; color: #e9e6df;">Frieren · ep. 7</i><i style="font-style: normal; font: 400 10.5px/1 Manrope; color: #8f9695;">12:43 / 23:40</i></span>
+        </div>
+        <div style="flex: 1;"></div>
+        <div style="display: flex; align-items: center; justify-content: space-between; padding: 13px 15px; border-radius: 18px; background: rgba(240,162,74,.12); border: 1px solid rgba(240,162,74,.3);">
+          <span style="display: flex; flex-direction: column; gap: 2px;"><i style="font-style: normal; font: 700 12.5px/1.2 Manrope; color: #e9e6df;">Comunidades con pulso</i><i style="font-style: normal; font: 400 10.5px/1.2 Manrope; color: #8f9695;">Quién soy y qué construyo</i></span>
+          <span style="font: 400 16px/1 Manrope; color: #f0a24a;">↗</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="1e">
+      <div class="dv-olabel"><a class="dv-oid" href="#1e">1e</a>Tres tratamientos para la tarjeta de comunidad: portada, contenida y de datos.</div>
+      <div class="dv-card" style="width: 348px; display: flex; flex-direction: column; gap: 14px; padding: 18px; background: #131415; border: 1px solid rgba(233,230,223,.1); border-radius: 22px;">
+        <span style="font: 700 9px/1 ui-monospace, Menlo, monospace; letter-spacing: .2em; color: #5f6665;">A · PORTADA COMPLETA (EN USO)</span>
+        <div style="border: 1px solid rgba(233,230,223,.1); border-radius: 20px; overflow: hidden; background: #191b1c;">
+          <div style="position: relative; height: 106px; background: url(assets/c/gw2-cover.webp) center/cover;">
+            <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(15,16,17,.15) 20%, rgba(15,16,17,.92));"></div>
+            <div style="position: absolute; left: 13px; bottom: 11px; display: flex; align-items: center; gap: 10px;">
+              <span style="width: 40px; height: 40px; border-radius: 12px; border: 1px solid rgba(233,230,223,.18); background: url(assets/c/gw2-logo.webp) center/cover;"></span>
+              <span style="display: flex; flex-direction: column; gap: 2px;"><i style="font-style: normal; font: 700 14px/1.15 Manrope; color: #e9e6df;">GW2 · Gatitos 2</i><i style="font-style: normal; font: 500 9px/1 ui-monospace, monospace; letter-spacing: .1em; color: #c9a6ff;">MODERADOR ANTERIOR</i></span>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; justify-content: space-between; padding: 11px 13px;">
+            <span style="display: flex; align-items: baseline; gap: 5px;"><b style="font: 800 17px/1 Manrope; color: #e9e6df;">103K</b><i style="font-style: normal; font: 400 9.5px/1 Manrope; color: #5f6665;">miembros</i></span>
+            <span style="font: 600 11px/1 Manrope; color: #81d8cc;">Ver en directo ↗</span>
+          </div>
+        </div>
+        <span style="font: 700 9px/1 ui-monospace, Menlo, monospace; letter-spacing: .2em; color: #5f6665;">B · CONTENIDA, LOGO GRANDE</span>
+        <div style="display: flex; gap: 13px; padding: 13px; border: 1px solid rgba(233,230,223,.1); border-radius: 20px; background: #191b1c;">
+          <span style="flex: none; width: 62px; height: 62px; border-radius: 16px; background: url(assets/c/kernelos-logo.png) center/contain no-repeat, #0f1011; border: 1px solid rgba(233,230,223,.12);"></span>
+          <span style="flex: 1; display: flex; flex-direction: column; gap: 4px;">
+            <i style="font-style: normal; font: 700 14.5px/1.15 Manrope; color: #e9e6df;">KernelOS</i>
+            <i style="font-style: normal; font: 400 11px/1.45 Manrope; color: #8f9695;">CustomOS para gaming y comunidad. 50K+ miembros.</i>
+            <i style="font-style: normal; display: flex; gap: 6px; padding-top: 2px;"><b style="padding: 3px 8px; border-radius: 100px; background: rgba(255,143,143,.14); font: 600 9px/1 Manrope; color: #ff8f8f;">Colaborador</b><b style="padding: 3px 8px; border-radius: 100px; background: rgba(233,230,223,.07); font: 600 9px/1 Manrope; color: #8f9695;">Producto</b></i>
+          </span>
+        </div>
+        <span style="font: 700 9px/1 ui-monospace, Menlo, monospace; letter-spacing: .2em; color: #5f6665;">C · FICHA DE DATOS</span>
+        <div style="display: flex; flex-direction: column; gap: 11px; padding: 14px; border: 1px solid rgba(143,180,255,.24); border-radius: 20px; background: linear-gradient(150deg, rgba(58,111,216,.14), #191b1c 72%);">
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <span style="font: 700 15px/1 Manrope; letter-spacing: -.02em; color: #e9e6df;">FNLB</span>
+            <span style="display: flex; align-items: center; gap: 5px; font: 700 8.5px/1 ui-monospace, monospace; letter-spacing: .12em; color: #81d8cc;"><i style="width: 5px; height: 5px; border-radius: 50%; background: #81d8cc;"></i>EN DIRECTO</span>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">
+            <span style="display: flex; flex-direction: column; gap: 2px; padding: 9px 10px; border-radius: 12px; background: rgba(233,230,223,.05);"><i style="font-style: normal; font: 800 15px/1 Manrope; color: #e9e6df;">60K</i><i style="font-style: normal; font: 400 8.5px/1 Manrope; color: #5f6665;">miembros</i></span>
+            <span style="display: flex; flex-direction: column; gap: 2px; padding: 9px 10px; border-radius: 12px; background: rgba(233,230,223,.05);"><i style="font-style: normal; font: 800 15px/1 Manrope; color: #81d8cc;">8.4K</i><i style="font-style: normal; font: 400 8.5px/1 Manrope; color: #5f6665;">en línea</i></span>
+            <span style="display: flex; flex-direction: column; gap: 2px; padding: 9px 10px; border-radius: 12px; background: rgba(240,162,74,.1);"><i style="font-style: normal; font: 800 15px/1 Manrope; color: #f0a24a;">61</i><i style="font-style: normal; font: 400 8.5px/1 Manrope; color: #5f6665;">en voz</i></span>
+          </div>
+          <span style="font: 400 10.5px/1.45 Manrope; color: #8f9695;">Lobby bots de Fortnite, soporte y producto. Moderación actual.</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <p class="dv-next">Prueba a pedir: “en <a class="dv-oid" href="#1a">1a</a> usa la home de <a class="dv-oid" href="#1d">1d</a>” · “aplica el tratamiento C de <a class="dv-oid" href="#1e">1e</a> a la lista de comunidades” · “añade onboarding y pantalla de login” · “versión en tema claro”</p>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { sheet: false, plat: 'ios' };
+
+  componentDidMount() {
+    this.onPrompt = (e) => { e.preventDefault(); this.deferred = e; };
+    window.addEventListener('beforeinstallprompt', this.onPrompt);
+    const ua = navigator.userAgent || '';
+    if (/Android/i.test(ua)) this.setState({ plat: 'android' });
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('beforeinstallprompt', this.onPrompt);
+  }
+
+  open = () => {
+    if (this.deferred) { this.deferred.prompt(); return; }
+    this.setState({ sheet: true });
+  };
+
+  renderVals() {
+    const s = this.state;
+    const ios = s.plat === 'ios';
+    const ic = (d, fill) => React.createElement('svg', { width: 16, height: 16, viewBox: '0 0 24 24', fill: fill ? 'currentColor' : 'none', stroke: 'currentColor', strokeWidth: 1.9, strokeLinecap: 'round', strokeLinejoin: 'round' }, React.createElement('path', { d }));
+    return {
+      sheet: s.sheet,
+      openSheet: this.open,
+      closeSheet: () => this.setState({ sheet: false }),
+      pickIos: () => this.setState({ plat: 'ios' }),
+      pickAndroid: () => this.setState({ plat: 'android' }),
+      iosBg: ios ? 'rgba(240,162,74,.12)' : 'transparent',
+      andBg: ios ? 'transparent' : 'rgba(240,162,74,.12)',
+      iosB: ios ? 'rgba(240,162,74,.42)' : 'rgba(233,230,223,.13)',
+      andB: ios ? 'rgba(233,230,223,.13)' : 'rgba(240,162,74,.42)',
+      iosC: ios ? '#f0a24a' : '#8f9695',
+      andC: ios ? '#8f9695' : '#f0a24a',
+      sheetTitle: ios ? 'Tres pasos en Safari' : 'Dos pasos en Chrome',
+      sheetNote: ios
+        ? 'SAFARI NO PERMITE INSTALAR POR BOTÓN: APPLE OBLIGA A PASAR POR COMPARTIR.'
+        : 'SI EL NAVEGADOR LO SOPORTA, EL BOTÓN INSTALA SOLO — SIN ESTE PASO A PASO.',
+      steps: ios
+        ? [
+            { n: '1', text: 'Toca el botón Compartir de la barra inferior', icon: ic('M12 3.6v11.4M8 7.4 12 3.4l4 4M5.4 13.6v5.8a1.4 1.4 0 0 0 1.4 1.4h10.4a1.4 1.4 0 0 0 1.4-1.4v-5.8') },
+            { n: '2', text: 'Desliza y elige “Añadir a pantalla de inicio”', icon: ic('M12 6.4v11.2M6.4 12h11.2') },
+            { n: '3', text: 'Confirma en “Añadir” y listo', icon: ic('M5 12.6 10 17.4 19 7') }
+          ]
+        : [
+            { n: '1', text: 'Abre el menú ⋮ del navegador', icon: ic('M12 6.6v.2M12 12v.2M12 17.4v.2', true) },
+            { n: '2', text: 'Pulsa “Instalar aplicación” y confirma', icon: ic('M5 12.6 10 17.4 19 7') }
+          ]
+    };
+  }
+}
+</script>
+</body>
+</html>

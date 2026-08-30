@@ -378,110 +378,49 @@ export type HardwareItem = {
 
 export const hardware: HardwareItem[] = [
   {
-    id: 'cpu',
-    label: { es: 'Procesador', en: 'Processor' },
-    model: 'AMD Ryzen 7 7800X3D',
-    metric: '8C / 16T',
-    summary: {
-      es: 'El centro del equipo: arquitectura Zen 4 y 3D V-Cache orientada a un rendimiento especialmente fuerte en juegos.',
-      en: 'The centre of the build: Zen 4 architecture and 3D V-Cache tuned for especially strong gaming performance.',
-    },
-    details: { es: ['8 núcleos', '16 hilos', 'Socket AM5'], en: ['8 cores', '16 threads', 'AM5 socket'] },
-  },
-  {
     id: 'gpu',
     label: { es: 'Tarjeta gráfica', en: 'Graphics card' },
-    model: 'NVIDIA GeForce RTX 5070',
-    metric: 'RTX 5070',
+    model: 'NVIDIA GeForce RTX 5080',
+    metric: '16 GB GDDR7',
     summary: {
-      es: 'La pieza gráfica principal para jugar a alta calidad, acelerar cargas creativas y mover interfaces fluidas.',
-      en: 'The main graphics engine for high-quality gaming, accelerated creative workloads and fluid interfaces.',
-    },
-    details: { es: ['GPU dedicada NVIDIA', 'Aceleración RTX', 'Configuración detectada localmente'], en: ['Dedicated NVIDIA GPU', 'RTX acceleration', 'Locally detected configuration'] },
-  },
-  {
-    id: 'memory',
-    label: { es: 'Memoria', en: 'Memory' },
-    model: 'Corsair DDR5',
-    metric: '16 GB · 6000',
-    summary: {
-      es: 'Memoria DDR5 configurada a 6000 MT/s para mantener baja latencia y buen ritmo entre juego, Discord y herramientas.',
-      en: 'DDR5 memory configured at 6000 MT/s to keep latency low across games, Discord and creative tools.',
-    },
-    details: { es: ['16 GB instalados', '6000 MT/s', 'Módulo CMH32GX5M2B6000C30'], en: ['16 GB installed', '6000 MT/s', 'CMH32GX5M2B6000C30 module'] },
-  },
-  {
-    id: 'board',
-    label: { es: 'Placa base', en: 'Motherboard' },
-    model: 'MSI X670E Gaming Plus WiFi',
-    metric: 'X670E · AM5',
-    summary: {
-      es: 'La base de la configuración AM5, con conectividad Wi-Fi y margen para ampliar almacenamiento y periféricos.',
-      en: 'The foundation of the AM5 build, with Wi-Fi connectivity and room for storage and peripheral expansion.',
-    },
-    details: { es: ['Chipset X670E', 'Socket AM5', 'Wi-Fi integrado'], en: ['X670E chipset', 'AM5 socket', 'Integrated Wi-Fi'] },
-  },
-  {
-    id: 'storage',
-    label: { es: 'Almacenamiento', en: 'Storage' },
-    model: 'WD_BLACK SN770 + unidades secundarias',
-    metric: '1 TB NVMe',
-    summary: {
-      es: 'Un NVMe WD_BLACK SN770 de 1 TB como unidad principal, acompañado de SSD y HDD secundarios para biblioteca y archivo.',
-      en: 'A 1 TB WD_BLACK SN770 NVMe as the primary drive, backed by secondary SSDs and an HDD for library and archive storage.',
+      es: 'La base gráfica del equipo para jugar en 4K, crear contenido y acelerar cargas de trabajo con IA.',
+      en: 'The graphics foundation of the build for 4K gaming, content creation and AI-accelerated workloads.',
     },
     details: {
-      es: ['WD_BLACK SN770 · 1 TB', 'Samsung 840 EVO · 250 GB', 'Toshiba HDD · 1 TB', 'Dos SSD WDC · 256 GB'],
-      en: ['WD_BLACK SN770 · 1 TB', 'Samsung 840 EVO · 250 GB', 'Toshiba HDD · 1 TB', 'Two WDC SSDs · 256 GB'],
-    },
-  },
-]
-
-export const dreamHardware: HardwareItem[] = [
-  {
-    id: 'gpu',
-    label: { es: 'Gráfica objetivo', en: 'Target graphics card' },
-    model: 'NVIDIA GeForce RTX 5090',
-    metric: '32 GB GDDR7',
-    summary: {
-      es: 'La meta gráfica del setup: la GeForce de referencia más potente de NVIDIA, planteada para juego 4K extremo, creación y cargas aceleradas por IA.',
-      en: 'The graphics target for the build: NVIDIA’s most powerful reference GeForce, intended for extreme 4K gaming, creation and AI-accelerated workloads.',
-    },
-    details: {
-      es: ['Arquitectura Blackwell', '21.760 núcleos CUDA', '32 GB GDDR7 · 512-bit', '575 W TGP'],
-      en: ['Blackwell architecture', '21,760 CUDA cores', '32 GB GDDR7 · 512-bit', '575 W TGP'],
+      es: ['Arquitectura Blackwell', '10.752 núcleos CUDA', '16 GB GDDR7 · 256-bit', 'DLSS 4'],
+      en: ['Blackwell architecture', '10,752 CUDA cores', '16 GB GDDR7 · 256-bit', 'DLSS 4'],
     },
     source: {
-      href: 'https://www.nvidia.com/en-gb/geforce/graphics-cards/50-series/rtx-5090/',
+      href: 'https://www.nvidia.com/es-es/geforce/graphics-cards/50-series/rtx-5080/',
       label: { es: 'Ficha oficial de NVIDIA', en: 'Official NVIDIA specifications' },
     },
   },
   {
     id: 'cpu',
-    label: { es: 'Procesador objetivo', en: 'Target processor' },
-    model: 'AMD Ryzen 9 9950X3D2 Dual Edition',
+    label: { es: 'Procesador', en: 'Processor' },
+    model: 'AMD Ryzen 9 9950X3D',
     metric: '16C / 32T',
     summary: {
-      es: 'Un objetivo de plataforma AM5 de gama entusiasta, con 3D V-Cache en ambos chiplets para combinar juego, desarrollo y creación exigente.',
-      en: 'An enthusiast-class AM5 platform target, with 3D V-Cache on both chiplets to combine gaming, development and demanding creative work.',
+      es: 'Un procesador AM5 de gama entusiasta para combinar juego, desarrollo y creación exigente sin cambiar de máquina.',
+      en: 'An enthusiast-class AM5 processor for gaming, development and demanding creative work on the same machine.',
     },
     details: {
-      es: ['Zen 5 · 16 núcleos', 'Hasta 5,6 GHz', '208 MB de caché L2 + L3', '200 W · PCIe 5.0'],
-      en: ['Zen 5 · 16 cores', 'Up to 5.6 GHz', '208 MB L2 + L3 cache', '200 W · PCIe 5.0'],
+      es: ['Zen 5 · 16 núcleos', '32 hilos', '3D V-Cache', 'Socket AM5 · PCIe 5.0'],
+      en: ['Zen 5 · 16 cores', '32 threads', '3D V-Cache', 'AM5 socket · PCIe 5.0'],
     },
     source: {
-      href: 'https://www.amd.com/en/products/processors/desktops/ryzen/9000-series/amd-ryzen-9-9950x3d2-dual-edition.html',
+      href: 'https://www.amd.com/en/products/processors/desktops/ryzen/9000-series/amd-ryzen-9-9950x3d.html',
       label: { es: 'Ficha oficial de AMD', en: 'Official AMD specifications' },
     },
   },
   {
     id: 'board',
-    label: { es: 'Placa base objetivo', en: 'Target motherboard' },
+    label: { es: 'Placa base', en: 'Motherboard' },
     model: 'MSI MEG X870E GODLIKE MAX',
     metric: 'X870E · AM5',
     summary: {
-      es: 'La base soñada para la plataforma: conectividad de primer nivel, amplia expansión PCIe 5.0 y margen para evolucionar el equipo.',
-      en: 'The dream foundation for the platform: flagship connectivity, broad PCIe 5.0 expansion and room for the build to evolve.',
+      es: 'La base de la plataforma: conectividad de primer nivel, expansión PCIe 5.0 y margen para ampliar el equipo.',
+      en: 'The platform foundation: flagship connectivity, PCIe 5.0 expansion and room for future upgrades.',
     },
     details: {
       es: ['Hasta 256 GB DDR5', '7 ranuras M.2', 'Wi-Fi 7 · USB4 40 Gbps', 'LAN 10 Gb + 5 Gb'],
@@ -494,7 +433,7 @@ export const dreamHardware: HardwareItem[] = [
   },
   {
     id: 'memory',
-    label: { es: 'Memoria objetivo', en: 'Target memory' },
+    label: { es: 'Memoria', en: 'Memory' },
     model: 'Corsair Dominator Titanium RGB',
     metric: '96 GB · 6000',
     summary: {
@@ -512,7 +451,7 @@ export const dreamHardware: HardwareItem[] = [
   },
   {
     id: 'storage',
-    label: { es: 'Almacenamiento objetivo', en: 'Target storage' },
+    label: { es: 'Almacenamiento', en: 'Storage' },
     model: 'Samsung 9100 PRO 8 TB',
     metric: '14,8 GB/s',
     summary: {
@@ -530,12 +469,12 @@ export const dreamHardware: HardwareItem[] = [
   },
   {
     id: 'power',
-    label: { es: 'Fuente objetivo', en: 'Target power supply' },
+    label: { es: 'Fuente de alimentación', en: 'Power supply' },
     model: 'Corsair HX1500i',
     metric: '1500 W',
     summary: {
-      es: 'La fuente prevista para alimentar el conjunto con margen, conectividad nativa para GPU de nueva generación y una plataforma ATX actual.',
-      en: 'The planned power supply for comfortable headroom, native next-generation GPU connectivity and a modern ATX platform.',
+      es: 'Potencia con margen para todo el equipo, conectividad nativa para GPU de nueva generación y una plataforma ATX actual.',
+      en: 'Power headroom for the full build, native next-generation GPU connectivity and a modern ATX platform.',
     },
     details: {
       es: ['1500 W · 80 PLUS Platinum', 'ATX 3.1 · PCIe 5.1', 'Doble cable 12V-2x6', 'Garantía de 10 años'],

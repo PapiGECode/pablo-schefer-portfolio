@@ -13,7 +13,7 @@ export function NowPlayingDock({ locale, placement = 'bottom-right' }: { locale:
   const reduceMotion = useReducedMotion()
   const { phase, socketLive, track } = useLanyardPresence()
   const progress = useSpotifyProgress(track)
-  const [expanded, setExpanded] = useState(false)
+  const [expanded, setExpanded] = useState(true)
   const [visible, setVisible] = useState(true)
   const { bindDock, corner, dragHandlers, isDragging, refreshPosition, style } = useDockPosition('pablo-portfolio-spotify-dock-position', placement, 'spotify', Boolean(track))
 

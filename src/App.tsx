@@ -1,11 +1,12 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, useReducedMotion, useScroll, useSpring } from 'motion/react'
 import * as m from 'motion/react-m'
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
+import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import { AmbientField } from './components/AmbientField'
 import { SiteFooter } from './components/SiteFooter'
 import { SiteHeader } from './components/SiteHeader'
 import { EasterEggs } from './components/EasterEggs'
+import { VirtualCompanion } from './components/VirtualCompanion'
 import { copy, type Locale, type SiteCopy } from './content'
 import { HomePage } from './pages/HomePage'
 import { useCommunityNotifications } from './hooks/useCommunityNotifications'
@@ -25,7 +26,7 @@ const NotFoundPage = lazy(() => import('./pages/NotFoundPage').then((module) => 
 const NowPlayingDock = lazy(() => import('./components/NowPlayingDock').then((module) => ({ default: module.NowPlayingDock })))
 const AnimeNowDock = lazy(() => import('./components/AnimeNowDock').then((module) => ({ default: module.AnimeNowDock })))
 
-const productionOrigin = 'https://pablo-schefer.vercel.app'
+const productionOrigin = 'https://www.pabloschefer.com'
 
 function getSeo(content: SiteCopy, pathname: string) {
   if (pathname === '/') return content.seo.home
@@ -45,7 +46,6 @@ function getSeo(content: SiteCopy, pathname: string) {
   if (pathname === '/legal/cookies') return { title: 'Política de cookies — Pablo Schefer', description: 'Información sobre cookies y preferencias de navegación del portafolio de Pablo Schefer.' }
   if (pathname === '/legal/privacidad') return { title: 'Política de privacidad — Pablo Schefer', description: 'Información sobre el tratamiento de datos personales en el portafolio de Pablo Schefer.' }
   if (pathname === '/legal/aviso-legal') return { title: 'Aviso legal — Pablo Schefer', description: 'Aviso legal y condiciones de uso del portafolio de Pablo Schefer.' }
-  if (pathname === '/legal/condiciones-venta') return { title: 'Condiciones de venta — Pablo Schefer', description: 'Condiciones informativas para futuras contrataciones a través del portafolio.' }
   return content.seo.notFound
 }
 
@@ -53,15 +53,37 @@ function ScrollManager() {
   const location = useLocation()
 
   useEffect(() => {
+    let observer: MutationObserver | null = null
+    let timeout = 0
+
     const frame = window.requestAnimationFrame(() => {
-      if (location.hash) {
-        const id = decodeURIComponent(location.hash.slice(1))
-        document.getElementById(id)?.scrollIntoView({ block: 'start' })
-      } else {
+      if (!location.hash) {
         window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+        return
       }
+
+      const id = decodeURIComponent(location.hash.slice(1))
+      const scrollToTarget = () => {
+        const target = document.getElementById(id)
+        if (!target) return false
+        target.scrollIntoView({ block: 'start' })
+        observer?.disconnect()
+        window.clearTimeout(timeout)
+        return true
+      }
+
+      if (scrollToTarget()) return
+
+      observer = new MutationObserver(scrollToTarget)
+      observer.observe(document.getElementById('root') ?? document.body, { childList: true, subtree: true })
+      timeout = window.setTimeout(() => observer?.disconnect(), 2_000)
     })
-    return () => window.cancelAnimationFrame(frame)
+
+    return () => {
+      window.cancelAnimationFrame(frame)
+      window.clearTimeout(timeout)
+      observer?.disconnect()
+    }
   }, [location.hash, location.pathname])
 
   return null
@@ -177,6 +199,7 @@ function App() {
       <m.div className="scroll-progress" style={{ scaleX }} aria-hidden="true" />
       <SiteHeader content={content} locale={locale} onLocaleChange={setLocale} />
       <ScrollManager />
+      <VirtualCompanion locale={locale} />
       <AnimatePresence>
         {chatNotice && location.pathname !== '/' && (
           <m.button className="community-chat-notice" type="button" initial={{ opacity: 0, x: 24, y: -12 }} animate={{ opacity: 1, x: 0, y: 0 }} exit={{ opacity: 0, x: 24, y: -8 }} onClick={() => { setChatNotice(null); navigate('/?chat=1') }}>
@@ -216,7 +239,7 @@ function App() {
               <Route path="/legal/cookies" element={<LegalPage type="cookies" />} />
               <Route path="/legal/privacidad" element={<LegalPage type="privacidad" />} />
               <Route path="/legal/aviso-legal" element={<LegalPage type="aviso-legal" />} />
-              <Route path="/legal/condiciones-venta" element={<LegalPage type="condiciones-venta" />} />
+              <Route path="/legal/condiciones-venta" element={<Navigate to="/legal/aviso-legal" replace />} />
               <Route path="*" element={<NotFoundPage content={content} />} />
             </Routes>
           </Suspense>

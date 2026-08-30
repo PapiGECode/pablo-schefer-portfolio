@@ -89,7 +89,7 @@ export async function POST(request: Request) {
   const safeName = escapeHtml(displayName)
   const safeEmail = escapeHtml(email)
   const safeMessage = escapeHtml(message).replace(/\n/g, '<br />')
-  const subject = `Nuevo mensaje desde pablo-schefer.vercel.app - ${displayName}`.slice(0, 150)
+  const subject = `Nuevo mensaje desde www.pabloschefer.com - ${displayName}`.slice(0, 150)
   const requestIdempotencyKey = await idempotencyKey(email, message, startedAt)
 
   let resendResponse: Response
