@@ -125,6 +125,78 @@ export function DiscordLivePanel({ content, locale, guildId = 'edgar', displayNa
           setLastChangeAt(nextData.updatedAt)
         }
 
+export function DiscordLivePanel({ content, locale, guildId = 'edgar', displayName }: { content: SiteCopy; locale: Locale; guildId?: LiveGuildId; displayName?: string }) {
+  const [data, setData] = useState<EdgarCommunityData | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [refreshing, setRefreshing] = useState(false)
+  const [error, setError] = useState(false)
+  const [activeOnly, setActiveOnly] = useState(false)
+  const [expandedChannels, setExpandedChannels] = useState<Set<string>>(new Set())
+  const [lastChangeAt, setLastChangeAt] = useState<string | null>(null)
+  const [requestVersion, setRequestVersion] = useState(0)
+  const signatureRef = useRef<string | null>(null)
+  const hasDataRef = useRef(false)
+  const expansionInitialisedRef = useRef(false)
+  const labels = content.edgar
+
+  const ui = locale === 'es' ? {
+    monitor: 'Monitor activo',
+    refresh: 'Actualizar ahora',
+    activeOnly: 'Solo canales activos',
+    allChannels: 'Todos los canales',
+    nextCheck: 'Próxima comprobación',
+    checked: 'Comprobado',
+    lastChange: 'Último cambio detectado',
+    justNow: 'ahora',
+    source: 'Actividad pública de Discord',
+    sourceDelay: 'Miembros, canales y participantes visibles se actualizan automáticamente mientras navegas.',
+    fallbackSource: 'Resumen público de la comunidad',
+    fallbackDelay: 'Discord no publica ahora mismo los canales de voz de este servidor. El panel seguirá comprobando el widget automáticamente.',
+    expand: 'Mostrar participantes',
+    collapse: 'Ocultar participantes',
+  } : {
+    monitor: 'Monitor active',
+    refresh: 'Refresh now',
+    activeOnly: 'Active channels only',
+    allChannels: 'All channels',
+    nextCheck: 'Next check',
+    checked: 'Checked',
+    lastChange: 'Last change detected',
+    justNow: 'now',
+    source: 'Public Discord activity',
+    sourceDelay: 'Visible members, channels and participants update automatically while you browse.',
+    fallbackSource: 'Public community summary',
+    fallbackDelay: 'Discord is not publishing this server’s voice channels right now. The panel will keep checking the widget automatically.',
+    expand: 'Show participants',
+    collapse: 'Hide participants',
+  }
+
+  useEffect(() => {
+    let active = true
+    let controller: AbortController | null = null
+
+    const load = async () => {
+      controller?.abort()
+      controller = new AbortController()
+      if (hasDataRef.current) setRefreshing(true)
+
+      try {
+        const query = guildId === 'edgar' ? '' : `?guild=${guildId}`
+        const response = await fetch(`/api/edgar-community${query}`, {
+          cache: 'no-store',
+          headers: { Accept: 'application/json' },
+          signal: controller.signal,
+        })
+        if (!response.ok) throw new Error('discord_unavailable')
+        const nextData = await response.json() as EdgarCommunityData
+        if (!active) return
+
+        const signature = createSnapshotSignature(nextData)
+        if (signatureRef.current === null || signatureRef.current !== signature) {
+          signatureRef.current = signature
+          setLastChangeAt(nextData.updatedAt)
+        }
+
         if (!expansionInitialisedRef.current) {
           const activeChannels = nextData.voice.channels
             .filter((channel) => channel.members.length > 0)
