@@ -5,9 +5,9 @@ import { Globe2, Check } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useLanguage, type Language } from "./language-provider"
 
-const languages: Array<{ code: Language; label: string; flag: string }> = [
-  { code: "es", label: "Español", flag: "🇪🇸" },
-  { code: "en", label: "English", flag: "🇺🇸" },
+const languages: Array<{ code: Language; label: string; flag: string; alt: string }> = [
+  { code: "es", label: "Español", flag: "/flag-spain.png", alt: "Bandera de España" },
+  { code: "en", label: "English", flag: "/flag-united-states.png", alt: "Flag of the United States" },
 ]
 
 export function LanguageChanger() {
@@ -30,7 +30,7 @@ export function LanguageChanger() {
       >
         <Globe2 className="h-4 w-4 transition-transform duration-300 group-hover:rotate-12" />
         <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 pointer-events-none whitespace-nowrap rounded-md border border-border bg-card px-2.5 py-1 font-mono text-[10px] text-muted-foreground opacity-0 shadow-lg transition-all duration-200 group-hover:-bottom-9 group-hover:opacity-100">
-          {current.flag}
+          <img src={current.flag} alt={current.alt} className="h-4 w-6 rounded-[3px] object-cover" />
         </span>
       </button>
 
@@ -63,7 +63,9 @@ export function LanguageChanger() {
                     language === item.code ? "border-primary/50 bg-primary/10 text-foreground shadow-sm shadow-primary/10" : "border-transparent text-muted-foreground",
                   )}
                 >
-                  <span className="flex h-7 w-8 items-center justify-center rounded border border-current/20 text-lg leading-none" aria-hidden="true">{item.flag}</span>
+                  <span className="flex h-7 w-9 items-center justify-center overflow-hidden rounded border border-current/20 bg-background/40" aria-hidden="true">
+                    <img src={item.flag} alt="" className="h-5 w-7 rounded-[2px] object-cover" />
+                  </span>
                   <span className="flex-1">{item.label}</span>
                   {language === item.code && <Check className="h-3.5 w-3.5 text-primary" />}
                 </button>
