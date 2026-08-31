@@ -31,7 +31,7 @@ const imageTech = (src: string, label: string, href: string): LogoItem => ({
       <img
         src={src}
         alt={label}
-        className="h-8 w-8 scale-[3.2] object-contain transition-all duration-300 ease-out group-hover/fnlb:scale-[3.4] group-hover/fnlb:brightness-150 group-hover/fnlb:drop-shadow-[0_0_0.45rem_var(--primary)]"
+        className="fnlb-logo h-8 w-8 scale-[3.2] object-contain transition-all duration-300 ease-out group-hover/fnlb:scale-[3.4]"
         draggable={false}
       />
     </span>
