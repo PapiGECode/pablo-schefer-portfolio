@@ -44,7 +44,9 @@ function TiltPortrait({ children }: { children: ReactNode }) {
   return (
     <motion.div
       className="relative mx-auto w-full max-w-md lg:mx-0 lg:ml-auto"
-      style={{ rotateX: smoothX, rotateY: smoothY, transformPerspective: 1200 }}
+      style={{ rotateX: smoothX, rotateY: smoothY, transformPerspective: 1200, transformStyle: "preserve-3d" }}
+      animate={{ y: [0, -4, 0], rotateZ: [0, 0.35, -0.35, 0] }}
+      transition={{ duration: 5.5, ease: "easeInOut", repeat: Infinity }}
       onMouseMove={handleMove}
       onMouseLeave={() => { rotateX.set(0); rotateY.set(0) }}
     >
