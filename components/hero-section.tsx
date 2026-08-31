@@ -165,8 +165,10 @@ export function HeroSection() {
         aria-label={language === "es" ? "Desplázate hacia abajo" : "Scroll down"}
       >
         <div className="scroll-cue" aria-hidden="true">
-          <span className="scroll-cue-wheel" />
-          <span className="scroll-cue-chevron">⌄</span>
+          <span className="scroll-cue-glow" />
+          <span className="scroll-cue-line" />
+          <span className="scroll-cue-arrow">↓</span>
+          <span className="scroll-cue-ring" />
         </div>
       </div>
     </section>
