@@ -14,7 +14,6 @@ import { XLogo } from "./x-logo"
 const navItems = [
   { key: "home", href: "/" },
   { key: "projects", href: "/projects" },
-  { key: "activity", href: "/#activity" },
   // { label: "Notes", href: "/notes" },/
   { key: "workbench", href: "/workbench" },
   { key: "blog", href: "/blog" },
@@ -33,8 +32,8 @@ export function Header() {
   const pathname = usePathname()
   const { language } = useLanguage()
   const labels = language === "es"
-    ? { home: "Inicio", projects: "Proyectos", activity: "En directo", workbench: "Workbench", blog: "Blog", status: "estado: construyendo" }
-    : { home: "Home", projects: "Projects", activity: "Live", workbench: "Workbench", blog: "Blog", status: "status: building" }
+    ? { home: "Inicio", projects: "Proyectos", workbench: "Workbench", blog: "Blog", status: "estado: construyendo" }
+    : { home: "Home", projects: "Projects", workbench: "Workbench", blog: "Blog", status: "status: building" }
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/"
