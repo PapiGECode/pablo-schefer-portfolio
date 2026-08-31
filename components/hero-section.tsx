@@ -8,7 +8,7 @@ export function HeroSection() {
   const { language } = useLanguage()
   const roles = useMemo(
     () => language === "es"
-      ? ["creando apps", "subiendo proyectos", "diseñando UI", "automatizando", "probando IA"]
+      ? ["creando apps", "subiendo apps", "diseñando UI", "automatizando", "probando IA"]
       : ["building apps", "shipping code", "designing UI", "automating", "testing AI"],
     [language],
   )
