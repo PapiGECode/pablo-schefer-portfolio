@@ -17,18 +17,37 @@ import {
   SiNvidia,
   SiGitlab,
   SiFigma,
+  SiCloudflare,
+  SiSamsung,
+  SiIntel,
+  SiAmd,
+  SiSpotify,
+  SiDiscord,
+  SiUnity,
+  SiAtlassian,
+  SiGithubcopilot,
+  SiGooglecloud,
   SiTailwindcss,
   SiVercel,
   SiGithub,
   SiDocker,
   SiSvelte,
 } from "react-icons/si"
-import { FaAmazon, FaMicrosoft } from "react-icons/fa6"
+import { FaAmazon, FaMicrosoft, FaSlack } from "react-icons/fa6"
 import { BsOpenai } from "react-icons/bs"
+import { BiLogoAdobe } from "react-icons/bi"
+import { GrOracle } from "react-icons/gr"
 import type { IconType } from "react-icons"
 
 const tech = (Icon: IconType, label: string, href: string): LogoItem => ({
   node: <Icon className="h-8 w-8" aria-hidden="true" />,
+  href,
+  title: label,
+  ariaLabel: label,
+})
+
+const wordmark = (label: string, href: string): LogoItem => ({
+  node: <span className="font-mono text-[0.72em] font-bold tracking-[-0.08em]" aria-hidden="true">{label}</span>,
   href,
   title: label,
   ariaLabel: label,
@@ -57,6 +76,21 @@ const techLogos: LogoItem[] = [
   tech(SiSvelte, "Svelte", "https://svelte.dev"),
   tech(SiGithub, "GitHub", "https://github.com/PapiGECode"),
   tech(SiJavascript, "JavaScript", "https://developer.mozilla.org/en-US/docs/Web/JavaScript"),
+  tech(SiCloudflare, "Cloudflare", "https://www.cloudflare.com"),
+  wordmark("IBM", "https://www.ibm.com"),
+  tech(GrOracle, "Oracle", "https://www.oracle.com"),
+  tech(SiSamsung, "Samsung", "https://www.samsung.com"),
+  tech(SiIntel, "Intel", "https://www.intel.com"),
+  tech(SiAmd, "AMD", "https://www.amd.com"),
+  tech(BiLogoAdobe, "Adobe", "https://www.adobe.com"),
+  tech(SiSpotify, "Spotify", "https://www.spotify.com"),
+  tech(SiDiscord, "Discord", "https://discord.com"),
+  tech(SiUnity, "Unity", "https://unity.com"),
+  tech(SiAtlassian, "Atlassian", "https://www.atlassian.com"),
+  tech(FaSlack, "Slack", "https://slack.com"),
+  tech(SiGithubcopilot, "GitHub Copilot", "https://github.com/features/copilot"),
+  tech(SiGooglecloud, "Google Cloud", "https://cloud.google.com"),
+  wordmark("AWS", "https://aws.amazon.com"),
 ]
 
 export function TechStack() {
