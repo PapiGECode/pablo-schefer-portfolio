@@ -330,7 +330,11 @@ function AnimeCard({ activity, labels }: { activity: LanyardActivity | null; lab
   return (
     <article className={`live-card live-card--anime${activity ? " is-active" : ""}`}>
       <header>
-        <span><Tv aria-hidden="true" /> Anime</span>
+        <span className="live-anime-brand">
+          <Tv aria-hidden="true" />
+          <span>PapiGECode <b aria-hidden="true">×</b> Crunchyroll</span>
+          <img src="https://cdn.simpleicons.org/crunchyroll/F47521" alt="Crunchyroll" />
+        </span>
         <span className="live-card__signal"><i />{activity ? labels.live : labels.waiting}</span>
       </header>
       {activity ? (

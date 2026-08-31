@@ -1097,6 +1097,10 @@
 
 .live-card > header > span { display: inline-flex; align-items: center; gap: 0.5rem; }
 .live-card > header svg { width: 0.95rem; height: 0.95rem; color: var(--live-accent); }
+.live-anime-brand { min-width: 0; white-space: nowrap; }
+.live-anime-brand > span { overflow: hidden; text-overflow: ellipsis; }
+.live-anime-brand b { color: color-mix(in oklch, var(--live-accent) 76%, white); font-weight: 500; }
+.live-anime-brand img { width: 1rem; height: 1rem; object-fit: contain; opacity: 0.9; filter: drop-shadow(0 0 7px color-mix(in oklch, var(--live-accent) 48%, transparent)); }
 .live-card__signal { color: var(--muted-foreground); font-size: 0.58rem; }
 .live-card__signal i { width: 0.38rem; height: 0.38rem; border-radius: 50%; background: var(--muted-foreground); }
 .live-card.is-active .live-card__signal { color: var(--live-accent); }
