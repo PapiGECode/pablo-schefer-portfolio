@@ -807,33 +807,6 @@
   }
 }
 
-.fnlb-logo {
-  filter: grayscale(1) opacity(0.72);
-  transition: filter 300ms ease-out, transform 300ms ease-out;
-}
-
-.fnlb-logo-wrap:hover .fnlb-logo,
-.fnlb-logo-wrap:focus-within .fnlb-logo {
-  transform: scale(3.4);
-  filter:
-    brightness(0) saturate(100%) invert(66%) sepia(94%) saturate(1350%)
-    hue-rotate(145deg) brightness(92%) contrast(101%)
-    drop-shadow(0 0 0.45rem color-mix(in srgb, var(--primary) 75%, transparent));
-}
-
-.fnlb-logo-hover {
-  z-index: 1;
-  filter:
-    brightness(0) saturate(100%) invert(66%) sepia(94%) saturate(1350%)
-    hue-rotate(145deg) brightness(92%) contrast(101%)
-    drop-shadow(0 0 0.45rem color-mix(in srgb, var(--primary) 75%, transparent));
-}
-
-.fnlb-logo-wrap:hover .fnlb-logo-hover,
-.fnlb-logo-wrap:focus-within .fnlb-logo-hover {
-  opacity: 1;
-}
-
 /* Focus styles enhancement */
 :focus-visible {
   outline: 2px solid var(--primary);
