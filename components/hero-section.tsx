@@ -163,7 +163,6 @@ export function HeroSection() {
         <span className="mouse">
           <span className="move" />
         </span>
-        <h2>Scroll down</h2>
       </div>
     </section>
   )
