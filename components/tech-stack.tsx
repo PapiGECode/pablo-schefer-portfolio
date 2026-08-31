@@ -11,13 +11,19 @@ import {
   SiCplusplus,
   SiGithubactions,
   SiEpicgames,
+  SiGoogle,
+  SiApple,
+  SiMeta,
+  SiNvidia,
+  SiGitlab,
+  SiFigma,
   SiTailwindcss,
   SiVercel,
   SiGithub,
   SiDocker,
   SiSvelte,
 } from "react-icons/si"
-import { FaMicrosoft } from "react-icons/fa6"
+import { FaAmazon, FaMicrosoft } from "react-icons/fa6"
 import { BsOpenai } from "react-icons/bs"
 import type { IconType } from "react-icons"
 
@@ -38,6 +44,13 @@ const techLogos: LogoItem[] = [
   tech(FaMicrosoft, "Microsoft", "https://www.microsoft.com"),
   tech(SiEpicgames, "Epic Games", "https://www.epicgames.com"),
   tech(BsOpenai, "OpenAI", "https://openai.com"),
+  tech(SiGoogle, "Google", "https://www.google.com"),
+  tech(SiApple, "Apple", "https://www.apple.com"),
+  tech(FaAmazon, "Amazon", "https://www.amazon.com"),
+  tech(SiMeta, "Meta", "https://about.meta.com"),
+  tech(SiNvidia, "NVIDIA", "https://www.nvidia.com"),
+  tech(SiGitlab, "GitLab", "https://gitlab.com"),
+  tech(SiFigma, "Figma", "https://www.figma.com"),
   tech(SiTypescript, "TypeScript", "https://www.typescriptlang.org"),
   tech(SiTailwindcss, "Tailwind CSS", "https://tailwindcss.com"),
   tech(SiVercel, "Vercel", "https://vercel.com"),
