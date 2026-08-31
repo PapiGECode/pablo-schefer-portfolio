@@ -266,7 +266,7 @@ function SpotifyCard({ track, labels }: { track: SpotifyPresence | null; labels:
           <div className="live-art"><img src={track.album_art_url} alt={`${labels.album}: ${track.album}`} /></div>
           <div className="live-copy">
             <span className="live-kicker">{labels.nowListening}</span>
-            <h3><ShinyText text={track.song} color="var(--foreground)" shineColor="var(--primary)" speed={4} /></h3>
+            <h3><ShinyText text={track.song} speed={4} /></h3>
             <p>{track.artist}</p>
             <small>{track.album}</small>
             <ProgressBar timestamps={track.timestamps} />
@@ -311,7 +311,7 @@ function AppleMusicCard({ activity, labels }: { activity: LanyardActivity | null
           </div>
           <div className="live-copy">
             <span className="live-kicker">{labels.nowListening}</span>
-            <h3><ShinyText text={visibleActivity.details || visibleActivity.assets?.large_text || "Apple Music"} color="var(--foreground)" shineColor="var(--primary)" speed={4} /></h3>
+            <h3><ShinyText text={visibleActivity.details || visibleActivity.assets?.large_text || "Apple Music"} speed={4} /></h3>
             <p>{visibleActivity.state || visibleActivity.assets?.small_text || labels.publicActivity}</p>
             {lyrics ? (
               <BlurLyrics text={lyrics} />
@@ -344,7 +344,7 @@ function GameCard({ activity, labels }: { activity: LanyardActivity | null; labe
           </div>
           <div className="live-copy">
             <span className="live-kicker">{labels.nowPlaying}</span>
-            <h3><ShinyText text={activity.assets?.large_text || activity.name} color="var(--foreground)" shineColor="var(--primary)" speed={4} /></h3>
+            <h3><ShinyText text={activity.assets?.large_text || activity.name} speed={4} /></h3>
             <p>{activity.details || labels.gameActivity}</p>
             <small>{activity.state}</small>
             {activity.timestamps?.start ? (
@@ -396,7 +396,7 @@ function AnimeCard({ activity, labels }: { activity: LanyardActivity | null; lab
           </div>
           <div className="live-copy">
             <span className="live-kicker">{labels.nowWatching}</span>
-            <h3><ShinyText text={metadata?.title || title} color="var(--foreground)" shineColor="var(--primary)" speed={4} /></h3>
+            <h3><ShinyText text={metadata?.title || title} speed={4} /></h3>
             <p>{activity.state || activity.assets?.small_text || labels.animeActivity}</p>
             {metadata ? (
               <small>{[metadata.year, metadata.episodes ? `${metadata.episodes} ep.` : null, metadata.score ? `${metadata.score}/100` : null].filter(Boolean).join(" · ")}</small>
