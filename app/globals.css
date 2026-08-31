@@ -765,8 +765,13 @@
   width: 32px;
   height: 64px;
   margin: 0 auto;
-  border: 2px solid var(--foreground);
+  border: 1px solid color-mix(in srgb, var(--primary) 82%, white 18%);
   border-radius: 50px;
+  box-shadow:
+    0 0 0.45rem color-mix(in srgb, var(--primary) 28%, transparent),
+    inset 0 0 0.55rem color-mix(in srgb, var(--primary) 10%, transparent);
+  filter: drop-shadow(0 0 0.35rem color-mix(in srgb, var(--primary) 24%, transparent));
+  animation: scroll-bloom 2.4s ease-in-out infinite;
 }
 
 #scroll-down-animation .move,
@@ -776,9 +781,24 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background-color: var(--foreground);
+  background-color: var(--primary);
   transform: translateX(-50%);
+  filter: drop-shadow(0 0 0.3rem color-mix(in srgb, var(--primary) 95%, transparent));
   animation: move 2s linear infinite;
+}
+
+@keyframes scroll-bloom {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0.35rem color-mix(in srgb, var(--primary) 20%, transparent),
+      inset 0 0 0.45rem color-mix(in srgb, var(--primary) 8%, transparent);
+  }
+  50% {
+    box-shadow:
+      0 0 0.85rem color-mix(in srgb, var(--primary) 40%, transparent),
+      inset 0 0 0.7rem color-mix(in srgb, var(--primary) 16%, transparent);
+  }
 }
 
 @keyframes move {
