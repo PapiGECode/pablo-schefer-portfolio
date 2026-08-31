@@ -816,12 +816,13 @@
 .smooth-input-control {
   position: relative;
   z-index: 1;
-  min-height: 3rem;
+  min-height: 2.5rem;
   caret-color: transparent;
 }
 
 .smooth-input-mirror {
   position: absolute;
+  display: block;
   inset: 0;
   z-index: 0;
   visibility: hidden;

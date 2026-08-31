@@ -29,6 +29,10 @@ export const SmoothInput = forwardRef<HTMLInputElement, SmoothInputProps>(functi
 
     const styles = getComputedStyle(input)
     mirror.style.font = styles.font
+    mirror.style.fontFamily = styles.fontFamily
+    mirror.style.fontSize = styles.fontSize
+    mirror.style.fontWeight = styles.fontWeight
+    mirror.style.lineHeight = styles.lineHeight
     mirror.style.boxSizing = styles.boxSizing
     mirror.style.width = `${input.offsetWidth}px`
     mirror.style.letterSpacing = styles.letterSpacing
@@ -49,8 +53,10 @@ export const SmoothInput = forwardRef<HTMLInputElement, SmoothInputProps>(functi
     const fontSize = Number.parseFloat(styles.fontSize) || 16
     const lineHeight = styles.lineHeight === "normal" ? fontSize * 1.4 : Number.parseFloat(styles.lineHeight) || fontSize * 1.4
 
-    caret.style.height = `${lineHeight}px`
-    caret.style.transform = `translate3d(${markerRect.left - shellRect.left - input.scrollLeft}px, ${markerRect.top - shellRect.top}px, 0)`
+    const caretHeight = Math.min(lineHeight, 20)
+    const y = (input.offsetHeight - caretHeight) / 2
+    caret.style.height = `${caretHeight}px`
+    caret.style.transform = `translate3d(${markerRect.left - shellRect.left - input.scrollLeft}px, ${y}px, 0)`
   }, [])
 
   const schedulePosition = useCallback(() => {
@@ -103,7 +109,13 @@ export const SmoothInput = forwardRef<HTMLInputElement, SmoothInputProps>(functi
         }}
         value={value}
         defaultValue={defaultValue}
-        className={cn("smooth-input-control", className)}
+        className={cn(
+          "file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+          "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
+          "aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+          "smooth-input-control",
+          className,
+        )}
         onChange={(event) => {
           onChange?.(event)
           schedulePosition()
