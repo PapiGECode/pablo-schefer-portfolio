@@ -159,9 +159,15 @@ export function HeroSection() {
         </div>
       </div>
 
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden lg:flex flex-col items-center gap-2 animate-fade-in stagger-6">
-              <span className="font-mono text-xs text-muted-foreground">{language === "es" ? "desplazar" : "scroll"}</span>
-        <div className="w-px h-12 bg-gradient-to-b from-primary/50 to-transparent animate-pulse" />
+      <div
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden lg:flex animate-fade-in stagger-6"
+        role="img"
+        aria-label={language === "es" ? "Desplázate hacia abajo" : "Scroll down"}
+      >
+        <div className="scroll-cue" aria-hidden="true">
+          <span className="scroll-cue-wheel" />
+          <span className="scroll-cue-chevron">⌄</span>
+        </div>
       </div>
     </section>
   )
