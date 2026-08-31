@@ -243,7 +243,7 @@ function BlurLyrics({ text }: { text: string }) {
               opacity: [0, 0.5, 1],
               y: [50, -5, 0],
             }}
-            transition={{ duration: 0.42, times: [0, 0.5, 1], delay: index * 0.022, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.54, times: [0, 0.5, 1], delay: index * 0.032, ease: [0.16, 1, 0.3, 1] }}
           >
             {character === " " ? "\u00a0" : character}
           </motion.span>
