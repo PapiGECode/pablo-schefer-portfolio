@@ -167,7 +167,7 @@ export function HeroSection() {
         <div className="scroll-cue" aria-hidden="true">
           <span className="scroll-cue-glow" />
           <span className="scroll-cue-line" />
-          <span className="scroll-cue-arrow">↓</span>
+          <span className="scroll-cue-arrow" />
           <span className="scroll-cue-ring" />
         </div>
       </div>
