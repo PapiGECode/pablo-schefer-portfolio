@@ -27,11 +27,18 @@ const tech = (Icon: IconType, label: string, href: string): LogoItem => ({
 
 const imageTech = (src: string, label: string, href: string): LogoItem => ({
   node: (
-    <span className="group/fnlb inline-flex h-8 w-8 items-center justify-center overflow-hidden" aria-label={label}>
+    <span className="group/fnlb relative inline-flex h-8 w-8 items-center justify-center overflow-hidden" aria-label={label}>
       <img
         src={src}
         alt={label}
         className="fnlb-logo h-8 w-8 scale-[3.2] object-contain transition-all duration-300 ease-out group-hover/fnlb:scale-[3.4]"
+        draggable={false}
+      />
+      <img
+        src={src}
+        alt=""
+        aria-hidden="true"
+        className="fnlb-logo-hover pointer-events-none absolute h-8 w-8 scale-[3.4] object-contain opacity-0 transition-opacity duration-300 ease-out group-hover/fnlb:opacity-100"
         draggable={false}
       />
     </span>

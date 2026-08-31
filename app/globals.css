@@ -820,6 +820,13 @@
     drop-shadow(0 0 0.45rem color-mix(in srgb, var(--primary) 75%, transparent));
 }
 
+.fnlb-logo-hover {
+  filter:
+    brightness(0) saturate(100%) invert(66%) sepia(94%) saturate(1350%)
+    hue-rotate(145deg) brightness(92%) contrast(101%)
+    drop-shadow(0 0 0.45rem color-mix(in srgb, var(--primary) 75%, transparent));
+}
+
 /* Focus styles enhancement */
 :focus-visible {
   outline: 2px solid var(--primary);
