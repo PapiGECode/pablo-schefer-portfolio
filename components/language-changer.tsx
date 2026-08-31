@@ -63,7 +63,7 @@ export function LanguageChanger() {
                     language === item.code ? "border-primary/50 bg-primary/10 text-foreground shadow-sm shadow-primary/10" : "border-transparent text-muted-foreground",
                   )}
                 >
-                  <span className="flex h-7 w-9 items-center justify-center overflow-hidden rounded border border-current/20 bg-background/40" aria-hidden="true">
+                  <span className="flex h-7 w-9 items-center justify-center overflow-hidden" aria-hidden="true">
                     <img src={item.flag} alt="" className="h-5 w-7 rounded-[2px] object-cover" />
                   </span>
                   <span className="flex-1">{item.label}</span>
