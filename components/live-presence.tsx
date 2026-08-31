@@ -265,8 +265,7 @@ function AppleMusicCard({ activity, labels }: { activity: LanyardActivity | null
             <h3>{activity.details || activity.assets?.large_text || "Apple Music"}</h3>
             <p>{activity.state || activity.assets?.small_text || labels.publicActivity}</p>
             {activity.assets?.large_text ? (
-              <div className="live-lyrics" aria-label={labels.lyrics}>
-                <span>{labels.lyrics}</span>
+              <div className="live-lyrics">
                 <p>{activity.assets.large_text}</p>
               </div>
             ) : null}
@@ -387,7 +386,6 @@ function copyFor(language: "es" | "en") {
         waiting: "en espera",
         album: "Álbum",
         nowListening: "Escuchando ahora",
-        lyrics: "Letra",
         nowPlaying: "Jugando ahora",
         nowWatching: "Viendo ahora",
         publicActivity: "Actividad musical pública",
@@ -421,7 +419,6 @@ function copyFor(language: "es" | "en") {
         waiting: "waiting",
         album: "Album",
         nowListening: "Listening now",
-        lyrics: "Lyrics",
         nowPlaying: "Playing now",
         nowWatching: "Watching now",
         publicActivity: "Public music activity",

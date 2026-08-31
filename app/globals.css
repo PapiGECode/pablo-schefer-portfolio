@@ -1188,16 +1188,8 @@
   padding-left: 0.65rem;
   border-left: 2px solid color-mix(in oklch, var(--live-accent) 72%, transparent);
 }
-.live-lyrics > span {
-  display: block;
-  color: var(--live-accent);
-  font-family: var(--font-geist-mono), monospace;
-  font-size: 0.58rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
 .live-lyrics p {
-  margin-top: 0.2rem;
+  margin-top: 0;
   color: color-mix(in oklch, var(--foreground) 78%, transparent);
   font-size: 0.72rem;
   font-style: italic;
