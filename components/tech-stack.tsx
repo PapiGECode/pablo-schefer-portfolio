@@ -23,7 +23,6 @@ import {
   SiAmd,
   SiSpotify,
   SiDiscord,
-  SiUnity,
   SiAtlassian,
   SiGithubcopilot,
   SiGooglecloud,
@@ -35,7 +34,6 @@ import {
 } from "react-icons/si"
 import { FaAmazon, FaMicrosoft, FaSlack } from "react-icons/fa6"
 import { BsOpenai } from "react-icons/bs"
-import { BiLogoAdobe } from "react-icons/bi"
 import { GrOracle } from "react-icons/gr"
 import type { IconType } from "react-icons"
 
@@ -82,10 +80,8 @@ const techLogos: LogoItem[] = [
   tech(SiSamsung, "Samsung", "https://www.samsung.com"),
   tech(SiIntel, "Intel", "https://www.intel.com"),
   tech(SiAmd, "AMD", "https://www.amd.com"),
-  tech(BiLogoAdobe, "Adobe", "https://www.adobe.com"),
   tech(SiSpotify, "Spotify", "https://www.spotify.com"),
   tech(SiDiscord, "Discord", "https://discord.com"),
-  tech(SiUnity, "Unity", "https://unity.com"),
   tech(SiAtlassian, "Atlassian", "https://www.atlassian.com"),
   tech(FaSlack, "Slack", "https://slack.com"),
   tech(SiGithubcopilot, "GitHub Copilot", "https://github.com/features/copilot"),
