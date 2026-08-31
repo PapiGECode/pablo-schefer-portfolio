@@ -5,7 +5,7 @@ import type React from "react"
 import { useState, useEffect, useRef } from "react"
 import { cn } from "@/lib/utils"
 import { Mail, Rss, Search, Tag, TrendingUp } from "lucide-react"
-import { Input } from "@/components/ui/input"
+import { SmoothInput } from "@/components/smooth-input"
 import { Button } from "@/components/ui/button"
 
 const categories = [
@@ -53,7 +53,7 @@ export function BlogSidebar() {
       <div className={cn("opacity-0", isVisible && "animate-fade-in-up")}>
         <div className="relative">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-          <Input
+          <SmoothInput
             type="search"
             placeholder="Search articles..."
             className="pl-10 bg-card/40 border-border/50 focus:border-primary/50"
@@ -119,7 +119,7 @@ export function BlogSidebar() {
           Get notified about new articles and experiments. No spam, unsubscribe anytime.
         </p>
         <form onSubmit={handleSubscribe} className="space-y-3">
-          <Input
+          <SmoothInput
             type="email"
             placeholder="your@email.com"
             value={email}

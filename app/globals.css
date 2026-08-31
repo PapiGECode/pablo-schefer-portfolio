@@ -807,6 +807,60 @@
   }
 }
 
+.smooth-input-shell {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+.smooth-input-control {
+  position: relative;
+  z-index: 1;
+  caret-color: transparent;
+}
+
+.smooth-input-mirror {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  visibility: hidden;
+  overflow: hidden;
+  pointer-events: none;
+  white-space: pre;
+}
+
+.smooth-input-caret {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: 2px;
+  height: 1em;
+  border-radius: 999px;
+  background: var(--primary);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--primary) 72%, transparent);
+  pointer-events: none;
+  user-select: none;
+  opacity: 0;
+  transform: translate3d(0, 0, 0);
+  transition: transform 95ms cubic-bezier(.2, .78, .3, 1), height 95ms cubic-bezier(.2, .78, .3, 1), opacity 120ms ease;
+  will-change: transform, height, opacity;
+}
+
+.smooth-input-caret.is-visible {
+  opacity: 1;
+  animation: smooth-input-caret-blink 1.1s ease-in-out infinite;
+}
+
+.smooth-input-caret.is-visible.is-typing {
+  animation: none;
+}
+
+@keyframes smooth-input-caret-blink {
+  0%, 52% { opacity: 1; }
+  76%, 100% { opacity: .14; }
+}
+
 /* Focus styles enhancement */
 :focus-visible {
   outline: 2px solid var(--primary);

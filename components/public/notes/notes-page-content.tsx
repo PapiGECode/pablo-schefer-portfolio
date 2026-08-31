@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { cn } from "@/lib/utils"
 import { ArrowRight, Calendar, Tag, Search } from "lucide-react"
-import { Input } from "@/components/ui/input"
+import { SmoothInput } from "@/components/smooth-input"
 import { useLanguage } from "@/components/language-provider"
 
 const notes = [
@@ -132,7 +132,7 @@ export function NotesPageContent() {
             {/* Search */}
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
+              <SmoothInput
                 type="text"
                 placeholder={language === "es" ? "Buscar notas..." : "Search notes..."}
                 value={searchQuery}

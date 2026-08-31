@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import { cn } from "@/lib/utils"
 import { Github, Star, GitFork, ExternalLink, Sparkles, Search, Filter } from "lucide-react"
-import { Input } from "@/components/ui/input"
+import { SmoothInput } from "@/components/smooth-input"
 import { useLanguage } from "@/components/language-provider"
 
 const projects = [
@@ -126,7 +126,7 @@ export function ProjectsPageContent() {
           {/* Search */}
           <div className="relative max-w-md">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input
+            <SmoothInput
               type="text"
               placeholder={language === "es" ? "Buscar proyectos..." : "Search projects..."}
               value={searchQuery}
