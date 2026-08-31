@@ -742,9 +742,10 @@
 #scroll-down-animation,
 .provided-scroll-animation {
   position: absolute;
-  top: 50%;
+  top: auto;
+  bottom: 1.25rem;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
   text-align: center;
 }
 
@@ -753,15 +754,16 @@
   color: var(--foreground);
   font-family: Arial, sans-serif;
   font-weight: 200;
-  font-size: 16px;
+  margin-top: 0.45rem;
+  font-size: 11px;
 }
 
 #scroll-down-animation .mouse,
 .provided-scroll-animation .mouse {
   position: relative;
   display: block;
-  width: 50px;
-  height: 100px;
+  width: 32px;
+  height: 64px;
   margin: 0 auto;
   border: 2px solid var(--foreground);
   border-radius: 50px;
@@ -771,8 +773,8 @@
 .provided-scroll-animation .move {
   position: absolute;
   left: 50%;
-  width: 10px;
-  height: 10px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   background-color: var(--foreground);
   transform: translateX(-50%);
@@ -781,15 +783,15 @@
 
 @keyframes move {
   0% {
-    transform: translate(-50%, 10px);
+    transform: translate(-50%, 7px);
     opacity: 0;
   }
   50% {
-    transform: translate(-50%, 40px);
+    transform: translate(-50%, 26px);
     opacity: 1;
   }
   100% {
-    transform: translate(-50%, 80px);
+    transform: translate(-50%, 51px);
     opacity: 0;
   }
 }
