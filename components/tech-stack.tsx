@@ -37,7 +37,7 @@ const techLogos: LogoItem[] = [
   tech(SiNextdotjs, "Next.js", "https://nextjs.org"),
   tech(SiNodedotjs, "Node.js", "https://nodejs.org"),
   tech(SiCplusplus, "C++", "https://isocpp.org"),
-  imageTech("/fnlb-logo.png", "FNLB", "https://github.com/PapiGECode"),
+  imageTech("/fnlb-logo.png", "FNLB", "https://fnlb.net/"),
   tech(SiGithubactions, "GitHub Actions", "https://github.com/features/actions"),
   tech(SiTypescript, "TypeScript", "https://www.typescriptlang.org"),
   tech(SiTailwindcss, "Tailwind CSS", "https://tailwindcss.com"),
