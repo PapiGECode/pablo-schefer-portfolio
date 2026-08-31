@@ -10,15 +10,15 @@ import {
   SiNodedotjs,
   SiCplusplus,
   SiGithubactions,
-  SiMicrosoft,
   SiEpicgames,
-  SiOpenai,
   SiTailwindcss,
   SiVercel,
   SiGithub,
   SiDocker,
   SiSvelte,
 } from "react-icons/si"
+import { FaMicrosoft } from "react-icons/fa6"
+import { BsOpenai } from "react-icons/bs"
 import type { IconType } from "react-icons"
 
 const tech = (Icon: IconType, label: string, href: string): LogoItem => ({
@@ -58,9 +58,9 @@ const techLogos: LogoItem[] = [
   tech(SiCplusplus, "C++", "https://isocpp.org"),
   imageTech("/fnlb-logo.png", "FNLB", "https://fnlb.net/"),
   tech(SiGithubactions, "GitHub Actions", "https://github.com/features/actions"),
-  tech(SiMicrosoft, "Microsoft", "https://www.microsoft.com"),
+  tech(FaMicrosoft, "Microsoft", "https://www.microsoft.com"),
   tech(SiEpicgames, "Epic Games", "https://www.epicgames.com"),
-  tech(SiOpenai, "OpenAI", "https://openai.com"),
+  tech(BsOpenai, "OpenAI", "https://openai.com"),
   tech(SiTypescript, "TypeScript", "https://www.typescriptlang.org"),
   tech(SiTailwindcss, "Tailwind CSS", "https://tailwindcss.com"),
   tech(SiVercel, "Vercel", "https://vercel.com"),
