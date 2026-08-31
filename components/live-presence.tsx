@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useMemo, useRef, useState } from "react"
+import { motion, useReducedMotion } from "motion/react"
 import {
   ExternalLink,
   Gamepad2,
@@ -215,16 +216,39 @@ function EmptyState({ icon: Icon, title, body }: { icon: typeof Radio; title: st
   )
 }
 
+function appleTrackIdentity(activity: LanyardActivity | null) {
+  if (!activity) return null
+  return [
+    activity.name,
+    activity.timestamps?.start ?? "live",
+    activity.details ?? "",
+    activity.state ?? "",
+    activity.assets?.large_image ?? "",
+  ].join("|")
+}
+
 function BlurLyrics({ text }: { text: string }) {
+  const reduceMotion = useReducedMotion()
+  const characters = useMemo(() => Array.from(text), [text])
+
   return (
     <div className="live-lyrics" aria-label={text}>
-      <p className="live-lyrics__text" key={text}>
-        {Array.from(text).map((character, index) => (
-          <span key={`${text}-${index}`} style={{ "--lyrics-delay": `${index * 50}ms` } as React.CSSProperties}>
+      <motion.p className="live-lyrics__text" key={text}>
+        {characters.map((character, index) => (
+          <motion.span
+            key={`${text}-${index}`}
+            initial={reduceMotion ? false : { filter: "blur(10px)", opacity: 0, y: 50 }}
+            animate={reduceMotion ? { filter: "blur(0px)", opacity: 1, y: 0 } : {
+              filter: ["blur(10px)", "blur(5px)", "blur(0px)"],
+              opacity: [0, 0.5, 1],
+              y: [50, -5, 0],
+            }}
+            transition={{ duration: 0.7, times: [0, 0.5, 1], delay: index * 0.05, ease: [0.16, 1, 0.3, 1] }}
+          >
             {character === " " ? "\u00a0" : character}
-          </span>
+          </motion.span>
         ))}
-      </p>
+      </motion.p>
     </div>
   )
 }
@@ -258,9 +282,19 @@ function SpotifyCard({ track, labels }: { track: SpotifyPresence | null; labels:
 }
 
 function AppleMusicCard({ activity, labels }: { activity: LanyardActivity | null; labels: ReturnType<typeof copyFor> }) {
-  const image = activity ? resolveActivityImage(activity) : undefined
-  const search = activity
-    ? `https://music.apple.com/search?term=${encodeURIComponent([activity.details, activity.state].filter(Boolean).join(" "))}`
+  const incomingIdentity = appleTrackIdentity(activity)
+  const [stableActivity, setStableActivity] = useState(activity)
+  const stableIdentity = appleTrackIdentity(stableActivity)
+
+  useEffect(() => {
+    if (incomingIdentity !== stableIdentity) setStableActivity(activity)
+  }, [activity, incomingIdentity, stableIdentity])
+
+  const visibleActivity = incomingIdentity === stableIdentity ? stableActivity : activity
+  const image = visibleActivity ? resolveActivityImage(visibleActivity) : undefined
+  const lyrics = activity?.assets?.large_text ?? ""
+  const search = visibleActivity
+    ? `https://music.apple.com/search?term=${encodeURIComponent([visibleActivity.details, visibleActivity.state].filter(Boolean).join(" "))}`
     : "https://music.apple.com/"
 
   return (
@@ -269,19 +303,19 @@ function AppleMusicCard({ activity, labels }: { activity: LanyardActivity | null
         <span><SiApplemusic aria-hidden="true" /> Apple Music</span>
         <span className="live-card__signal"><i />{activity ? labels.live : labels.waiting}</span>
       </header>
-      {activity ? (
-        <div className="live-media" key={`${activity.name}-${activity.timestamps?.start ?? "live"}`}>
+      {visibleActivity ? (
+        <div className="live-media" key={incomingIdentity}>
           <div className="live-art">
             {image ? <img src={image} alt="" /> : <SiApplemusic aria-hidden="true" />}
           </div>
           <div className="live-copy">
             <span className="live-kicker">{labels.nowListening}</span>
-            <h3>{activity.details || activity.assets?.large_text || "Apple Music"}</h3>
-            <p>{activity.state || activity.assets?.small_text || labels.publicActivity}</p>
-            {activity.assets?.large_text ? (
-              <BlurLyrics text={activity.assets.large_text} />
+            <h3>{visibleActivity.details || visibleActivity.assets?.large_text || "Apple Music"}</h3>
+            <p>{visibleActivity.state || visibleActivity.assets?.small_text || labels.publicActivity}</p>
+            {lyrics ? (
+              <BlurLyrics text={lyrics} />
             ) : null}
-            <ProgressBar timestamps={activity.timestamps} />
+            <ProgressBar timestamps={visibleActivity.timestamps} />
             <a href={search} target="_blank" rel="noreferrer">
               {labels.openApple}<ExternalLink aria-hidden="true" />
             </a>
