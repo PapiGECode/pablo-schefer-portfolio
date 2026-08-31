@@ -29,21 +29,28 @@ export const SmoothInput = forwardRef<HTMLInputElement, SmoothInputProps>(functi
 
     const styles = getComputedStyle(input)
     mirror.style.font = styles.font
+    mirror.style.boxSizing = styles.boxSizing
+    mirror.style.width = `${input.offsetWidth}px`
     mirror.style.letterSpacing = styles.letterSpacing
     mirror.style.padding = styles.padding
     mirror.style.border = styles.border
     mirror.style.whiteSpace = "pre"
-    mirror.textContent = input.value.slice(0, input.selectionStart ?? input.value.length) || "\u200b"
+    const marker = document.createElement("span")
+    marker.textContent = "\u200b"
+    mirror.replaceChildren(
+      document.createTextNode(input.value.slice(0, input.selectionStart ?? input.value.length)),
+      marker,
+    )
 
     const shell = input.parentElement
     if (!shell) return
     const shellRect = shell.getBoundingClientRect()
-    const markerRect = mirror.getBoundingClientRect()
+    const markerRect = marker.getBoundingClientRect()
     const fontSize = Number.parseFloat(styles.fontSize) || 16
     const lineHeight = styles.lineHeight === "normal" ? fontSize * 1.4 : Number.parseFloat(styles.lineHeight) || fontSize * 1.4
 
     caret.style.height = `${lineHeight}px`
-    caret.style.transform = `translate3d(${markerRect.right - shellRect.left - input.scrollLeft}px, ${markerRect.top - shellRect.top}px, 0)`
+    caret.style.transform = `translate3d(${markerRect.left - shellRect.left - input.scrollLeft}px, ${markerRect.top - shellRect.top}px, 0)`
   }, [])
 
   const schedulePosition = useCallback(() => {
@@ -136,4 +143,3 @@ export const SmoothInput = forwardRef<HTMLInputElement, SmoothInputProps>(functi
     </span>
   )
 })
-
