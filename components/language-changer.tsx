@@ -5,9 +5,9 @@ import { Globe2, Check } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useLanguage, type Language } from "./language-provider"
 
-const languages: Array<{ code: Language; label: string; short: string; flag: string }> = [
-  { code: "es", label: "Español", short: "ES", flag: "🇪🇸" },
-  { code: "en", label: "English", short: "EN", flag: "🇺🇸" },
+const languages: Array<{ code: Language; label: string; flag: string }> = [
+  { code: "es", label: "Español", flag: "🇪🇸" },
+  { code: "en", label: "English", flag: "🇺🇸" },
 ]
 
 export function LanguageChanger() {
@@ -30,7 +30,7 @@ export function LanguageChanger() {
       >
         <Globe2 className="h-4 w-4 transition-transform duration-300 group-hover:rotate-12" />
         <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 pointer-events-none whitespace-nowrap rounded-md border border-border bg-card px-2.5 py-1 font-mono text-[10px] text-muted-foreground opacity-0 shadow-lg transition-all duration-200 group-hover:-bottom-9 group-hover:opacity-100">
-          {current.short}
+          {current.flag}
         </span>
       </button>
 
