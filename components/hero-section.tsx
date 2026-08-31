@@ -159,7 +159,7 @@ export function HeroSection() {
         </div>
       </div>
 
-      <div id="scroll-down-animation" className="hidden lg:block animate-fade-in stagger-6" role="img" aria-label="Scroll down">
+      <div id="scroll-down-animation" className="provided-scroll-animation hidden lg:block animate-fade-in stagger-6" role="img" aria-label="Scroll down">
         <span className="mouse">
           <span className="move" />
         </span>
