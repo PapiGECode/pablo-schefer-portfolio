@@ -753,15 +753,15 @@
 .provided-scroll-animation .mouse {
   position: relative;
   display: block;
-  width: 24px;
-  height: 48px;
+  width: 18px;
+  height: 36px;
   margin: 0 auto;
   border: 1px solid color-mix(in srgb, var(--primary) 82%, white 18%);
   border-radius: 50px;
   box-shadow:
-    0 0 0.45rem color-mix(in srgb, var(--primary) 28%, transparent),
-    inset 0 0 0.55rem color-mix(in srgb, var(--primary) 10%, transparent);
-  filter: drop-shadow(0 0 0.35rem color-mix(in srgb, var(--primary) 24%, transparent));
+    0 0 0.32rem color-mix(in srgb, var(--primary) 28%, transparent),
+    inset 0 0 0.4rem color-mix(in srgb, var(--primary) 10%, transparent);
+  filter: drop-shadow(0 0 0.24rem color-mix(in srgb, var(--primary) 24%, transparent));
   animation: scroll-bloom 2.4s ease-in-out infinite;
 }
 
@@ -769,12 +769,12 @@
 .provided-scroll-animation .move {
   position: absolute;
   left: 50%;
-  width: 5px;
-  height: 5px;
+  width: 4px;
+  height: 4px;
   border-radius: 50%;
   background-color: var(--primary);
   transform: translateX(-50%);
-  filter: drop-shadow(0 0 0.3rem color-mix(in srgb, var(--primary) 95%, transparent));
+  filter: drop-shadow(0 0 0.22rem color-mix(in srgb, var(--primary) 95%, transparent));
   animation: move 2s linear infinite;
 }
 
@@ -782,27 +782,27 @@
   0%,
   100% {
     box-shadow:
-      0 0 0.35rem color-mix(in srgb, var(--primary) 20%, transparent),
-      inset 0 0 0.45rem color-mix(in srgb, var(--primary) 8%, transparent);
+      0 0 0.25rem color-mix(in srgb, var(--primary) 20%, transparent),
+      inset 0 0 0.32rem color-mix(in srgb, var(--primary) 8%, transparent);
   }
   50% {
     box-shadow:
-      0 0 0.85rem color-mix(in srgb, var(--primary) 40%, transparent),
-      inset 0 0 0.7rem color-mix(in srgb, var(--primary) 16%, transparent);
+      0 0 0.62rem color-mix(in srgb, var(--primary) 40%, transparent),
+      inset 0 0 0.5rem color-mix(in srgb, var(--primary) 16%, transparent);
   }
 }
 
 @keyframes move {
   0% {
-    transform: translate(-50%, 5px);
+    transform: translate(-50%, 4px);
     opacity: 0;
   }
   50% {
-    transform: translate(-50%, 20px);
+    transform: translate(-50%, 15px);
     opacity: 1;
   }
   100% {
-    transform: translate(-50%, 38px);
+    transform: translate(-50%, 28px);
     opacity: 0;
   }
 }
