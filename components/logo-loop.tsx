@@ -34,6 +34,7 @@ export function LogoLoop({
   const sequenceRef = useRef<HTMLUListElement>(null)
   const trackRef = useRef<HTMLDivElement>(null)
   const offsetRef = useRef(0)
+  const velocityRef = useRef(0)
   const lastTimeRef = useRef<number | null>(null)
   const frameRef = useRef<number | null>(null)
   const [sequenceWidth, setSequenceWidth] = useState(0)
@@ -50,15 +51,21 @@ export function LogoLoop({
 
   useEffect(() => {
     const track = trackRef.current
-    if (!track || sequenceWidth <= 0 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+    if (!track || sequenceWidth <= 0 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      velocityRef.current = 0
+      return
+    }
 
     const directionMultiplier = direction === "left" ? 1 : -1
+    const smoothTau = 0.24
     const animate = (time: number) => {
       if (lastTimeRef.current === null) lastTimeRef.current = time
       const delta = Math.min(64, time - lastTimeRef.current) / 1000
       lastTimeRef.current = time
       const targetSpeed = pauseOnHover && isHovered ? 0 : speed * directionMultiplier
-      offsetRef.current = (offsetRef.current + targetSpeed * delta + sequenceWidth) % sequenceWidth
+      const easing = 1 - Math.exp(-delta / smoothTau)
+      velocityRef.current += (targetSpeed - velocityRef.current) * easing
+      offsetRef.current = (offsetRef.current + velocityRef.current * delta + sequenceWidth) % sequenceWidth
       track.style.transform = `translate3d(${-offsetRef.current}px, 0, 0)`
       frameRef.current = requestAnimationFrame(animate)
     }
