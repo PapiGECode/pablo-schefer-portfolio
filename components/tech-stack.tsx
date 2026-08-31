@@ -25,12 +25,20 @@ const tech = (Icon: IconType, label: string, href: string): LogoItem => ({
   ariaLabel: label,
 })
 
+const imageTech = (src: string, label: string, href: string): LogoItem => ({
+  src,
+  alt: label,
+  href,
+  title: label,
+})
+
 const techLogos: LogoItem[] = [
   tech(SiJavascript, "JavaScript", "https://developer.mozilla.org/en-US/docs/Web/JavaScript"),
   tech(SiReact, "React", "https://react.dev"),
   tech(SiNextdotjs, "Next.js", "https://nextjs.org"),
   tech(SiNodedotjs, "Node.js", "https://nodejs.org"),
   tech(SiCplusplus, "C++", "https://isocpp.org"),
+  imageTech("/fnlb-logo.png", "FNLB", "https://github.com/PapiGECode"),
   tech(SiGithubactions, "GitHub Actions", "https://github.com/features/actions"),
   tech(SiTypescript, "TypeScript", "https://www.typescriptlang.org"),
   tech(SiTailwindcss, "Tailwind CSS", "https://tailwindcss.com"),
