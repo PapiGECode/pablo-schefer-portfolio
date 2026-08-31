@@ -3,9 +3,14 @@
 import { LogoLoop, type LogoItem } from "./logo-loop"
 import { useLanguage } from "./language-provider"
 import {
+  SiJavascript,
   SiTypescript,
   SiReact,
   SiNextdotjs,
+  SiNodedotjs,
+  SiCplusplus,
+  SiPlaywright,
+  SiGithubactions,
   SiTailwindcss,
   SiVercel,
   SiGithub,
@@ -22,14 +27,19 @@ const tech = (Icon: IconType, label: string, href: string): LogoItem => ({
 })
 
 const techLogos: LogoItem[] = [
+  tech(SiJavascript, "JavaScript", "https://developer.mozilla.org/en-US/docs/Web/JavaScript"),
+  tech(SiReact, "React", "https://react.dev"),
+  tech(SiNextdotjs, "Next.js", "https://nextjs.org"),
+  tech(SiNodedotjs, "Node.js", "https://nodejs.org"),
+  tech(SiCplusplus, "C++", "https://isocpp.org"),
+  tech(SiPlaywright, "Playwright", "https://playwright.dev"),
+  tech(SiGithubactions, "GitHub Actions", "https://github.com/features/actions"),
+  tech(SiTypescript, "TypeScript", "https://www.typescriptlang.org"),
   tech(SiTailwindcss, "Tailwind CSS", "https://tailwindcss.com"),
   tech(SiVercel, "Vercel", "https://vercel.com"),
   tech(SiGithub, "GitHub", "https://github.com/PapiGECode"),
   tech(SiDocker, "Docker", "https://www.docker.com"),
   tech(SiSvelte, "Svelte", "https://svelte.dev"),
-  tech(SiReact, "React", "https://react.dev"),
-  tech(SiNextdotjs, "Next.js", "https://nextjs.org"),
-  tech(SiTypescript, "TypeScript", "https://www.typescriptlang.org"),
 ]
 
 export function TechStack() {
