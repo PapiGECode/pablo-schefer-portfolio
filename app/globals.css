@@ -1156,6 +1156,15 @@
 .live-art img { width: 100%; height: 100%; object-fit: cover; }
 .live-art > svg { width: 2.5rem; height: 2.5rem; color: var(--live-accent); }
 .live-art--poster { aspect-ratio: 0.72; max-height: 190px; }
+.live-art--game {
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.live-art--game::after { display: none; }
+.live-art--game img { object-fit: contain; }
 .live-copy { min-width: 0; align-self: center; }
 
 .live-kicker {
