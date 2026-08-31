@@ -1183,6 +1183,25 @@
 .live-copy p,
 .live-copy > small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .live-copy p { margin-top: 0.45rem; color: var(--muted-foreground); font-size: 0.88rem; }
+.live-lyrics {
+  margin-top: 0.7rem;
+  padding-left: 0.65rem;
+  border-left: 2px solid color-mix(in oklch, var(--live-accent) 72%, transparent);
+}
+.live-lyrics > span {
+  display: block;
+  color: var(--live-accent);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.live-lyrics p {
+  margin-top: 0.2rem;
+  color: color-mix(in oklch, var(--foreground) 78%, transparent);
+  font-size: 0.72rem;
+  font-style: italic;
+}
 .live-copy > small {
   margin-top: 0.3rem;
   color: color-mix(in oklch, var(--muted-foreground) 75%, transparent);

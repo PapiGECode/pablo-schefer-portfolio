@@ -256,7 +256,7 @@ function AppleMusicCard({ activity, labels }: { activity: LanyardActivity | null
         <span className="live-card__signal"><i />{activity ? labels.live : labels.waiting}</span>
       </header>
       {activity ? (
-        <div className="live-media" key={`${activity.id}-${activity.timestamps?.start}`}>
+        <div className="live-media" key={`${activity.name}-${activity.timestamps?.start ?? "live"}`}>
           <div className="live-art">
             {image ? <img src={image} alt="" /> : <SiApplemusic aria-hidden="true" />}
           </div>
@@ -264,6 +264,12 @@ function AppleMusicCard({ activity, labels }: { activity: LanyardActivity | null
             <span className="live-kicker">{labels.nowListening}</span>
             <h3>{activity.details || activity.assets?.large_text || "Apple Music"}</h3>
             <p>{activity.state || activity.assets?.small_text || labels.publicActivity}</p>
+            {activity.assets?.large_text ? (
+              <div className="live-lyrics" aria-label={labels.lyrics}>
+                <span>{labels.lyrics}</span>
+                <p>{activity.assets.large_text}</p>
+              </div>
+            ) : null}
             <ProgressBar timestamps={activity.timestamps} />
             <a href={search} target="_blank" rel="noreferrer">
               {labels.openApple}<ExternalLink aria-hidden="true" />
@@ -381,6 +387,7 @@ function copyFor(language: "es" | "en") {
         waiting: "en espera",
         album: "Álbum",
         nowListening: "Escuchando ahora",
+        lyrics: "Letra",
         nowPlaying: "Jugando ahora",
         nowWatching: "Viendo ahora",
         publicActivity: "Actividad musical pública",
@@ -414,6 +421,7 @@ function copyFor(language: "es" | "en") {
         waiting: "waiting",
         album: "Album",
         nowListening: "Listening now",
+        lyrics: "Lyrics",
         nowPlaying: "Playing now",
         nowWatching: "Watching now",
         publicActivity: "Public music activity",
