@@ -26,7 +26,11 @@ const tech = (Icon: IconType, label: string, href: string): LogoItem => ({
 })
 
 const imageTech = (src: string, label: string, href: string): LogoItem => ({
-  node: <img src={src} alt={label} className="h-8 w-8 object-contain" draggable={false} />,
+  node: (
+    <span className="inline-flex h-8 w-8 items-center justify-center overflow-hidden" aria-label={label}>
+      <img src={src} alt={label} className="h-8 w-8 scale-[3.2] object-contain" draggable={false} />
+    </span>
+  ),
   href,
   title: label,
 })
