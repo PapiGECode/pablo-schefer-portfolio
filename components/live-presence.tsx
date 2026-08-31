@@ -215,6 +215,20 @@ function EmptyState({ icon: Icon, title, body }: { icon: typeof Radio; title: st
   )
 }
 
+function BlurLyrics({ text }: { text: string }) {
+  return (
+    <div className="live-lyrics" aria-label={text}>
+      <p className="live-lyrics__text" key={text}>
+        {Array.from(text).map((character, index) => (
+          <span key={`${text}-${index}`} style={{ "--lyrics-delay": `${index * 50}ms` } as React.CSSProperties}>
+            {character === " " ? "\u00a0" : character}
+          </span>
+        ))}
+      </p>
+    </div>
+  )
+}
+
 function SpotifyCard({ track, labels }: { track: SpotifyPresence | null; labels: ReturnType<typeof copyFor> }) {
   return (
     <article className={`live-card live-card--spotify${track ? " is-active" : ""}`}>
@@ -265,9 +279,7 @@ function AppleMusicCard({ activity, labels }: { activity: LanyardActivity | null
             <h3>{activity.details || activity.assets?.large_text || "Apple Music"}</h3>
             <p>{activity.state || activity.assets?.small_text || labels.publicActivity}</p>
             {activity.assets?.large_text ? (
-              <div className="live-lyrics">
-                <p>{activity.assets.large_text}</p>
-              </div>
+              <BlurLyrics text={activity.assets.large_text} />
             ) : null}
             <ProgressBar timestamps={activity.timestamps} />
             <a href={search} target="_blank" rel="noreferrer">
