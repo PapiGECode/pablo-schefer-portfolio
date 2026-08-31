@@ -48,7 +48,7 @@ export function HeroSection() {
           <div className="space-y-8 sm:space-y-10">
             <div className="space-y-3 animate-fade-in-up">
               <p className="font-mono text-xs uppercase tracking-[0.25em] sm:tracking-[0.35em] text-primary">
-                <span className="font-bold">ˡᵃˢᵗPapiGEGamer🐾ྀི</span> — {language === "es" ? "Software, proyectos y experimentos" : "Software, projects & experiments"}
+                <span className="font-bold">PapiGECode</span> — {language === "es" ? "Software, proyectos y experimentos" : "Software, projects & experiments"}
               </p>
               <h1 className="text-4xl font-bold tracking-tight sm:text-4xl lg:text-5xl xl:text-6xl text-balance">
                 {language === "es" ? "Construyendo con código" : "Building with code"}
