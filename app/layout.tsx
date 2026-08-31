@@ -26,7 +26,7 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://pabloschefer.vercel.app'),
   title: {
-    default: "PapiGECode — Pablo Schefer Orduña's Digital Laboratory",
+    default: "PapiGECode",
     template: "%s | PapiGECode",
   },
   description:
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "/",
-    title: "PapiGECode — Pablo Schefer Orduña's Digital Laboratory",
+    title: "PapiGECode",
     description: "El laboratorio digital de Pablo Schefer Orduña: comunidades, moderación, vibecoding y proyectos digitales.",
     siteName: "PapiGECode",
     images: [
@@ -48,13 +48,13 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "PapiGECode — Pablo Schefer Orduña's Digital Laboratory",
+        alt: "PapiGECode",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "PapiGECode — Pablo Schefer Orduña's Digital Laboratory",
+    title: "PapiGECode",
     description: "A digital workshop where code meets curiosity. Experiments, prototypes, and open-source artifacts.",
     creator: "@PapiGECode",
     images: ["/og-image.png"],
