@@ -1,6 +1,7 @@
 import { Header } from "@/components/header"
 import { HeroSection } from "@/components/hero-section"
 import { TechStack } from "@/components/tech-stack"
+import { LivePresence } from "@/components/live-presence"
 import { ProjectsGrid } from "@/components/projects-grid"
 import { LabNotes } from "@/components/lab-notes"
 import { Workbench } from "@/components/workbench"
@@ -29,6 +30,7 @@ export default function Home() {
           <Header />
           <HeroSection />
           <TechStack />
+          <LivePresence />
           <ProjectsGrid />
           <LabNotes />
           <Workbench />

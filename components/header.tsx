@@ -14,6 +14,7 @@ import { XLogo } from "./x-logo"
 const navItems = [
   { key: "home", href: "/" },
   { key: "projects", href: "/projects" },
+  { key: "activity", href: "/#activity" },
   // { label: "Notes", href: "/notes" },/
   { key: "workbench", href: "/workbench" },
   { key: "blog", href: "/blog" },
@@ -32,8 +33,8 @@ export function Header() {
   const pathname = usePathname()
   const { language } = useLanguage()
   const labels = language === "es"
-    ? { home: "Inicio", projects: "Proyectos", workbench: "Workbench", blog: "Blog", status: "estado: construyendo" }
-    : { home: "Home", projects: "Projects", workbench: "Workbench", blog: "Blog", status: "status: building" }
+    ? { home: "Inicio", projects: "Proyectos", activity: "En directo", workbench: "Workbench", blog: "Blog", status: "estado: construyendo" }
+    : { home: "Home", projects: "Projects", activity: "Live", workbench: "Workbench", blog: "Blog", status: "status: building" }
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/"
@@ -77,7 +78,7 @@ export function Header() {
                 key={item.key}
                 href={item.href}
                 className={cn(
-                  "relative px-4 py-2.5 font-mono text-xs uppercase tracking-widest transition-all duration-300 rounded-lg",
+                  "relative whitespace-nowrap px-3 lg:px-4 py-2.5 font-mono text-xs uppercase tracking-widest transition-all duration-300 rounded-lg",
                   isActive(item.href)
                     ? "text-primary"
                     : "text-muted-foreground hover:text-foreground hover:bg-secondary/50",
