@@ -816,7 +816,7 @@
 .smooth-input-control {
   position: relative;
   z-index: 1;
-  min-height: 2.75rem;
+  min-height: 3.25rem;
   caret-color: transparent;
 }
 
