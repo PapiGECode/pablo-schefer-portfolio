@@ -13,7 +13,7 @@ import {
 } from "lucide-react"
 import { SiApplemusic, SiSpotify } from "react-icons/si"
 import { useLanguage } from "./language-provider"
-import ShinyText from "./ShinyText"
+import SplitText from "@/components/SplitText"
 import {
   DISCORD_USER_ID,
   LANYARD_REST_URL,
@@ -254,6 +254,27 @@ function BlurLyrics({ text }: { text: string }) {
   )
 }
 
+function LiveActivityTitle({ text }: { text: string }) {
+  return (
+    <h3>
+      <SplitText
+        key={text}
+        text={text}
+        tag="span"
+        textAlign="left"
+        splitType="chars"
+        delay={14}
+        duration={0.62}
+        threshold={0}
+        rootMargin="0px"
+        from={{ opacity: 0, y: 16, filter: "blur(5px)" }}
+        to={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        className="live-activity-title"
+      />
+    </h3>
+  )
+}
+
 function SpotifyCard({ track, labels }: { track: SpotifyPresence | null; labels: ReturnType<typeof copyFor> }) {
   return (
     <article className={`live-card live-card--spotify${track ? " is-active" : ""}`}>
@@ -266,7 +287,7 @@ function SpotifyCard({ track, labels }: { track: SpotifyPresence | null; labels:
           <div className="live-art"><img src={track.album_art_url} alt={`${labels.album}: ${track.album}`} /></div>
           <div className="live-copy">
             <span className="live-kicker">{labels.nowListening}</span>
-            <h3><ShinyText text={track.song} speed={4} /></h3>
+            <LiveActivityTitle text={track.song} />
             <p>{track.artist}</p>
             <small>{track.album}</small>
             <ProgressBar timestamps={track.timestamps} />
@@ -311,7 +332,7 @@ function AppleMusicCard({ activity, labels }: { activity: LanyardActivity | null
           </div>
           <div className="live-copy">
             <span className="live-kicker">{labels.nowListening}</span>
-            <h3><ShinyText text={visibleActivity.details || visibleActivity.assets?.large_text || "Apple Music"} speed={4} /></h3>
+            <LiveActivityTitle text={visibleActivity.details || visibleActivity.assets?.large_text || "Apple Music"} />
             <p>{visibleActivity.state || visibleActivity.assets?.small_text || labels.publicActivity}</p>
             {lyrics ? (
               <BlurLyrics text={lyrics} />
@@ -344,7 +365,7 @@ function GameCard({ activity, labels }: { activity: LanyardActivity | null; labe
           </div>
           <div className="live-copy">
             <span className="live-kicker">{labels.nowPlaying}</span>
-            <h3><ShinyText text={activity.assets?.large_text || activity.name} speed={4} /></h3>
+            <LiveActivityTitle text={activity.assets?.large_text || activity.name} />
             <p>{activity.details || labels.gameActivity}</p>
             <small>{activity.state}</small>
             {activity.timestamps?.start ? (
@@ -396,7 +417,7 @@ function AnimeCard({ activity, labels }: { activity: LanyardActivity | null; lab
           </div>
           <div className="live-copy">
             <span className="live-kicker">{labels.nowWatching}</span>
-            <h3><ShinyText text={metadata?.title || title} speed={4} /></h3>
+            <LiveActivityTitle text={metadata?.title || title} />
             <p>{activity.state || activity.assets?.small_text || labels.animeActivity}</p>
             {metadata ? (
               <small>{[metadata.year, metadata.episodes ? `${metadata.episodes} ep.` : null, metadata.score ? `${metadata.score}/100` : null].filter(Boolean).join(" · ")}</small>
