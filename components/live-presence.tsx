@@ -210,8 +210,8 @@ function EmptyState({ icon: Icon, title, body }: { icon: typeof Radio; title: st
     <div className="live-empty">
       <span className="live-empty__icon"><Icon aria-hidden="true" /></span>
       <div>
-        <strong>{title}</strong>
-        <p>{body}</p>
+        <strong><LiveAnimatedText text={title} splitType="words" /></strong>
+        <p><LiveAnimatedText text={body} splitType="words" /></p>
       </div>
     </div>
   )
@@ -263,11 +263,11 @@ function LiveActivityTitle({ text }: { text: string }) {
         tag="span"
         textAlign="left"
         splitType="chars"
-        delay={14}
-        duration={0.62}
+        delay={36}
+        duration={0.9}
         threshold={0}
         rootMargin="0px"
-        from={{ opacity: 0, y: 16, filter: "blur(5px)" }}
+        from={{ opacity: 0, y: 14, filter: "blur(5px)" }}
         to={{ opacity: 1, y: 0, filter: "blur(0px)" }}
         className="live-activity-title"
       />
@@ -275,24 +275,49 @@ function LiveActivityTitle({ text }: { text: string }) {
   )
 }
 
+function LiveAnimatedText({
+  text,
+  splitType = "words",
+}: {
+  text: string
+  splitType?: "chars" | "words"
+}) {
+  return (
+    <SplitText
+      key={`${splitType}-${text}`}
+      text={text}
+      tag="span"
+      textAlign="left"
+      splitType={splitType}
+      delay={splitType === "chars" ? 36 : 64}
+      duration={0.82}
+      threshold={0}
+      rootMargin="0px"
+      from={{ opacity: 0, y: 10, filter: "blur(4px)" }}
+      to={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+      className="live-animated-text"
+    />
+  )
+}
+
 function SpotifyCard({ track, labels }: { track: SpotifyPresence | null; labels: ReturnType<typeof copyFor> }) {
   return (
     <article className={`live-card live-card--spotify${track ? " is-active" : ""}`}>
       <header>
-        <span><SiSpotify aria-hidden="true" /> Spotify</span>
-        <span className="live-card__signal"><i />{track ? labels.live : labels.waiting}</span>
+        <span><SiSpotify aria-hidden="true" /> <LiveAnimatedText text="Spotify" /></span>
+        <span className="live-card__signal"><i /><LiveAnimatedText text={track ? labels.live : labels.waiting} /></span>
       </header>
       {track ? (
         <div className="live-media" key={track.track_id}>
           <div className="live-art"><img src={track.album_art_url} alt={`${labels.album}: ${track.album}`} /></div>
           <div className="live-copy">
-            <span className="live-kicker">{labels.nowListening}</span>
+            <span className="live-kicker"><LiveAnimatedText text={labels.nowListening} /></span>
             <LiveActivityTitle text={track.song} />
-            <p>{track.artist}</p>
-            <small>{track.album}</small>
+            <p><LiveAnimatedText text={track.artist} /></p>
+            <small><LiveAnimatedText text={track.album} /></small>
             <ProgressBar timestamps={track.timestamps} />
             <a href={`https://open.spotify.com/track/${track.track_id}`} target="_blank" rel="noreferrer">
-              {labels.openSpotify}<ExternalLink aria-hidden="true" />
+              <LiveAnimatedText text={labels.openSpotify} /><ExternalLink aria-hidden="true" />
             </a>
           </div>
         </div>
@@ -322,8 +347,8 @@ function AppleMusicCard({ activity, labels }: { activity: LanyardActivity | null
   return (
     <article className={`live-card live-card--apple${activity ? " is-active" : ""}`}>
       <header>
-        <span><SiApplemusic aria-hidden="true" /> Apple Music</span>
-        <span className="live-card__signal"><i />{activity ? labels.live : labels.waiting}</span>
+        <span><SiApplemusic aria-hidden="true" /> <LiveAnimatedText text="Apple Music" /></span>
+        <span className="live-card__signal"><i /><LiveAnimatedText text={activity ? labels.live : labels.waiting} /></span>
       </header>
       {visibleActivity ? (
         <div className="live-media" key={incomingIdentity}>
@@ -331,15 +356,15 @@ function AppleMusicCard({ activity, labels }: { activity: LanyardActivity | null
             {image ? <img src={image} alt="" /> : <SiApplemusic aria-hidden="true" />}
           </div>
           <div className="live-copy">
-            <span className="live-kicker">{labels.nowListening}</span>
+            <span className="live-kicker"><LiveAnimatedText text={labels.nowListening} /></span>
             <LiveActivityTitle text={visibleActivity.details || visibleActivity.assets?.large_text || "Apple Music"} />
-            <p>{visibleActivity.state || visibleActivity.assets?.small_text || labels.publicActivity}</p>
+            <p><LiveAnimatedText text={visibleActivity.state || visibleActivity.assets?.small_text || labels.publicActivity} /></p>
             {lyrics ? (
               <BlurLyrics text={lyrics} />
             ) : null}
             <ProgressBar timestamps={visibleActivity.timestamps} />
             <a href={search} target="_blank" rel="noreferrer">
-              {labels.openApple}<ExternalLink aria-hidden="true" />
+              <LiveAnimatedText text={labels.openApple} /><ExternalLink aria-hidden="true" />
             </a>
           </div>
         </div>
@@ -355,8 +380,8 @@ function GameCard({ activity, labels }: { activity: LanyardActivity | null; labe
   return (
     <article className={`live-card live-card--game${activity ? " is-active" : ""}`}>
       <header>
-        <span><Gamepad2 aria-hidden="true" /> {labels.games}</span>
-        <span className="live-card__signal"><i />{activity ? labels.live : labels.waiting}</span>
+        <span><Gamepad2 aria-hidden="true" /> <LiveAnimatedText text={labels.games} /></span>
+        <span className="live-card__signal"><i /><LiveAnimatedText text={activity ? labels.live : labels.waiting} /></span>
       </header>
       {activity ? (
         <div className="live-media" key={`${activity.id}-${activity.timestamps?.start}`}>
@@ -364,12 +389,12 @@ function GameCard({ activity, labels }: { activity: LanyardActivity | null; labe
             {image ? <img src={image} alt="" /> : <Gamepad2 aria-hidden="true" />}
           </div>
           <div className="live-copy">
-            <span className="live-kicker">{labels.nowPlaying}</span>
+            <span className="live-kicker"><LiveAnimatedText text={labels.nowPlaying} /></span>
             <LiveActivityTitle text={activity.assets?.large_text || activity.name} />
-            <p>{activity.details || labels.gameActivity}</p>
-            <small>{activity.state}</small>
+            <p><LiveAnimatedText text={activity.details || labels.gameActivity} /></p>
+            {activity.state ? <small><LiveAnimatedText text={activity.state} /></small> : null}
             {activity.timestamps?.start ? (
-              <span className="live-elapsed"><Radio aria-hidden="true" /> {labels.sessionLive}</span>
+              <span className="live-elapsed"><Radio aria-hidden="true" /> <LiveAnimatedText text={labels.sessionLive} /></span>
             ) : null}
           </div>
         </div>
@@ -405,10 +430,10 @@ function AnimeCard({ activity, labels }: { activity: LanyardActivity | null; lab
       <header>
         <span className="live-anime-brand">
           <Tv aria-hidden="true" />
-          <span>PapiGECode <b aria-hidden="true">×</b> Crunchyroll</span>
+          <span><LiveAnimatedText text="PapiGECode × Crunchyroll" /></span>
           <img src="https://cdn.simpleicons.org/crunchyroll/F47521" alt="Crunchyroll" />
         </span>
-        <span className="live-card__signal"><i />{activity ? labels.live : labels.waiting}</span>
+        <span className="live-card__signal"><i /><LiveAnimatedText text={activity ? labels.live : labels.waiting} /></span>
       </header>
       {activity ? (
         <div className="live-media" key={`${activity.id}-${activity.timestamps?.start}`}>
@@ -416,18 +441,18 @@ function AnimeCard({ activity, labels }: { activity: LanyardActivity | null; lab
             {image ? <img src={image} alt="" /> : <Tv aria-hidden="true" />}
           </div>
           <div className="live-copy">
-            <span className="live-kicker">{labels.nowWatching}</span>
+            <span className="live-kicker"><LiveAnimatedText text={labels.nowWatching} /></span>
             <LiveActivityTitle text={metadata?.title || title} />
-            <p>{activity.state || activity.assets?.small_text || labels.animeActivity}</p>
+            <p><LiveAnimatedText text={activity.state || activity.assets?.small_text || labels.animeActivity} /></p>
             {metadata ? (
-              <small>{[metadata.year, metadata.episodes ? `${metadata.episodes} ep.` : null, metadata.score ? `${metadata.score}/100` : null].filter(Boolean).join(" · ")}</small>
+              <small><LiveAnimatedText text={[metadata.year, metadata.episodes ? `${metadata.episodes} ep.` : null, metadata.score ? `${metadata.score}/100` : null].filter(Boolean).join(" · ")} /></small>
             ) : (
               <small className="live-loading"><Sparkles aria-hidden="true" /> {labels.findingDetails}</small>
             )}
             <ProgressBar timestamps={activity.timestamps} />
             <div className="live-links">
-              {metadata?.crunchyrollUrl ? <a href={metadata.crunchyrollUrl} target="_blank" rel="noreferrer">Crunchyroll<ExternalLink aria-hidden="true" /></a> : null}
-              {metadata?.anilistUrl ? <a href={metadata.anilistUrl} target="_blank" rel="noreferrer">AniList<ExternalLink aria-hidden="true" /></a> : null}
+              {metadata?.crunchyrollUrl ? <a href={metadata.crunchyrollUrl} target="_blank" rel="noreferrer"><LiveAnimatedText text="Crunchyroll" /><ExternalLink aria-hidden="true" /></a> : null}
+              {metadata?.anilistUrl ? <a href={metadata.anilistUrl} target="_blank" rel="noreferrer"><LiveAnimatedText text="AniList" /><ExternalLink aria-hidden="true" /></a> : null}
             </div>
           </div>
         </div>
