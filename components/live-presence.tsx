@@ -564,13 +564,13 @@ export function LivePresence() {
       <div className="mx-auto max-w-7xl">
         <div className="live-presence-heading animate-fade-in-up">
           <div>
-            <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary sm:tracking-[0.35em]">{labels.eyebrow}</p>
-            <h2>{labels.title}</h2>
-            <p>{labels.intro}</p>
+            <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary sm:tracking-[0.35em]"><LiveAnimatedText text={labels.eyebrow} /></p>
+            <h2><SplitText key={labels.title} text={labels.title} tag="span" textAlign="left" splitType="chars" delay={36} duration={0.9} threshold={0} rootMargin="0px" from={{ opacity: 0, y: 14, filter: "blur(5px)" }} to={{ opacity: 1, y: 0, filter: "blur(0px)" }} /></h2>
+            <p><LiveAnimatedText text={labels.intro} /></p>
           </div>
           <div className="live-connection" data-status={status}>
             <span className="live-connection__signal"><i /><i /></span>
-            <span><strong>{connectionLabel}</strong><small>{presence?.discord_user?.display_name || presence?.discord_user?.global_name || "PapiGEGamer"}</small></span>
+            <span><strong><LiveAnimatedText text={connectionLabel} /></strong><small><LiveAnimatedText text={presence?.discord_user?.display_name || presence?.discord_user?.global_name || "PapiGEGamer"} /></small></span>
             <Wifi aria-hidden="true" />
           </div>
         </div>
@@ -582,7 +582,7 @@ export function LivePresence() {
           <AnimeCard activity={anime} labels={labels} />
         </div>
 
-        <p className="live-privacy"><ShieldCheck aria-hidden="true" />{labels.publicOnly}<span>LANYARD / DISCORD / ANILIST</span></p>
+        <p className="live-privacy"><ShieldCheck aria-hidden="true" /><LiveAnimatedText text={labels.publicOnly} /><span><LiveAnimatedText text="LANYARD / DISCORD / ANILIST" /></span></p>
       </div>
     </section>
   )

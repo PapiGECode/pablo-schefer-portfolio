@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils"
 import { Github, Star, GitFork, ExternalLink, Sparkles } from "lucide-react"
 import { useLanguage } from "./language-provider"
 import { GithubApiStatus } from "./github-api-status"
-import ShinyText from "./ShinyText"
+import { AnimatedText } from "@/components/animated-text"
 
 const projects = [
   {
@@ -93,8 +93,8 @@ export function ProjectsGrid() {
       <div className="mx-auto max-w-7xl">
         <div className="mb-10 sm:mb-14 flex flex-col gap-6 sm:gap-8 sm:flex-row sm:items-end sm:justify-between">
           <div className="space-y-3 animate-fade-in-up">
-            <p className="font-mono text-xs uppercase tracking-[0.25em] sm:tracking-[0.35em] text-primary">{language === "es" ? "GitHub · trabajo seleccionado" : "GitHub · selected work"}</p>
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">{language === "es" ? "Proyectos de programación" : "Programming projects"}</h2>
+            <p className="font-mono text-xs uppercase tracking-[0.25em] sm:tracking-[0.35em] text-primary"><AnimatedText text={language === "es" ? "GitHub · trabajo seleccionado" : "GitHub · selected work"} emphasis="label" /></p>
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl"><AnimatedText text={language === "es" ? "Proyectos de programación" : "Programming projects"} mode="chars" emphasis="title" /></h2>
             <a
               href="https://github.com/PapiGECode"
               target="_blank"
@@ -102,7 +102,7 @@ export function ProjectsGrid() {
               className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1.5 font-mono text-[10px] uppercase tracking-wider text-primary transition-all duration-300 hover:border-primary/60 hover:bg-primary/15 hover:-translate-y-0.5"
             >
               <Github className="h-3.5 w-3.5" />
-              {language === "es" ? "Miembro del GitHub Developer Program" : "GitHub Developer Program Member"}
+              <AnimatedText text={language === "es" ? "Miembro del GitHub Developer Program" : "GitHub Developer Program Member"} emphasis="label" />
             </a>
             <GithubApiStatus />
           </div>
@@ -119,7 +119,7 @@ export function ProjectsGrid() {
                     : "border-border text-muted-foreground hover:border-foreground/50 hover:text-foreground hover:bg-secondary/50",
                 )}
               >
-                {filterLabels[filter as keyof typeof filterLabels]}
+                <AnimatedText text={filterLabels[filter as keyof typeof filterLabels]} emphasis="label" />
               </button>
             ))}
           </div>
@@ -142,7 +142,7 @@ export function ProjectsGrid() {
                 <div className="absolute left-5 top-5 flex items-center gap-2 rounded-full border border-primary/40 bg-primary/15 px-3.5 py-1.5 animate-pulse-glow">
                   <Sparkles className="h-3.5 w-3.5 text-primary" />
                   <span className="font-mono text-[10px] uppercase tracking-wider text-primary font-medium">
-                    {language === "es" ? "Destacado" : "Featured"}
+                    <AnimatedText text={language === "es" ? "Destacado" : "Featured"} emphasis="label" />
                   </span>
                 </div>
               )}
@@ -162,7 +162,7 @@ export function ProjectsGrid() {
                     project.status === "archived" && "bg-muted-foreground",
                   )}
                 />
-                <span className="font-mono text-xs text-muted-foreground">{filterLabels[project.status as keyof typeof filterLabels]}</span>
+                <span className="font-mono text-xs text-muted-foreground"><AnimatedText text={filterLabels[project.status as keyof typeof filterLabels]} emphasis="label" /></span>
               </div>
 
               <div
@@ -180,7 +180,7 @@ export function ProjectsGrid() {
                   "highlight" in project && project.highlight ? "text-xl sm:text-2xl" : "text-lg sm:text-xl",
                 )}
               >
-                <ShinyText text={project.title} speed={4} />
+                <AnimatedText text={project.title} mode="chars" emphasis="title" />
               </h3>
 
               <p
@@ -189,7 +189,7 @@ export function ProjectsGrid() {
                   "highlight" in project && project.highlight ? "line-clamp-3" : "line-clamp-2",
                 )}
               >
-                {project.description}
+                <AnimatedText text={project.description} />
               </p>
 
               <div className="mb-5 flex items-center gap-5 font-mono text-xs text-muted-foreground">
@@ -209,7 +209,7 @@ export function ProjectsGrid() {
                     key={tag}
                     className="rounded-md border border-border/80 bg-secondary/60 px-2.5 py-1 font-mono text-xs text-secondary-foreground transition-colors hover:border-primary/50 hover:bg-primary/10"
                   >
-                    {tag}
+                    <AnimatedText text={tag} emphasis="label" />
                   </span>
                 ))}
               </div>
@@ -223,7 +223,7 @@ export function ProjectsGrid() {
                   onClick={(e) => e.stopPropagation()}
                 >
                   <Github className="h-4 w-4 transition-transform group-hover/link:scale-110" />
-                  <span className="underline-animate">{language === "es" ? "código" : "source"}</span>
+                  <span className="underline-animate"><AnimatedText text={language === "es" ? "código" : "source"} emphasis="label" /></span>
                 </a>
                 {project.homepage && (
                   <a
@@ -234,7 +234,7 @@ export function ProjectsGrid() {
                     onClick={(e) => e.stopPropagation()}
                   >
                     <ExternalLink className="h-4 w-4 transition-transform group-hover/link:scale-110 group-hover/link:rotate-12" />
-                    <span className="underline-animate">{language === "es" ? "demo" : "live"}</span>
+                    <span className="underline-animate"><AnimatedText text={language === "es" ? "demo" : "live"} emphasis="label" /></span>
                   </a>
                 )}
               </div>

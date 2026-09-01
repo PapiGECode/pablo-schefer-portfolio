@@ -36,6 +36,7 @@ import { FaAmazon, FaMicrosoft, FaSlack } from "react-icons/fa6"
 import { BsOpenai } from "react-icons/bs"
 import { GrOracle } from "react-icons/gr"
 import type { IconType } from "react-icons"
+import { AnimatedText } from "@/components/animated-text"
 
 const tech = (Icon: IconType, label: string, href: string): LogoItem => ({
   node: <Icon className="h-8 w-8" aria-hidden="true" />,
@@ -96,7 +97,7 @@ export function TechStack() {
     <section className="border-y border-border/30 px-4 py-8 sm:px-6 sm:py-10" aria-labelledby="tech-stack-title">
       <div className="mx-auto flex max-w-7xl flex-col gap-5 sm:flex-row sm:items-center sm:gap-10">
         <p id="tech-stack-title" className="shrink-0 font-mono text-[10px] uppercase tracking-[0.28em] text-primary">
-          {language === "es" ? "Stack · programación" : "Stack · programming"}
+          <AnimatedText text={language === "es" ? "Stack · programación" : "Stack · programming"} emphasis="label" />
         </p>
         <LogoLoop logos={techLogos} speed={65} logoHeight={36} gap={38} />
       </div>

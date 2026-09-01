@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { cn } from "@/lib/utils"
 import { ArrowRight } from "lucide-react"
+import { AnimatedText } from "@/components/animated-text"
 
 const notes = [
   {
@@ -47,10 +48,10 @@ export function LabNotes() {
     <section id="notes" className="px-4 sm:px-6 py-20 sm:py-28 border-t border-border/30">
       <div className="mx-auto max-w-7xl">
         <div className="mb-10 sm:mb-14 space-y-3 animate-fade-in-up">
-          <p className="font-mono text-xs uppercase tracking-[0.25em] sm:tracking-[0.35em] text-primary">Engineering notes · Pablo</p>
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">Notas de desarrollo</h2>
+          <p className="font-mono text-xs uppercase tracking-[0.25em] sm:tracking-[0.35em] text-primary"><AnimatedText text="Engineering notes · Pablo" emphasis="label" /></p>
+          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl"><AnimatedText text="Notas de desarrollo" mode="chars" emphasis="title" /></h2>
           <p className="max-w-2xl text-base sm:text-lg text-muted-foreground leading-relaxed">
-            Decisiones técnicas, aprendizajes y experimentos desde mi espacio de desarrollo.
+            <AnimatedText text="Decisiones técnicas, aprendizajes y experimentos desde mi espacio de desarrollo." />
           </p>
         </div>
 
@@ -75,19 +76,19 @@ export function LabNotes() {
               <div className="relative z-10">
                 <div className="mb-4 sm:mb-5 flex items-center justify-between gap-3">
                   <span className="rounded-lg border border-border/80 bg-secondary/60 px-3 py-1.5 font-mono text-xs text-muted-foreground transition-colors group-hover:border-primary/50 group-hover:text-foreground">
-                    {note.category}
+                    <AnimatedText text={note.category} emphasis="label" />
                   </span>
-                  <span className="font-mono text-xs text-muted-foreground">{note.date}</span>
+                  <span className="font-mono text-xs text-muted-foreground"><AnimatedText text={note.date} emphasis="label" /></span>
                 </div>
 
                 <h3 className="mb-3 text-lg sm:text-xl font-semibold tracking-tight transition-colors duration-300 group-hover:text-gradient">
-                  {note.title}
+                  <AnimatedText text={note.title} mode="chars" emphasis="title" />
                 </h3>
 
-                <p className="text-sm leading-relaxed text-muted-foreground">{note.excerpt}</p>
+                <p className="text-sm leading-relaxed text-muted-foreground"><AnimatedText text={note.excerpt} /></p>
 
                 <div className="mt-5 flex items-center gap-2 font-mono text-xs text-primary transition-all duration-300 sm:opacity-0 sm:translate-x-[-8px] group-hover:opacity-100 group-hover:translate-x-0">
-                  <span>read more</span>
+                  <span><AnimatedText text="read more" emphasis="label" /></span>
                   <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
                 </div>
               </div>

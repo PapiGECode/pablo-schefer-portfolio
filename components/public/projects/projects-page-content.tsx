@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils"
 import { Github, Star, GitFork, ExternalLink, Sparkles, Search, Filter } from "lucide-react"
 import { SmoothInput } from "@/components/smooth-input"
 import { useLanguage } from "@/components/language-provider"
-import ShinyText from "@/components/ShinyText"
+import { AnimatedText } from "@/components/animated-text"
 
 type Project = {
   id: number | string
@@ -167,10 +167,10 @@ export function ProjectsPageContent() {
       <div className="mx-auto max-w-7xl">
         {/* Hero */}
         <div className={cn("mb-12 sm:mb-16 space-y-4 opacity-0", isVisible && "animate-fade-in-up")}>
-          <p className="font-mono text-xs uppercase tracking-[0.25em] sm:tracking-[0.35em] text-primary">{language === "es" ? "GitHub · trabajo seleccionado" : "GitHub · selected work"}</p>
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">{language === "es" ? "Proyectos de programación" : "Programming projects"}</h1>
+          <p className="font-mono text-xs uppercase tracking-[0.25em] sm:tracking-[0.35em] text-primary"><AnimatedText text={language === "es" ? "GitHub · trabajo seleccionado" : "GitHub · selected work"} emphasis="label" /></p>
+          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl"><AnimatedText text={language === "es" ? "Proyectos de programación" : "Programming projects"} mode="chars" emphasis="title" /></h1>
           <p className="max-w-2xl text-base sm:text-lg text-muted-foreground leading-relaxed">
-            {language === "es" ? "Repositorios, interfaces y experimentos de Pablo Schefer Orduña. Código en evolución, documentado y construido para aprender, probar y publicar." : "Repositories, interfaces and experiments by Pablo Schefer Orduña. Evolving, documented code built to learn, test and ship."}
+            <AnimatedText text={language === "es" ? "Repositorios, interfaces y experimentos de Pablo Schefer Orduña. Código en evolución, documentado y construido para aprender, probar y publicar." : "Repositories, interfaces and experiments by Pablo Schefer Orduña. Evolving, documented code built to learn, test and ship."} />
           </p>
         </div>
 
@@ -201,7 +201,7 @@ export function ProjectsPageContent() {
                     : "border-border text-muted-foreground hover:border-foreground/50 hover:text-foreground hover:bg-secondary/50",
                 )}
               >
-                {filterLabels[filter as keyof typeof filterLabels]}
+                <AnimatedText text={filterLabels[filter as keyof typeof filterLabels]} emphasis="label" />
               </button>
             ))}
           </div>
@@ -220,7 +220,7 @@ export function ProjectsPageContent() {
                     : "border-border/60 bg-secondary/40 text-muted-foreground hover:border-primary/30 hover:text-foreground",
                 )}
               >
-                {tag}
+                <AnimatedText text={tag} emphasis="label" />
               </button>
             ))}
           </div>
@@ -248,7 +248,7 @@ export function ProjectsPageContent() {
                 <div className="absolute left-5 top-5 flex items-center gap-2 rounded-full border border-primary/40 bg-primary/15 px-3.5 py-1.5 animate-pulse-glow">
                   <Sparkles className="h-3.5 w-3.5 text-primary" />
                   <span className="font-mono text-[10px] uppercase tracking-wider text-primary font-medium">
-                    {language === "es" ? "Destacado" : "Featured"}
+                    <AnimatedText text={language === "es" ? "Destacado" : "Featured"} emphasis="label" />
                   </span>
                 </div>
               )}
@@ -267,7 +267,7 @@ export function ProjectsPageContent() {
                     project.status === "archived" && "bg-muted-foreground",
                   )}
                 />
-                <span className="font-mono text-xs text-muted-foreground">{filterLabels[project.status as keyof typeof filterLabels]}</span>
+                <span className="font-mono text-xs text-muted-foreground"><AnimatedText text={filterLabels[project.status as keyof typeof filterLabels]} emphasis="label" /></span>
               </div>
 
               <div
@@ -285,7 +285,7 @@ export function ProjectsPageContent() {
                   "highlight" in project && project.highlight ? "text-xl sm:text-2xl" : "text-lg sm:text-xl",
                 )}
               >
-                <ShinyText text={project.title} speed={4} />
+                <AnimatedText text={project.title} mode="chars" emphasis="title" />
               </h3>
 
               <p
@@ -294,7 +294,7 @@ export function ProjectsPageContent() {
                   "highlight" in project && project.highlight ? "line-clamp-3" : "line-clamp-2",
                 )}
               >
-                {project.description}
+                <AnimatedText text={project.description} />
               </p>
 
               <div className="mb-5 flex items-center gap-5 font-mono text-xs text-muted-foreground">
@@ -314,7 +314,7 @@ export function ProjectsPageContent() {
                     key={tag}
                     className="rounded-md border border-border/80 bg-secondary/60 px-2.5 py-1 font-mono text-xs text-secondary-foreground transition-colors hover:border-primary/50 hover:bg-primary/10"
                   >
-                    {tag}
+                    <AnimatedText text={tag} emphasis="label" />
                   </span>
                 ))}
               </div>
@@ -327,7 +327,7 @@ export function ProjectsPageContent() {
                   className="flex items-center gap-2 font-mono text-xs text-muted-foreground hover:text-primary transition-all duration-300 group/link"
                 >
                   <Github className="h-4 w-4 transition-transform group-hover/link:scale-110" />
-                  <span className="underline-animate">{language === "es" ? "código" : "source"}</span>
+                  <span className="underline-animate"><AnimatedText text={language === "es" ? "código" : "source"} emphasis="label" /></span>
                 </a>
                 {project.homepage && (
                   <a
@@ -337,7 +337,7 @@ export function ProjectsPageContent() {
                     className="flex items-center gap-2 font-mono text-xs text-primary hover:text-foreground transition-all duration-300 group/link"
                   >
                     <ExternalLink className="h-4 w-4 transition-transform group-hover/link:scale-110 group-hover/link:rotate-12" />
-                    <span className="underline-animate">{language === "es" ? "demo" : "live"}</span>
+                    <span className="underline-animate"><AnimatedText text={language === "es" ? "demo" : "live"} emphasis="label" /></span>
                   </a>
                 )}
               </div>
@@ -349,7 +349,7 @@ export function ProjectsPageContent() {
 
         {filteredProjects.length === 0 && (
           <div className="text-center py-20">
-            <p className="font-mono text-sm text-muted-foreground">{language === "es" ? "No se encontraron proyectos con esos criterios." : "No projects found matching your criteria."}</p>
+            <p className="font-mono text-sm text-muted-foreground"><AnimatedText text={language === "es" ? "No se encontraron proyectos con esos criterios." : "No projects found matching your criteria."} /></p>
           </div>
         )}
       </div>

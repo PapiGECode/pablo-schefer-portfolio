@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { useEffect, useMemo, useState } from "react"
+import { AnimatedText } from "@/components/animated-text"
 import { useLanguage } from "./language-provider"
 
 export function HeroSection() {
@@ -48,10 +49,10 @@ export function HeroSection() {
           <div className="space-y-8 sm:space-y-10">
             <div className="space-y-3 animate-fade-in-up">
               <p className="font-mono text-xs uppercase tracking-[0.25em] sm:tracking-[0.35em] text-primary">
-                <span className="font-bold">PapiGECode</span> — {language === "es" ? "Software, proyectos y experimentos" : "Software, projects & experiments"}
+                <AnimatedText text={`PapiGECode — ${language === "es" ? "Software, proyectos y experimentos" : "Software, projects & experiments"}`} emphasis="label" />
               </p>
               <h1 className="text-4xl font-bold tracking-tight sm:text-4xl lg:text-5xl xl:text-6xl text-balance">
-                {language === "es" ? "Construyendo con código" : "Building with code"}
+                <AnimatedText text={language === "es" ? "Construyendo con código" : "Building with code"} mode="chars" emphasis="title" />
                 <br />
                 <span
                   className="inline-block min-h-[1.2em] bg-gradient-to-l from-primary/50 to-accent text-transparent bg-clip-text typing-cursor"
@@ -62,15 +63,9 @@ export function HeroSection() {
             </div>
 
             <p className="max-w-lg text-base sm:text-lg leading-relaxed text-muted-foreground animate-fade-in-up stagger-2">
-              {language === "es" ? (
-                <>Soy Pablo Schefer Orduña — <span className="text-foreground font-medium">PapiGEGamer</span>.
-                Desarrollo proyectos web, herramientas y experimentos con JavaScript, TypeScript, React y Next.js.
-                PapiGECode es mi laboratorio profesional: código, repositorios y productos digitales en construcción.</>
-              ) : (
-                <>I&apos;m Pablo Schefer Orduña — <span className="text-foreground font-medium">PapiGEGamer</span>.
-                I build web projects, tools and experiments with JavaScript, TypeScript, React and Next.js.
-                PapiGECode is my professional lab for code, repositories and digital products in progress.</>
-              )}
+              <AnimatedText text={language === "es"
+                ? "Soy Pablo Schefer Orduña — PapiGEGamer. Desarrollo proyectos web, herramientas y experimentos con JavaScript, TypeScript, React y Next.js. PapiGECode es mi laboratorio profesional: código, repositorios y productos digitales en construcción."
+                : "I'm Pablo Schefer Orduña — PapiGEGamer. I build web projects, tools and experiments with JavaScript, TypeScript, React and Next.js. PapiGECode is my professional lab for code, repositories and digital products in progress."} />
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 animate-fade-in-up stagger-3">
@@ -78,7 +73,7 @@ export function HeroSection() {
                 href="#projects"
                 className="group relative inline-flex items-center justify-center gap-3 overflow-hidden rounded-lg border border-primary bg-primary/10 px-7 py-4 sm:py-3.5 font-mono text-sm text-primary transition-all duration-500 hover:bg-primary hover:text-primary-foreground active:scale-[0.98]"
               >
-                <span className="relative z-10">{language === "es" ? "explorar repositorios" : "explore repositories"}</span>
+                <span className="relative z-10"><AnimatedText text={language === "es" ? "explorar repositorios" : "explore repositories"} emphasis="label" /></span>
                 <span className="relative z-10 transition-transform duration-300 group-hover:translate-x-1">→</span>
                 {/* Animated background */}
                 <span className="absolute inset-0 -translate-x-full bg-primary transition-transform duration-500 group-hover:translate-x-0" />
@@ -88,7 +83,7 @@ export function HeroSection() {
                 className="group relative isolate inline-flex items-center justify-center gap-3 overflow-hidden rounded-lg border border-primary/25 bg-card/30 px-7 py-4 font-mono text-sm font-medium tracking-wide text-muted-foreground shadow-sm shadow-primary/5 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/70 hover:bg-primary/10 hover:text-foreground hover:shadow-lg hover:shadow-primary/10 active:translate-y-0 active:scale-[0.98] sm:py-3.5"
               >
                 <span className="absolute inset-0 -z-10 -translate-x-full bg-gradient-to-r from-transparent via-primary/10 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
-                <span className="transition-transform duration-300 group-hover:translate-x-0.5">{language === "es" ? "sobre Pablo" : "about Pablo"}</span>
+                <span className="transition-transform duration-300 group-hover:translate-x-0.5"><AnimatedText text={language === "es" ? "sobre Pablo" : "about Pablo"} emphasis="label" /></span>
                 <span className="flex h-6 w-6 items-center justify-center rounded-full border border-primary/30 text-xs text-primary transition-all duration-300 group-hover:border-primary group-hover:bg-primary group-hover:text-primary-foreground">
                   ↗
                 </span>

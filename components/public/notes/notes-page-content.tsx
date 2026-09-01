@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils"
 import { ArrowRight, Calendar, Tag, Search } from "lucide-react"
 import { SmoothInput } from "@/components/smooth-input"
 import { useLanguage } from "@/components/language-provider"
+import { AnimatedText } from "@/components/animated-text"
 
 const notes = [
   { id: 1, title: "La arquitectura de PapiGECode", excerpt: "Notas sobre cómo conviven Next.js, TypeScript, GitHub y las integraciones públicas de mi portfolio.", content: "Una mirada breve a las decisiones que sostienen PapiGECode.", date: "Sep 2026", category: "frontend", tags: ["Next.js", "React", "TypeScript"], color: "from-primary/20 to-emerald-500/20", readTime: "6 min" },
@@ -52,10 +53,10 @@ export function NotesPageContent() {
       <div className="mx-auto max-w-7xl">
         {/* Hero */}
         <div className={cn("mb-12 sm:mb-16 space-y-4 opacity-0", isVisible && "animate-fade-in-up")}>
-          <p className="font-mono text-xs uppercase tracking-[0.25em] sm:tracking-[0.35em] text-primary">{language === "es" ? "Notas de campo" : "Field notes"}</p>
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">{language === "es" ? "Notas del laboratorio" : "Lab notes"}</h1>
+          <p className="font-mono text-xs uppercase tracking-[0.25em] sm:tracking-[0.35em] text-primary"><AnimatedText text={language === "es" ? "Notas de campo" : "Field notes"} emphasis="label" /></p>
+          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl"><AnimatedText text={language === "es" ? "Notas del laboratorio" : "Lab notes"} mode="chars" emphasis="title" /></h1>
           <p className="max-w-2xl text-base sm:text-lg text-muted-foreground leading-relaxed">
-            {language === "es" ? "Observaciones breves, hallazgos técnicos y reflexiones desde la mesa de trabajo. Documentación del camino de aprendizaje." : "Brief observations, technical findings, and thoughts from the workbench. Documentation of the learning journey."}
+            <AnimatedText text={language === "es" ? "Observaciones breves, hallazgos técnicos y reflexiones desde la mesa de trabajo. Documentación del camino de aprendizaje." : "Brief observations, technical findings, and thoughts from the workbench. Documentation of the learning journey."} />
           </p>
         </div>
 
@@ -76,7 +77,7 @@ export function NotesPageContent() {
 
             {/* Categories */}
             <div className="rounded-xl border border-border bg-card/40 glass p-5">
-              <h3 className="font-mono text-xs uppercase tracking-wider text-primary mb-4">{language === "es" ? "Categorías" : "Categories"}</h3>
+              <h3 className="font-mono text-xs uppercase tracking-wider text-primary mb-4"><AnimatedText text={language === "es" ? "Categorías" : "Categories"} emphasis="label" /></h3>
               <div className="flex flex-col gap-2">
                 {categories.map((category) => (
                   <button
@@ -89,7 +90,7 @@ export function NotesPageContent() {
                         : "text-muted-foreground hover:text-foreground hover:bg-secondary/50",
                     )}
                   >
-                    {categoryLabels[category as keyof typeof categoryLabels]}
+                    <AnimatedText text={categoryLabels[category as keyof typeof categoryLabels]} emphasis="label" />
                   </button>
                 ))}
               </div>
@@ -99,7 +100,7 @@ export function NotesPageContent() {
             <div className="rounded-xl border border-border bg-card/40 glass p-5">
               <h3 className="font-mono text-xs uppercase tracking-wider text-primary mb-4 flex items-center gap-2">
                 <Tag className="h-3.5 w-3.5" />
-                Tags
+                <AnimatedText text="Tags" emphasis="label" />
               </h3>
               <div className="flex flex-wrap gap-2">
                 {allTags.map((tag) => (
@@ -113,7 +114,7 @@ export function NotesPageContent() {
                         : "border-border/60 bg-secondary/40 text-muted-foreground hover:border-primary/30 hover:text-foreground",
                     )}
                   >
-                    {tag}
+                    <AnimatedText text={tag} emphasis="label" />
                   </button>
                 ))}
               </div>
@@ -144,22 +145,22 @@ export function NotesPageContent() {
                   <div className="relative z-10">
                     <div className="mb-4 sm:mb-5 flex items-center justify-between gap-3">
                       <span className="rounded-lg border border-border/80 bg-secondary/60 px-3 py-1.5 font-mono text-xs text-muted-foreground transition-colors group-hover:border-primary/50 group-hover:text-foreground">
-                        {note.category}
+                        <AnimatedText text={note.category} emphasis="label" />
                       </span>
                       <div className="flex items-center gap-3 font-mono text-xs text-muted-foreground">
                         <span className="flex items-center gap-1">
                           <Calendar className="h-3 w-3" />
-                          {note.date}
+                          <AnimatedText text={note.date} emphasis="label" />
                         </span>
-                        <span>{note.readTime}</span>
+                        <span><AnimatedText text={note.readTime} emphasis="label" /></span>
                       </div>
                     </div>
 
                     <h3 className="mb-3 text-lg sm:text-xl font-semibold tracking-tight transition-colors duration-300 group-hover:text-gradient">
-                      {note.title}
+                      <AnimatedText text={note.title} mode="chars" emphasis="title" />
                     </h3>
 
-                    <p className="text-sm leading-relaxed text-muted-foreground mb-4">{note.excerpt}</p>
+                    <p className="text-sm leading-relaxed text-muted-foreground mb-4"><AnimatedText text={note.excerpt} /></p>
 
                     <div className="flex flex-wrap gap-2 mb-4">
                       {note.tags.map((tag) => (
@@ -167,13 +168,13 @@ export function NotesPageContent() {
                           key={tag}
                           className="rounded-md border border-border/60 bg-secondary/40 px-2 py-0.5 font-mono text-[10px] text-muted-foreground"
                         >
-                          {tag}
+                          <AnimatedText text={tag} emphasis="label" />
                         </span>
                       ))}
                     </div>
 
                     <div className="flex items-center gap-2 font-mono text-xs text-primary transition-all duration-300 sm:opacity-0 sm:translate-x-[-8px] group-hover:opacity-100 group-hover:translate-x-0">
-                      <span>{language === "es" ? "leer más" : "read more"}</span>
+                      <span><AnimatedText text={language === "es" ? "leer más" : "read more"} emphasis="label" /></span>
                       <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
                     </div>
                   </div>
@@ -185,7 +186,7 @@ export function NotesPageContent() {
 
             {filteredNotes.length === 0 && (
               <div className="text-center py-20">
-                <p className="font-mono text-sm text-muted-foreground">{language === "es" ? "No se encontraron notas con esos criterios." : "No notes found matching your criteria."}</p>
+                <p className="font-mono text-sm text-muted-foreground"><AnimatedText text={language === "es" ? "No se encontraron notas con esos criterios." : "No notes found matching your criteria."} /></p>
               </div>
             )}
           </div>
