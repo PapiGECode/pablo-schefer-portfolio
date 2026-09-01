@@ -1377,6 +1377,47 @@
   .live-privacy span { display: none; }
 }
 
+@media (max-width: 640px) {
+  body { overflow-x: hidden; }
+
+  .live-presence-section {
+    padding-right: 1rem;
+    padding-left: 1rem;
+  }
+
+  .live-presence-heading { gap: 1.35rem; }
+  .live-presence-heading h2 { font-size: clamp(1.8rem, 9vw, 2.4rem); }
+  .live-presence-heading > div:first-child > p:last-child { font-size: 0.88rem; line-height: 1.55; }
+
+  .live-connection {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .live-card > header {
+    min-height: 44px;
+    padding: 0 0.9rem;
+    font-size: 0.6rem;
+  }
+
+  .live-card__signal { max-width: 5.5rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .live-anime-brand { min-width: 0; max-width: 72%; }
+  .live-anime-brand > span { max-width: 9rem; overflow: hidden; text-overflow: ellipsis; }
+
+  .live-media {
+    grid-template-columns: minmax(0, 88px) minmax(0, 1fr);
+    gap: 0.9rem;
+    padding: 1rem;
+  }
+
+  .live-art--poster { max-height: 126px; }
+  .live-copy h3 { font-size: 1rem; }
+  .live-copy p { font-size: 0.78rem; }
+  .live-copy > small { font-size: 0.58rem; }
+  .live-lyrics p { font-size: 0.66rem; }
+  .live-copy > a, .live-links a { font-size: 0.58rem; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .live-card,
   .live-media,
