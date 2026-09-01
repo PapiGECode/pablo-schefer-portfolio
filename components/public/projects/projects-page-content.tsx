@@ -1,12 +1,27 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useMemo, useRef } from "react"
 import { cn } from "@/lib/utils"
 import { Github, Star, GitFork, ExternalLink, Sparkles, Search, Filter } from "lucide-react"
 import { SmoothInput } from "@/components/smooth-input"
 import { useLanguage } from "@/components/language-provider"
 
-const projects = [
+type Project = {
+  id: number | string
+  title: string
+  description: string
+  tags: string[]
+  status: string
+  year: string
+  stars: number
+  forks: number
+  url: string
+  homepage?: string
+  featured?: boolean
+  highlight?: boolean
+}
+
+const projects: Project[] = [
   {
     id: 0,
     title: "pablo-schefer-portfolio",
@@ -83,16 +98,53 @@ export function ProjectsPageContent() {
   const [activeFilter, setActiveFilter] = useState("all")
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedTags, setSelectedTags] = useState<string[]>([])
-  const [hoveredProject, setHoveredProject] = useState<number | null>(null)
+  const [hoveredProject, setHoveredProject] = useState<number | string | null>(null)
   const [isVisible, setIsVisible] = useState(false)
+  const [githubProjects, setGithubProjects] = useState<Project[]>([])
   const { language } = useLanguage()
   const sectionRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
     setIsVisible(true)
-  }, [])
+    fetch("/api/github/repos")
+      .then((response) => (response.ok ? response.json() : null))
+      .then((data) => {
+        if (!data?.repositories) return
+        setGithubProjects(data.repositories.map((repository: {
+          name: string
+          description: string | null
+          url: string
+          stars: number
+          forks: number
+          language: string | null
+          topics?: string[]
+          homepage?: string | null
+          archived?: boolean
+          updatedAt: string
+        }) => ({
+          id: `github-${repository.name}`,
+          title: repository.name,
+          description: repository.description || (language === "es" ? "Repositorio de PapiGECode en GitHub." : "PapiGECode repository on GitHub."),
+          tags: [...(repository.language ? [repository.language] : []), ...(repository.topics || [])],
+          status: repository.archived ? "archived" : "shipped",
+          year: new Date(repository.updatedAt).getFullYear().toString(),
+          stars: repository.stars,
+          forks: repository.forks,
+          url: repository.url,
+          homepage: repository.homepage || undefined,
+        })))
+      })
+      .catch(() => undefined)
+  }, [language])
 
-  const filteredProjects = projects.filter((p) => {
+  const allProjects = useMemo(() => {
+    const curatedNames = new Set(projects.map((project) => project.title.toLowerCase()))
+    return [...projects, ...githubProjects.filter((project) => !curatedNames.has(project.title.toLowerCase()))]
+  }, [githubProjects])
+
+  const allTags = useMemo(() => [...new Set(allProjects.flatMap((project) => project.tags))], [allProjects])
+
+  const filteredProjects = allProjects.filter((p) => {
     const matchesFilter = activeFilter === "all" || p.status === activeFilter
     const matchesSearch =
       searchQuery === "" ||

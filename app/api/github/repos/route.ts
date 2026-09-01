@@ -28,6 +28,9 @@ export async function GET() {
       stars: repository.stargazers_count,
       forks: repository.forks_count,
       language: repository.language,
+      topics: repository.topics,
+      homepage: repository.homepage,
+      archived: repository.archived,
       updatedAt: repository.updated_at,
     })),
   })
