@@ -6,10 +6,16 @@ import { ArrowRight, Clock, Calendar } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import Link from "next/link"
 import { blogPosts } from "@/lib/blog-data"
+import { useLanguage } from "@/components/language-provider"
 
 export function BlogList() {
   const [isVisible, setIsVisible] = useState(false)
   const sectionRef = useRef<HTMLDivElement>(null)
+  const { language } = useLanguage()
+
+  const categoryLabels = language === "es"
+    ? { frontend: "frontend", automation: "automatización", integrations: "integraciones", systems: "sistemas", community: "comunidad" }
+    : { frontend: "frontend", automation: "automation", integrations: "integrations", systems: "systems", community: "community" }
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -41,7 +47,7 @@ export function BlogList() {
           style={{ animationDelay: `${index * 80 + 100}ms` }}
         >
           <Link href={`/blog/${post.slug}`} className="absolute inset-0 z-10">
-            <span className="sr-only">Read {post.title}</span>
+            <span className="sr-only">{language === "es" ? "Leer" : "Read"} {post.title}</span>
           </Link>
 
           <div
@@ -54,11 +60,11 @@ export function BlogList() {
           <div className="relative z-0">
             <div className="mb-4 flex flex-wrap items-center gap-3">
               <span className="rounded-lg border border-border/80 bg-secondary/60 px-3 py-1.5 font-mono text-xs text-muted-foreground transition-colors group-hover:border-primary/50 group-hover:text-foreground">
-                {post.category}
+                {categoryLabels[post.category as keyof typeof categoryLabels] ?? post.category}
               </span>
               {post.featured && (
                 <span className="rounded-lg border border-primary/50 bg-primary/10 px-3 py-1.5 font-mono text-xs text-primary">
-                  featured
+                  {language === "es" ? "destacado" : "featured"}
                 </span>
               )}
               <div className="ml-auto flex items-center gap-4 text-xs text-muted-foreground">
@@ -99,7 +105,7 @@ export function BlogList() {
               </div>
 
               <div className="flex items-center gap-2 font-mono text-xs text-primary transition-all duration-300 sm:opacity-0 sm:translate-x-[-8px] group-hover:opacity-100 group-hover:translate-x-0">
-                <span>read article</span>
+                <span>{language === "es" ? "leer artículo" : "read article"}</span>
                 <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
               </div>
             </div>

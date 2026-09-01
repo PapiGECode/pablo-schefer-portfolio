@@ -7,10 +7,10 @@ const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://pabloschefer.vercel
 
 export const metadata: Metadata = {
   title: "Blog",
-  description: "Technical articles, experiments, and insights from the digital laboratory. Exploring systems programming, web development, AI, and more.",
+  description: "Proyectos, decisiones técnicas y aprendizajes de Pablo Schefer Orduña sobre frontend, automatización, comunidades e integraciones.",
   openGraph: {
     title: "Blog — PapiGECode",
-    description: "Technical articles, experiments, and insights from the digital laboratory.",
+    description: "Proyectos, decisiones técnicas y aprendizajes del laboratorio digital de PapiGECode.",
     url: `${baseUrl}/blog`,
     type: "website",
     images: [
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Blog — PapiGECode",
-    description: "Technical articles, experiments, and insights from the digital laboratory.",
+    description: "Proyectos, decisiones técnicas y aprendizajes del laboratorio digital de PapiGECode.",
     images: [`${baseUrl}/og-image-blog.png`],
   },
   alternates: {
