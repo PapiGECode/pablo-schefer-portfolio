@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils"
 import { Github, Star, GitFork, ExternalLink, Sparkles, Search, Filter } from "lucide-react"
 import { SmoothInput } from "@/components/smooth-input"
 import { useLanguage } from "@/components/language-provider"
+import ShinyText from "@/components/ShinyText"
 
 type Project = {
   id: number | string
@@ -284,7 +285,7 @@ export function ProjectsPageContent() {
                   "highlight" in project && project.highlight ? "text-xl sm:text-2xl" : "text-lg sm:text-xl",
                 )}
               >
-                {project.title}
+                <ShinyText text={project.title} speed={4} />
               </h3>
 
               <p

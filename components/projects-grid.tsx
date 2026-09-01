@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils"
 import { Github, Star, GitFork, ExternalLink, Sparkles } from "lucide-react"
 import { useLanguage } from "./language-provider"
 import { GithubApiStatus } from "./github-api-status"
+import ShinyText from "./ShinyText"
 
 const projects = [
   {
@@ -179,7 +180,7 @@ export function ProjectsGrid() {
                   "highlight" in project && project.highlight ? "text-xl sm:text-2xl" : "text-lg sm:text-xl",
                 )}
               >
-                {project.title}
+                <ShinyText text={project.title} speed={4} />
               </h3>
 
               <p
