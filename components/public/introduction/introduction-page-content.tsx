@@ -51,7 +51,7 @@ function TiltPortrait({ children }: { children: ReactNode }) {
       onMouseLeave={() => { rotateX.set(0); rotateY.set(0) }}
     >
       {children}
-      <motion.div className="pointer-events-none absolute inset-0 z-10 opacity-30 mix-blend-screen" style={{ background: shine }} />
+      <motion.div className="pointer-events-none absolute inset-0 z-10 rounded-[2.35rem] opacity-30 mix-blend-screen" style={{ background: shine }} />
     </motion.div>
   )
 }
