@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Github, Instagram, Mail, ExternalLink, Heart, Check, Copy } from "lucide-react"
+import { Github, Instagram, MailOpen, ExternalLink, Heart, Check, Copy } from "lucide-react"
 import { XLogo } from "./x-logo"
 import { DiscordLogo } from "./discord-logo"
 import { useLanguage } from "./language-provider"
@@ -11,7 +11,7 @@ const socialLinks = [
   { label: "x.com", href: "https://x.com/PapiGEGamer", handle: "@PapiGEGamer", icon: XLogo },
   { label: "Instagram", href: "https://www.instagram.com/papigegamer/", handle: "@papigegamer", icon: Instagram },
   { label: "Discord", href: "#discord", handle: "papigegamerantiguo", icon: DiscordLogo },
-  { label: "Email", href: "mailto:pablopme41@gmail.com", handle: "pablopme41@gmail.com", icon: Mail },
+  { label: "Email", href: "mailto:pablopme41@gmail.com", handle: "pablopme41@gmail.com", icon: MailOpen },
 ]
 
 export function Footer() {
