@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useMemo, useRef, useState } from "react"
+import { useEffect, useId, useMemo, useRef, useState } from "react"
 import { motion, useReducedMotion } from "motion/react"
 import {
   ExternalLink,
@@ -255,6 +255,10 @@ function BlurLyrics({ text }: { text: string }) {
 }
 
 function LiveActivityTitle({ text }: { text: string }) {
+  const id = useId()
+  const sequence = Number.parseInt(id.match(/\d+(?!.*\d)/)?.[0] ?? "0", 10)
+  if (sequence % 2 !== 0) return <h3>{text}</h3>
+
   return (
     <h3>
       <SplitText
@@ -282,6 +286,10 @@ function LiveAnimatedText({
   text: string
   splitType?: "chars" | "words"
 }) {
+  const id = useId()
+  const sequence = Number.parseInt(id.match(/\d+(?!.*\d)/)?.[0] ?? "0", 10)
+  if (sequence % 2 !== 0) return <span className="live-animated-text">{text}</span>
+
   return (
     <SplitText
       key={`${splitType}-${text}`}

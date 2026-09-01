@@ -1,5 +1,6 @@
 "use client"
 
+import { useId } from "react"
 import { useReducedMotion } from "motion/react"
 import SplitText from "@/components/SplitText"
 
@@ -19,8 +20,11 @@ export function AnimatedText({
   emphasis = "body",
 }: AnimatedTextProps) {
   const reduceMotion = useReducedMotion()
+  const id = useId()
+  const sequence = Number.parseInt(id.match(/\d+(?!.*\d)/)?.[0] ?? "0", 10)
+  const shouldAnimate = sequence % 2 === 0
 
-  if (reduceMotion) return <span className={className}>{text}</span>
+  if (reduceMotion || !shouldAnimate) return <span className={className}>{text}</span>
 
   const title = emphasis === "title"
   const label = emphasis === "label"
