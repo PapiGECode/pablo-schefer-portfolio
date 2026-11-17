@@ -17,7 +17,7 @@ export function generateBlogPostStructuredData(post: BlogPost, url: string) {
     publisher: {
       '@type': 'Person',
       name: 'Pablo Schefer Orduña',
-      url: 'https://pabloschefer.vercel.app',
+      url: 'https://papigegamer.com',
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
@@ -57,8 +57,8 @@ export function generatePersonStructuredData() {
     '@context': 'https://schema.org',
     '@type': 'Person',
     name: 'Pablo Schefer Orduña',
-    url: 'https://pabloschefer.vercel.app',
-    image: 'https://pabloschefer.vercel.app/pablo-avatar.gif',
+    url: 'https://papigegamer.com',
+    image: 'https://papigegamer.com/pablo-avatar.gif',
     sameAs: [
       'https://github.com/PapiGECode',
       'https://x.com/PapiGEGamer',

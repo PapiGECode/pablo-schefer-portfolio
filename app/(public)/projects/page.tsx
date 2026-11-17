@@ -1,7 +1,7 @@
 import { ProjectsPageContent } from "@/components/public/projects/projects-page-content";
 import type { Metadata } from "next";
 
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://pabloschefer.vercel.app';
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://papigegamer.com';
 
 export const metadata: Metadata = {
   title: "Projects",

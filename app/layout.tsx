@@ -24,7 +24,7 @@ const spaceGrotesk = Space_Grotesk({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://pabloschefer.vercel.app'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://papigegamer.com'),
   title: {
     default: "PapiGECode",
     template: "%s | PapiGECode",

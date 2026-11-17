@@ -14,10 +14,11 @@
   "author": "Pablo Schefer Orduña",
   "scripts": {
     "analyze": "next experimental-analyze",
-    "build": "next build",
+    "build": "next build --webpack",
     "dev": "next dev",
     "lint": "eslint .",
-    "start": "next start"
+    "start": "next start",
+    "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",

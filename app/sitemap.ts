@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next'
 import { blogPosts } from '@/lib/blog-data'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://pabloschefer.vercel.app'
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://papigegamer.com'
 
   // Static routes
   const staticRoutes = [
@@ -54,3 +54,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [...staticRoutes, ...blogRoutes]
 }
+
+export const dynamic = 'force-static'

@@ -81,3 +81,7 @@ Notes and next steps
 ---
 
 If anything in this README should be adjusted (more examples, extra badges, or internal docs links), tell me which parts you want expanded and I'll update it.
+
+## Cloudflare
+
+`npm ci && npm run build && npx wrangler deploy` exports all pages and deploys the two public API routes as a Worker. The original handlers are retained under `cloudflare/*.original`; their Cloudflare versions preserve validation and response shapes. Domains and routes are in `wrangler.jsonc`.

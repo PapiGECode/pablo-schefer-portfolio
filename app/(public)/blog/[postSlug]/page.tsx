@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     };
   }
 
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://pabloschefer.vercel.app';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://papigegamer.com';
   const postUrl = `${baseUrl}/blog/${post.slug}`;
   const ogImageUrl = `${baseUrl}/og-images/${post.slug}.png`;
 
@@ -72,7 +72,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     notFound();
   }
 
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://pabloschefer.vercel.app';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://papigegamer.com';
   const structuredData = generateBlogPostStructuredData(post, baseUrl);
 
   return (
